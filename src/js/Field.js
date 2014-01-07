@@ -59,6 +59,7 @@ define(function() {
 
         if ( (WIDTH/HEIGHT) >  1.5) {
           this.renderer.setSize(WIDTH-(WIDTH*0.075), HEIGHT-(HEIGHT*0.075));
+          //this.cssRenderer.setSize(WIDTH-(WIDTH*0.075), HEIGHT-(HEIGHT*0.075));
 
           this.camera.aspect = 2;
           this.camera.updateProjectionMatrix();
@@ -66,6 +67,7 @@ define(function() {
         } else {
           var zWide = (WIDTH-(WIDTH*0.075));
           this.renderer.setSize(zWide, zWide/1.77777);
+          //this.cssRenderer.setSize(zWide, zWide/1.77777);
           
           this.camera.aspect = 1.77777;
           this.camera.updateProjectionMatrix();
@@ -230,7 +232,6 @@ define(function() {
 
       },
       
-      
 ///////////////////---> end initialization code
       isWebGLinUse: function() {
         return this.webGLinUse;
@@ -245,6 +246,7 @@ define(function() {
         requestAnimationFrame(function() {
           that.waitingToRender = false;
           that.renderer.render(that.scene, that.camera); 
+          //that.cssRenderer.render(that.cssScene, that.camera); 
         });
       },
       
