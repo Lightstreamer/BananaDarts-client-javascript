@@ -13,8 +13,8 @@ Copyright 2013 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["./Constants","./Cube","./ConsoleSubscriptionListener","Subscription"],
-    function(Constants,Cube,ConsoleSubscriptionListener,Subscription) {
+define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
+    function(Constants,Dart,ConsoleSubscriptionListener,Subscription) {
   
   var BRIDGE_CALL = {
     nick: "setNick",
@@ -159,7 +159,7 @@ define(["./Constants","./Cube","./ConsoleSubscriptionListener","Subscription"],
           return;
         }
 
-        this.players[key] = new Cube(key,key == this.localPlayerKey ? Constants.OWN : Constants.OTHER,this.field,this.extraInfo);
+        this.players[key] = new Dart(key,key == this.localPlayerKey ? Constants.OWN : Constants.OTHER,this.field,this.extraInfo);
       },
       getPlayer: function(key) {
         return this.players[key];
