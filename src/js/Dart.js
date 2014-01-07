@@ -223,13 +223,13 @@ define(["./Constants"],function(Constants) {
       
       setPos: function(axis,value) {
         if ( value >= Constants.MAX_SIZE[axis] ) {
-          var diff = value - Constants.MAX_SIZE[axis];
-          value = Constants.MAX_SIZE[axis] * -1 - diff;
-
+          value = Constants.MAX_SIZE[axis];
         }else if ( value <= (Constants.MAX_SIZE[axis] * -1) ) {
-          var diff = Math.abs(value) - Constants.MAX_SIZE[axis];
-          value = Constants.MAX_SIZE[axis] + diff;
-
+          value = -Constants.MAX_SIZE[axis];
+        }
+        
+        if (value ==  this.dart.position[axis]) {
+          return;
         }
         
         this.dart.position[axis] = value;
