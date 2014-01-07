@@ -86,7 +86,7 @@ define(["./Constants"],function(Constants) {
       
       createDart: function() {
         this.dart = clonable[this.type].clone();
-        this.dart.scale.set(3,3,3);
+        this.dart.scale.set(2,2,2);
       },
       
       convertDart: function() {
@@ -248,10 +248,15 @@ define(["./Constants"],function(Constants) {
       },
       
       calculate: function(rateFactor) { 
-        this.setPos("x", this.calculateAxisPos("x",rateFactor));
-        this.setPos("y", this.calculateAxisPos("y",rateFactor));
         this.setPos("z", this.calculateAxisPos("z",rateFactor));
+        
+        if (this.dart.position["z"] != -Constants.MAX_SIZE["z"]) {
+          this.setPos("y", this.calculateAxisPos("y",rateFactor));
+          this.setPos("x", this.calculateAxisPos("x",rateFactor));
+        }
+        
        
+        /*
         var qx = new THREE.Quaternion();
         qx.setFromAxisAngle( new THREE.Vector3( 1, 0, 0 ), (this.dinamics.R.x * 0.02 * rateFactor) );
         this.dart.quaternion.multiply( qx );
@@ -266,7 +271,7 @@ define(["./Constants"],function(Constants) {
         qz.setFromAxisAngle( new THREE.Vector3( 0, 0, 1 ), (this.dinamics.R.z * 0.02 * rateFactor) );
         this.dart.quaternion.multiply( qz );
         this.dart.quaternion.normalize();
-        
+        */
         this.field.render();
       }
   };
