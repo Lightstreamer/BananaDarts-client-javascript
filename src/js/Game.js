@@ -22,16 +22,9 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
     posX: "setPosX",
     posY: "setPosY",
     posZ: "setPosZ",
-    rotX: "setRotX",
-    rotY: "setRotY",
-    rotZ: "setRotZ",
-    rotW: "setRotW",
     dVx: "setDVX",
     dVy: "setDVY",
     dVz: "setDVZ",
-    dRx: "setDRX",
-    dRY: "setDRY",
-    dRz: "setDRZ"
   };
   
   var LOCKABLE_PROPS = {
@@ -44,10 +37,6 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
       posX: true,
       posY: true,
       posZ: true,
-      rotX: true,
-      rotY: true,
-      rotZ: true,
-      rotW: true
   };
   
   var Game = function(client,room,field) {
@@ -66,9 +55,7 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
     //roomSubscription.setRequestedMaxFrequency("unfiltered");
     roomSubscription.setCommandSecondLevelFields(["nick","status",
                                                   "posX","posY","posZ",
-                                                  "rotX","rotY","rotZ","rotW",
-                                                  "dVx","dVy","dVz",
-                                                  "dRx","dRy","dRz"]);
+                                                  "dVx","dVy","dVz"]);
     if (Constants.LOG_UPDATES_ON_CONSOLE) {
       roomSubscription.addListener(putUpdatesOnConsole("Room list"));
     }
@@ -77,8 +64,7 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
     
     
     var posSubscription = new Subscription("COMMAND","roompos_"+room,["command","key", 
-                                                                        "posX","posY","posZ",
-                                                                        "rotX","rotY","rotZ","rotW"]); //ROOMPOSITION_SUBSCRIPTION contains list of users and object positions
+                                                                        "posX","posY","posZ"]); //ROOMPOSITION_SUBSCRIPTION contains list of users and object positions
     posSubscription.setRequestedSnapshot("yes");
     posSubscription.setRequestedMaxFrequency(0.5);
     posSubscription.addListener(this);
@@ -172,7 +158,7 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
         }
         
         var locked = this.localPlayerIsLocked && key == this.localPlayerKey;
-        if (!locked) console.log(key);
+
         itemUpdate.forEachChangedField(function(name,pos,val) {
           if (locked && LOCKABLE_PROPS[name]) {
             return;

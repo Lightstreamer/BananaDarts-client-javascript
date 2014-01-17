@@ -46,7 +46,7 @@ define(["./Constants"],function(Constants) {
   var NICK_OFFSET = {
       x: 2,
       y: 1,
-      z: 2,
+      z: 10,
   };
   
   var Dart = function(key,type,field,showInfo) {
@@ -79,7 +79,7 @@ define(["./Constants"],function(Constants) {
           this.createDart();
         }
         
-        this.dart.position.set(0,0,59);
+        this.dart.position.set(0,0,Constants.MAX_SIZE.z-1);
         this.dart.quaternion.set(0.707,0,0,0.707); //0.64,0,0,0.76); //0.57,0,0,0.81
         this.field.addObject(this.dart);
       },
@@ -255,23 +255,9 @@ define(["./Constants"],function(Constants) {
           this.setPos("x", this.calculateAxisPos("x",rateFactor));
         }
         
-       
-        /*
-        var qx = new THREE.Quaternion();
-        qx.setFromAxisAngle( new THREE.Vector3( 1, 0, 0 ), (this.dinamics.R.x * 0.02 * rateFactor) );
-        this.dart.quaternion.multiply( qx );
-        this.dart.quaternion.normalize();
-          
-        var qy = new THREE.Quaternion();
-        qy.setFromAxisAngle( new THREE.Vector3( 0, 1, 0 ), (this.dinamics.R.y * 0.02 * rateFactor) );
-        this.dart.quaternion.multiply( qy );
-        this.dart.quaternion.normalize();
-          
-        var qz = new THREE.Quaternion();
-        qz.setFromAxisAngle( new THREE.Vector3( 0, 0, 1 ), (this.dinamics.R.z * 0.02 * rateFactor) );
-        this.dart.quaternion.multiply( qz );
-        this.dart.quaternion.normalize();
-        */
+        
+        
+        
         this.field.render();
       }
   };
