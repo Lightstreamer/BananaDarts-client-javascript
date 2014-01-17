@@ -13,7 +13,7 @@ Copyright 2013 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(function() {
+define(["./Constants"],function(Constants) {
   
   var WIDTH = window.innerWidth;
   var HEIGHT = window.innerHeight;
@@ -100,7 +100,7 @@ define(function() {
        */
       setupCamera: function() {
         var v = this.webGLinUse ? 0.1 : 1;
-        this.camera = new THREE.PerspectiveCamera(45, WIDTH/HEIGHT, v, 10000); 
+        this.camera = new THREE.PerspectiveCamera(Constants.MAX_SIZE.y, WIDTH/HEIGHT, v, 10000); 
         this.camera.lookAt( {x:0,y:0,z:0} );
         this.camera.position.z = 140;
       },
@@ -140,50 +140,50 @@ define(function() {
         var material = new THREE.LineBasicMaterial( { color: 0x2f2f2f, opacity: 0.2 } );
         
         var plane1 = new THREE.Geometry();
-        plane1.vertices.push( new THREE.Vector3( 80, -45, 60 ) );
-        plane1.vertices.push( new THREE.Vector3( -80, -45, 60 ) );
-        plane1.vertices.push( new THREE.Vector3( -80, 45, 60 ) );
-        plane1.vertices.push( new THREE.Vector3( 80, 45, 60 ) );
+        plane1.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
+        plane1.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
+        plane1.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
+        plane1.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
         
         var plane2 = new THREE.Geometry();
-        plane2.vertices.push( new THREE.Vector3( 80, -45, -60 ) );
-        plane2.vertices.push( new THREE.Vector3( -80, -45, -60 ) );
-        plane2.vertices.push( new THREE.Vector3( -80, 45, -60 ) );
-        plane2.vertices.push( new THREE.Vector3( 80, 45, -60 ) );
+        plane2.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
+        plane2.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
+        plane2.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
+        plane2.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
         
         var plane3 = new THREE.Geometry();
-        plane3.vertices.push( new THREE.Vector3( -80, -45, 60 ) );
-        plane3.vertices.push( new THREE.Vector3( -80, 45, 60 ) );
-        plane3.vertices.push( new THREE.Vector3( -80, -45, -60 ) );
-        plane3.vertices.push( new THREE.Vector3( -80, 45, -60 ) );
+        plane3.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
+        plane3.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
+        plane3.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
+        plane3.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
         
         var plane4 = new THREE.Geometry();
-        plane4.vertices.push( new THREE.Vector3( -80, 45, 60 ) );
-        plane4.vertices.push( new THREE.Vector3( -80, 45, -60 ) );
-        plane4.vertices.push( new THREE.Vector3( 80, 45, 60 ) );
-        plane4.vertices.push( new THREE.Vector3( 80, 45, -60 ) );
+        plane4.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
+        plane4.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
+        plane4.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
+        plane4.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
 
         var plane5 = new THREE.Geometry();
-        plane5.vertices.push( new THREE.Vector3( 80, 45, 60 ) );
-        plane5.vertices.push( new THREE.Vector3( 80, 45, -60 ) );
-        plane5.vertices.push( new THREE.Vector3( 80, -45, -60 ) );
-        plane5.vertices.push( new THREE.Vector3( 80, -45, 60 ) );
+        plane5.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
+        plane5.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
+        plane5.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
+        plane5.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
         
         var plane6 = new THREE.Geometry();
-        plane6.vertices.push( new THREE.Vector3( -80, -45, -60 ) );
-        plane6.vertices.push( new THREE.Vector3( -80, -45, 60 ) );
-        plane6.vertices.push( new THREE.Vector3( 80, -45, 60 ) );
-        plane6.vertices.push( new THREE.Vector3( 80, -45, -60 ) );
+        plane6.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
+        plane6.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
+        plane6.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
+        plane6.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
         
         var plane7 = new THREE.Geometry();
-        plane7.vertices.push( new THREE.Vector3( 80, 45, 60 ) );
-        plane7.vertices.push( new THREE.Vector3( 80, -45, 60 ) );
-        plane7.vertices.push( new THREE.Vector3( 80, 45, -60 ) );
-        plane7.vertices.push( new THREE.Vector3( 80, -45, -60 ) );
+        plane7.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
+        plane7.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
+        plane7.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
+        plane7.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
         
         var plane8 = new THREE.Geometry();
-        plane8.vertices.push( new THREE.Vector3( -80, -45, 60 ) );
-        plane8.vertices.push( new THREE.Vector3( -80, -45, -60 ) );
+        plane8.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
+        plane8.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
         
         var line8 = new THREE.Line( plane8, material );
         line8.type = THREE.LinePieces;
@@ -223,8 +223,8 @@ define(function() {
         var loader = new THREE.OBJMTLLoader();
         loader.load("obj/dartboard.obj", "obj/dartboard.obj.mtl", function ( object ) {
 
-          object.position.set(0,0,-59);
-          object.scale.set(0.45,0.45,0.45);
+          object.position.set(0,0,-(Constants.MAX_SIZE.z-1));
+          object.scale.set(0.20,0.20,0.20);
           object.quaternion.set(0,1,0,0);
           that.group.add( object );
           that.render();
