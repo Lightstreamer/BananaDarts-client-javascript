@@ -42,14 +42,20 @@ define(["Inheritance","EventDispatcher","./Constants"],
   function convert(frame,leapPos,axis) {
     var pos = POSITIONS[axis];
 
+    //note each axis in the rendering goes from +MAX_SIZE to -MAX_SIZE
+    
     //convert value from leap reeferences to field references (we're taking into account the full size, from -v to +v)
-    var converter = (frame.interactionBox.size[pos]-Constants.LEAP_PADDING[axis])/(Constants.MAX_SIZE[axis]*2); 
+    //in case of the z axis we only admit the user to move the object in the positive section (so do not double the max_size)
+    var converter = (frame.interactionBox.size[pos]-Constants.LEAP_PADDING[axis])/(Constants.MAX_SIZE[axis]*(axis == "z" ? 1 : 2)); 
     var converted = leapPos[pos]/converter;
 
     //halve the value because it is or +v or -v
     if (axis == "y") {
       //leap only has positive y while our field also has negative values, shift value accordingly
       val = (converted/2)-Constants.MAX_SIZE[axis];
+    } else if (axis == "z") {
+      //leap only both positive and negative z while we only admit positive in the z axis, shift value accordingly
+      val = (converted+Constants.MAX_SIZE[axis])/2;
     } else {
       val = converted/2;
     }
