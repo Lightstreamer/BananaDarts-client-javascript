@@ -18,7 +18,6 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
   
   var BRIDGE_CALL = {
     nick: "setNick",
-    status: "setStatus",
     posX: "setPosX",
     posY: "setPosY",
     posZ: "setPosZ",
@@ -55,7 +54,8 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
     //roomSubscription.setRequestedMaxFrequency("unfiltered");
     roomSubscription.setCommandSecondLevelFields(["nick","status",
                                                   "posX","posY","posZ",
-                                                  "dVx","dVy","dVz"]);
+                                                  "dVx","dVy","dVz",
+                                                  "points"]);
     if (Constants.LOG_UPDATES_ON_CONSOLE) {
       roomSubscription.addListener(putUpdatesOnConsole("Room list"));
     }
@@ -163,6 +163,12 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
           if (locked && LOCKABLE_PROPS[name]) {
             return;
           }
+          
+          if (name == "nick" || name == "points" || name == "status") {
+            //TODO nick points and status will be shown elsewhere
+          }
+            
+          
           var tc = BRIDGE_CALL[name];
           if (val !== null && tc) {
             if (CONVERT[name]) {
