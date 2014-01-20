@@ -53,7 +53,7 @@ define(["./Constants"],function(Constants) {
     this.field = field;
     
     this.dart = null;
-    this.dinamics = {V: new THREE.Vector3( 0, 0, 0 ), R: new THREE.Vector3( 0, 0, 0 )};
+    this.dinamics =  new THREE.Vector3( 0, 0, 0 );
     
     this.text = null; 
     this.nick = null;
@@ -171,22 +171,13 @@ define(["./Constants"],function(Constants) {
       },
      
       setDVX: function(val) {
-        this.dinamics.V.x = val;
+        this.dinamics.x = val;
       },
       setDVY: function(val) {
-        this.dinamics.V.y = val;
+        this.dinamics.y = val;
       },
       setDVZ: function(val) {
-        this.dinamics.V.z = val;
-      },
-      setDRX: function(val) {
-        this.dinamics.R.x = val;
-      },
-      setDRY: function(val) {
-        this.dinamics.R.y = val;
-      },
-      setDRZ: function(val) {
-        this.dinamics.R.z = val;
+        this.dinamics.z = val;
       },
       
       //Rotation
@@ -244,7 +235,7 @@ define(["./Constants"],function(Constants) {
        * @private
        */
       calculateAxisPos: function(axis,rateFactor) {
-        return this.dart.position[axis] + (this.dinamics.V[axis] * 0.002 * rateFactor);
+        return this.dart.position[axis] + (this.dinamics[axis] * 0.002 * rateFactor);
       },
       
       calculate: function(rateFactor) { 
@@ -254,8 +245,6 @@ define(["./Constants"],function(Constants) {
           this.setPos("y", this.calculateAxisPos("y",rateFactor));
           this.setPos("x", this.calculateAxisPos("x",rateFactor));
         }
-        
-        
         
         
         this.field.render();
