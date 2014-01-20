@@ -223,7 +223,8 @@ define(["./Constants"],function(Constants) {
         var loader = new THREE.OBJMTLLoader();
         loader.load("obj/dartboard.obj", "obj/dartboard.obj.mtl", function ( object ) {
 
-          object.position.set(0,0,-(Constants.MAX_SIZE.z-1));
+          
+          object.position.set(0,0,-(Constants.MAX_SIZE.z));
           object.scale.set(0.20,0.20,0.20);
           object.quaternion.set(0,1,0,0);
           that.group.add( object );
