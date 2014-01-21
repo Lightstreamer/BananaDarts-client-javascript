@@ -59,6 +59,8 @@ define(["./Constants"],function(Constants) {
     this.nick = null;
     this.showNickFlag = showInfo;
     
+    this.serverLocked = true;
+    
     this.key = key;
     this.type = type;
     
@@ -168,6 +170,12 @@ define(["./Constants"],function(Constants) {
       },
       getNick: function() {
         return this.nick;
+      },
+      isServerLocked: function() {
+        return this.serverLocked;
+      },
+      setServerLocked: function(locked) {
+        this.serverLocked = locked === "true";
       },
      
       setDVX: function(val) {

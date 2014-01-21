@@ -24,6 +24,7 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
     dVx: "setDVX",
     dVy: "setDVY",
     dVz: "setDVZ",
+    locked: "setServerLocked"
   };
   
   var LOCKABLE_PROPS = {
@@ -55,9 +56,9 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
     roomSubscription.setCommandSecondLevelFields(["nick","status",
                                                   "posX","posY","posZ",
                                                   "dVx","dVy","dVz",
-                                                  "points"]);
+                                                  "points","locked"]);
     if (Constants.LOG_UPDATES_ON_CONSOLE) {
-      roomSubscription.addListener(putUpdatesOnConsole("Room list"));
+      roomSubscription.addListener(new ConsoleSubscriptionListener("Room list"));
     }
     roomSubscription.addListener(this);
     
@@ -100,6 +101,13 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
         if (this.players[key]) {
           this.players[key].changeType(Constants.OWN);
         }
+      },
+      
+      isLocalPlayerServerLocked: function() {
+        if (this.localPlayerKey && this.players[this.localPlayerKey]) {
+          return this.players[this.localPlayerKey].isServerLocked();
+        }
+        return true;
       },
       
       onItemUpdate: function(itemUpdate) {
