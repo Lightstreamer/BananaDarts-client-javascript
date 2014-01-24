@@ -79,7 +79,7 @@ define(["Inheritance","AbstractGrid","./Constants","./ConsoleSubscriptionListene
       
         
         this.panel = new THREE.Object3D();
-        this.panel.position.x = Constants.MAX_SIZE.x;
+        this.panel.position.x = Constants.MAX_SIZE.x+10;
         this.panel.position.y = 0;
         this.panel.position.z = 0;
         this.panel.add(panel);
