@@ -56,7 +56,7 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
     roomSubscription.setCommandSecondLevelFields(["nick","status",
                                                   "posX","posY","posZ",
                                                   "dVx","dVy","dVz",
-                                                  "points","locked"]);
+                                                  "locked"]);
     if (Constants.LOG_UPDATES_ON_CONSOLE) {
       roomSubscription.addListener(new ConsoleSubscriptionListener("Room list"));
     }
