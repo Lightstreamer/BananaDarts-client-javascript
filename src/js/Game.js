@@ -83,6 +83,7 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
     }
     
     client.subscribe(roomSubscription);
+    client.subscribe(roomSubscription2);
     client.subscribe(posSubscription);
     
   };
