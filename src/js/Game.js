@@ -54,7 +54,6 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
     roomSubscription.setRequestedSnapshot("yes");
     //roomSubscription.setRequestedMaxFrequency("unfiltered");
     roomSubscription.setCommandSecondLevelFields(["nick","status",
-                                                  "posX","posY","posZ",
                                                   "dVx","dVy","dVz",
                                                   "locked"]);
     if (Constants.LOG_UPDATES_ON_CONSOLE) {
@@ -63,6 +62,14 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
     roomSubscription.addListener(this);
     
     
+    var roomSubscription2 = new Subscription("COMMAND","roomchatlist_"+room,["command","key"]);  //ROOMCHATLIST_SUBSCRIPTION contains user statuses and user nicks
+    roomSubscription2.setRequestedSnapshot("no");
+    //roomSubscription2.setRequestedMaxFrequency("unfiltered");
+    roomSubscription2.setCommandSecondLevelFields(["posX","posY","posZ"]);
+    if (Constants.LOG_UPDATES_ON_CONSOLE) {
+      roomSubscription2.addListener(new ConsoleSubscriptionListener("Room list 2"));
+    }
+    roomSubscription2.addListener(this);
     
     var posSubscription = new Subscription("COMMAND","roompos_"+room,["command","key", 
                                                                         "posX","posY","posZ"]); //ROOMPOSITION_SUBSCRIPTION contains list of users and object positions
