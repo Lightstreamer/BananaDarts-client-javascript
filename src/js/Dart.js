@@ -49,6 +49,11 @@ define(["./Constants"],function(Constants) {
       z: 10,
   };
   
+  
+  //Dart is 13.598, we want it 96*scale
+  var expectedSize = 96*Constants.SCALE;
+  var SCALE_TO = expectedSize/13.598;
+  
   var Dart = function(key,type,field,showInfo) {
     this.field = field;
     
@@ -90,7 +95,8 @@ define(["./Constants"],function(Constants) {
       
       createDart: function() {
         this.dart = clonable[this.type].clone();
-        this.dart.scale.set(2,2,2);
+                
+        this.dart.scale.set(SCALE_TO,SCALE_TO,SCALE_TO);
       },
       
       convertDart: function() {
