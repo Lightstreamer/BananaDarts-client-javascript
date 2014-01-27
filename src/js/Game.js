@@ -24,7 +24,15 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
     dVx: "setDVX",
     dVy: "setDVY",
     dVz: "setDVZ",
-    locked: "setServerLocked"
+    locked: "setServerLocked",
+    timestamp: "setTimestamp"
+  };
+  
+  var POS_RELATED = {
+      timestamp: true,  
+      posX: true,
+      posY: true,
+      posZ: true
   };
   
   var LOCKABLE_PROPS = {
@@ -55,35 +63,22 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
     //roomSubscription.setRequestedMaxFrequency("unfiltered");
     roomSubscription.setCommandSecondLevelFields(["nick","status",
                                                   "dVx","dVy","dVz",
+                                                  "posX","posY","posZ","timestamp",
                                                   "locked"]);
-    if (Constants.LOG_UPDATES_ON_CONSOLE) {
-      roomSubscription.addListener(new ConsoleSubscriptionListener("Room list"));
-    }
     roomSubscription.addListener(this);
     
-    
-    var roomSubscription2 = new Subscription("COMMAND","roomchatlist_"+room,["command","key"]);  //ROOMCHATLIST_SUBSCRIPTION contains user statuses and user nicks
-    roomSubscription2.setRequestedSnapshot("no");
-    //roomSubscription2.setRequestedMaxFrequency("unfiltered");
-    roomSubscription2.setCommandSecondLevelFields(["posX","posY","posZ"]);
-    if (Constants.LOG_UPDATES_ON_CONSOLE) {
-      roomSubscription2.addListener(new ConsoleSubscriptionListener("Room list 2"));
-    }
-    roomSubscription2.addListener(this);
-    
     var posSubscription = new Subscription("COMMAND","roompos_"+room,["command","key", 
-                                                                        "posX","posY","posZ"]); //ROOMPOSITION_SUBSCRIPTION contains list of users and object positions
+                                                                        "posX","posY","posZ","timestamp"]); //ROOMPOSITION_SUBSCRIPTION contains list of users and object positions
     posSubscription.setRequestedSnapshot("yes");
     posSubscription.setRequestedMaxFrequency(0.5);
     posSubscription.addListener(this);
     
     if (Constants.LOG_UPDATES_ON_CONSOLE) {
-      roomSubscription.addListener(new ConsoleSubscriptionListener("Room"));
-      posSubscription.addListener(new ConsoleSubscriptionListener("Positions"));
+      roomSubscription.addListener(new ConsoleSubscriptionListener("User Status"));
+      posSubscription.addListener(new ConsoleSubscriptionListener("Sync Positions"));
     }
     
     client.subscribe(roomSubscription);
-    client.subscribe(roomSubscription2);
     client.subscribe(posSubscription);
     
   };
@@ -174,19 +169,16 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
         }
         
         var locked = this.localPlayerIsLocked && key == this.localPlayerKey;
+        
+        var ignorePositions = player.hasNewerPosition(itemUpdate.getValue("timestamp"));
 
         itemUpdate.forEachChangedField(function(name,pos,val) {
           if (locked && LOCKABLE_PROPS[name]) {
             return;
           }
           
-          if (name == "nick" || name == "points" || name == "status") {
-            //TODO nick points and status will be shown elsewhere
-          }
-            
-          
           var tc = BRIDGE_CALL[name];
-          if (val !== null && tc) {
+          if (val !== null && tc && (!ignorePositions || !POS_RELATED[name])) {
             if (CONVERT[name]) {
               val = getMyDouble(fromBase64(val));
             }

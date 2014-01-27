@@ -59,6 +59,8 @@ define(["./Constants"],function(Constants) {
     this.nick = null;
     this.showNickFlag = showInfo;
     
+    this.timestamp = 0;
+    
     this.serverLocked = true;
     
     this.key = key;
@@ -209,6 +211,14 @@ define(["./Constants"],function(Constants) {
       },
       
       //Position
+      
+      hasNewerPosition: function(timestamp) {
+        return this.timestamp > timestamp;
+      },
+      
+      setTimestamp: function(timestamp) {
+        this.timestamp = timestamp;
+      },
       
       setPosX: function(val) {
         this.setPos("x",val);
