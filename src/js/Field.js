@@ -102,7 +102,7 @@ define(["./Constants"],function(Constants) {
         var v = this.webGLinUse ? 0.1 : 1;
         this.camera = new THREE.PerspectiveCamera(Constants.MAX_SIZE.y, WIDTH/HEIGHT, v, 10000); 
         this.camera.lookAt( {x:0,y:0,z:0} );
-        this.camera.position.z = 140;
+        this.camera.position.z = Constants.MAX_SIZE.z*2;
       },
       
       /**
@@ -225,7 +225,7 @@ define(["./Constants"],function(Constants) {
 
           
           object.position.set(0,0,-(Constants.MAX_SIZE.z));
-          object.scale.set(0.20,0.20,0.20);
+          object.scale.set(Constants.SCALE,Constants.SCALE,Constants.SCALE);
           object.quaternion.set(0,1,0,0);
           that.group.add( object );
           that.render();
