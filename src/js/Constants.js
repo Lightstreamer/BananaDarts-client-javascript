@@ -15,6 +15,8 @@ Copyright 2014 Weswit s.r.l.
 */
 define(function() {
   
+  var scale = 0.20;
+  
   return {
     OWN: "own",
     OTHER: "other",
@@ -22,15 +24,19 @@ define(function() {
     ADAPTER: "DART",
     LOG_UPDATES_ON_CONSOLE: false,
     DEBUG_LEAP: true,
+    
+    SCALE: scale,
        
+    ARM_REACH: 142*scale,
+    
     MAX_SIZE: {
-     x:80,
-     y:45,
-     z:80
+     x:1333/2*scale,
+     y:666/2*scale,
+     z:1053/2*scale
     },
     
     LEAP_PADDING: {
-      x: 100,
+      x: 10,
       y: 0,
       z: 10
     },

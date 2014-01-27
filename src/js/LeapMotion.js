@@ -39,35 +39,26 @@ define(["Inheritance","EventDispatcher","./Constants"],
     checkHandValidPositionOnAxis(frame,leapPos,"z");
   }
   
-  function convert(frame,leapPos,axis) {
+  var MAX_3JS_POS = {
+    x: Constants.MAX_SIZE["x"]*2,
+    y: Constants.MAX_SIZE["y"]*2,
+    z: Constants.ARM_REACH
+  };
+  
+  function convert(leapPos,axis) {
     var pos = POSITIONS[axis];
 
-    //note each axis in the rendering goes from +MAX_SIZE to -MAX_SIZE
-    
-    //convert value from leap reeferences to field references (we're taking into account the full size, from -v to +v)
-    //in case of the z axis we only admit the user to move the object in the positive section (so do not double the max_size)
-    var converter = (frame.interactionBox.size[pos]-Constants.LEAP_PADDING[axis])/(Constants.MAX_SIZE[axis]*(axis == "z" ? 1 : 2)); 
-    var converted = leapPos[pos]/converter;
-
-    //halve the value because it is or +v or -v
-    if (axis == "y") {
-      //leap only has positive y while our field also has negative values, shift value accordingly
-      val = (converted/2)-Constants.MAX_SIZE[axis];
-    } else if (axis == "z") {
-      //leap only both positive and negative z while we only admit positive in the z axis, shift value accordingly
-      val = (converted+Constants.MAX_SIZE[axis])/2;
+    //leapPos is normalized (0 >= leapPos[pos] <= 1)
+    //first we conver leapPos[pos] to the full range
+    var val = MAX_3JS_POS[axis]*leapPos[pos];
+  
+    //then we shift accordingly
+    if (axis == "z") {
+      val = Constants.MAX_SIZE["z"] - Constants.ARM_REACH + val;
     } else {
-      val = converted/2;
+      val -= Constants.MAX_SIZE[axis];
     }
     
-    //put the correct sign on the converted value
-    if (Math.abs(val) > Constants.MAX_SIZE[axis]) {
-      if (val > 0) {
-        val = Constants.MAX_SIZE[axis]-1;
-      } else {
-        val = -(Constants.MAX_SIZE[axis]-1);
-      }
-    }
     return val;
   }
   
@@ -134,10 +125,12 @@ define(["Inheritance","EventDispatcher","./Constants"],
         }
         this.setFist(hand,hand.fingers.length <= FINGERS_OF_FIST);
        
+        var normPos = frame.interactionBox.normalizePoint(hand.palmPosition,true);
+        
         var pos = [
-                   convert(frame,hand.palmPosition,"x"),
-                   convert(frame,hand.palmPosition,"y"),
-                   convert(frame,hand.palmPosition,"z")
+                   convert(normPos,"x"),
+                   convert(normPos,"y"),
+                   convert(normPos,"z")
                    ];
         
        
