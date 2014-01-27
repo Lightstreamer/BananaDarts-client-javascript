@@ -243,15 +243,27 @@ define(["./Constants"],function(Constants) {
        * @private
        */
       calculateAxisPos: function(axis,rateFactor) {
-        return this.dart.position[axis] + (this.dinamics[axis] * 0.002 * rateFactor);
+        return this.dart.position[axis] + this.dinamics[axis] * 0.002 * rateFactor;
       },
       
       calculate: function(rateFactor) { 
         this.setPos("z", this.calculateAxisPos("z",rateFactor));
         
+        
+        if ( this.dinamics["z"] != 0) {
+          var g = 500 * 0.002 * rateFactor;
+          this.dinamics["y"] -= g;
+        }
+       
+        
         if (this.dart.position["z"] != -Constants.MAX_SIZE["z"]) {
           this.setPos("y", this.calculateAxisPos("y",rateFactor));
-          this.setPos("x", this.calculateAxisPos("x",rateFactor));
+          
+          if (this.dart.position["y"] != -Constants.MAX_SIZE["y"]) {
+            this.setPos("x", this.calculateAxisPos("x",rateFactor));
+          }
+          
+          
         }
         
         
