@@ -16,7 +16,7 @@ Copyright 2014 Weswit s.r.l.
 define(["Inheritance","EventDispatcher","./Constants"],
     function(Inheritance,EventDispatcher,Constants) {
   
-  var FINGERS_OF_FIST = 1;
+  var FINGERS_OF_FIST = 2;
   
   var POSITIONS = {
       x: 0,
