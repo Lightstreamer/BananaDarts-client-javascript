@@ -97,7 +97,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           this.createDart();
         }
         
-        this.dart.position.set(0,0,Constants.MAX_SIZE.z-1);
+        this.dart.position.set(0,0,Constants.MAX_SIZE.z);
         this.dart.quaternion.set(0.707,0,0,0.707); //0.64,0,0,0.76); //0.57,0,0,0.81
         this.field.addObject(this.dart);
       },
