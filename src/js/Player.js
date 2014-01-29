@@ -145,6 +145,10 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
           return;
         }
         this.holding = false;
+        if (Constants.CHEAT) {
+          sx = 0;
+          sy = 100;
+        }
         this.sendRoomMessage("release|"+room+"|"+sx+"|"+sy+"|"+sz,"3D",room);
         if (!Constants.LOCAL_PLAYER_RT) {
           this.game.lockLocalPlayer(false);
