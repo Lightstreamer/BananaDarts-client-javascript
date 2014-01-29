@@ -25,6 +25,16 @@ define(["./Constants"],function(Constants) {
   var mtls = {};
   mtls[Constants.OWN] = "obj/dart.obj.mtl";
   mtls[Constants.OTHER] = "obj/dartb.obj.mtl";
+  
+  
+  function setShadowOnObject(object) {
+    object.castShadow = true;
+    var children = object.getDescendants();
+    for (var i = 0; i < children.length; i++) {
+      setShadowOnObject(children[i]);
+    }
+  }
+  
     
   var loader = new THREE.OBJMTLLoader();
   var waiting = {};
@@ -33,6 +43,7 @@ define(["./Constants"],function(Constants) {
   var clonable = {};
   function loadClonable(type) {
     loader.load("obj/dart.obj", mtls[type], function ( object ) {
+      setShadowOnObject(object);
       clonable[type] = object;
       for(var i=0; i<waiting[type].length; i++) {
         waiting[type][i].convertDart();
@@ -83,6 +94,7 @@ define(["./Constants"],function(Constants) {
         if (!clonable[this.type]) {
           //wait
           this.dart = new THREE.Mesh(tmpGeometry,tmpMaterial);
+          this.dart.castShadow = true;
           waiting[this.type].push(this);
         } else {
           this.createDart();
@@ -95,7 +107,6 @@ define(["./Constants"],function(Constants) {
       
       createDart: function() {
         this.dart = clonable[this.type].clone();
-                
         this.dart.scale.set(SCALE_TO,SCALE_TO,SCALE_TO);
       },
       
