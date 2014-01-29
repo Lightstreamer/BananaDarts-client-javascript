@@ -13,8 +13,8 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
-    function(Constants,Dart,ConsoleSubscriptionListener,Subscription) {
+define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscription"],
+    function(Constants,Utils,Dart,ConsoleSubscriptionListener,Subscription) {
   
   var BRIDGE_CALL = {
     nick: "setNick",
@@ -180,7 +180,7 @@ define(["./Constants","./Dart","./ConsoleSubscriptionListener","Subscription"],
           var tc = BRIDGE_CALL[name];
           if (val !== null && tc && (!ignorePositions || !POS_RELATED[name])) {
             if (CONVERT[name]) {
-              val = getMyDouble(fromBase64(val));
+              val = Utils.toDouble(Utils.fromBase64(val));
             }
             player[tc](val);
           }
