@@ -13,7 +13,7 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["./Constants"],function(Constants) {
+define(["./Constants","./Utils"],function(Constants,Utils) {
   
   var WIDTH = window.innerWidth;
   var HEIGHT = window.innerHeight;
@@ -242,18 +242,15 @@ define(["./Constants"],function(Constants) {
        * @private
        */
       setupBoard: function() {
-       var that = this;
+        var that = this;
         
-        var loader = new THREE.OBJMTLLoader();
-        loader.load("obj/dartboard.obj", "obj/dartboard.obj.mtl", function ( object ) {
-
-          
+        Utils.loadObj("obj/dartboard.obj", "obj/dartboard.obj.mtl", function (object) {
           object.position.set(0,0,-(Constants.MAX_SIZE.z));
           object.scale.set(Constants.SCALE,Constants.SCALE,Constants.SCALE);
           object.quaternion.set(0,1,0,0);
           that.group.add( object );
           that.render();
-        } );
+        });
 
       },
       
@@ -274,6 +271,8 @@ define(["./Constants"],function(Constants) {
           //that.cssRenderer.render(that.cssScene, that.camera); 
         });
       },
+      
+      
       
       addObject: function(obj) {
         this.group.add(obj);

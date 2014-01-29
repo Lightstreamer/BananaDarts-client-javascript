@@ -13,7 +13,7 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["./Constants"],function(Constants) {
+define(["./Constants","./Utils"],function(Constants,Utils) {
   
   var tmpGeometry = new THREE.CubeGeometry(2,4,2);
   var tmpMaterial = new THREE.MeshLambertMaterial( { color: 0xdddddd } );
@@ -35,15 +35,12 @@ define(["./Constants"],function(Constants) {
     }
   }
   
-    
-  var loader = new THREE.OBJMTLLoader();
   var waiting = {};
   waiting[Constants.OWN] = [];
   waiting[Constants.OTHER] = [];
   var clonable = {};
   function loadClonable(type) {
-    loader.load("obj/dart.obj", mtls[type], function ( object ) {
-      setShadowOnObject(object);
+    Utils.loadObj("obj/dart.obj", mtls[type], function (object) {
       clonable[type] = object;
       for(var i=0; i<waiting[type].length; i++) {
         waiting[type][i].convertDart();
