@@ -37,6 +37,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     this.camera = null;
     this.controls = null;
     
+    this.htmlEl = htmlEl;
     this.webGLinUse = this.setupRenderer();
     htmlEl.appendChild(this.renderer.domElement);
     
@@ -115,7 +116,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         
         
         
-        this.controls = new THREE.TrackballControls( this.camera );
+        this.controls = new THREE.TrackballControls(this.camera, this.htmlEl);
         this.controls.rotateSpeed = 1.0;
         this.controls.zoomSpeed = 1.2;
         this.controls.panSpeed = 0.8;
@@ -270,7 +271,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         var that = this;
         
         Utils.loadObj("obj/dartboard.obj", "obj/dartboard.obj.mtl", function (object) {
-          object.position.set(0,0,-(Constants.MAX_SIZE.z));
+          object.position.set(0,Constants.CENTER_Y,-(Constants.MAX_SIZE.z));
           object.scale.set(Constants.SCALE,Constants.SCALE,Constants.SCALE);
           object.quaternion.set(0,1,0,0);
           that.group.add( object );

@@ -17,23 +17,32 @@ define(function() {
   
   var scale = 0.20;
   
+  var SIZE_X = 1333;
+  var SIZE_Y = 666;
+  var SIZE_Z = 1053;
+  
+  var CENTER_FROM_FLOOR = 769;
+  
   return {
     OWN: "own",
     OTHER: "other",
  
     ADAPTER: "DART",
     LOG_UPDATES_ON_CONSOLE: false,
-    DEBUG_LEAP: true,
+    DEBUG_LEAP: false,
+    CHEAT: true,
     
     SCALE: scale,
        
     ARM_REACH: 142*scale,
     
     MAX_SIZE: {
-     x:1333/2*scale,
-     y:666/2*scale,
-     z:1053/2*scale
+     x:SIZE_X/2*scale,
+     y:SIZE_Y/2*scale,
+     z:SIZE_Z/2*scale
     },
+    
+    CENTER_Y: (CENTER_FROM_FLOOR-SIZE_X/2)*scale,
     
     LEAP_PADDING: {
       x: 10,
