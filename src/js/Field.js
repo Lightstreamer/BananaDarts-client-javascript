@@ -128,7 +128,7 @@ define(["./Constants"],function(Constants) {
         aboveLight.shadowCameraRight = Constants.MAX_SIZE.z;
         aboveLight.shadowCameraBottom = Constants.MAX_SIZE.x;
         aboveLight.shadowCameraNear = .1;
-        aboveLight.shadowCameraFar = Constants.MAX_SIZE.y*2;
+        aboveLight.shadowCameraFar = Constants.MAX_SIZE.y*2+1; //+1 or else part of the floor might be out of reach 
         aboveLight.shadowBias = -.001;
         aboveLight.shadowMapWidth = 2048;
         aboveLight.shadowMapHeight = 2048;
