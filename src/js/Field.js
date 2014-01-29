@@ -89,7 +89,7 @@ define(["./Constants"],function(Constants) {
         }
         
         
-        
+        this.renderer.shadowMapEnabled = true;
         this.renderer.sortObjects = false;
         
         return webGl;
@@ -110,13 +110,31 @@ define(["./Constants"],function(Constants) {
        */
       setupLight: function() {
         // Lighting the scene.
-        var lightF = new THREE.DirectionalLight( 0xffffff, 2 );
-        lightF.position.set( 160, 90, 120 );
-        this.scene.add( lightF );
+        var light1 = new THREE.DirectionalLight( 0xffffff, 2 );
+        light1.position.set( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z);
+        this.scene.add( light1 );
         
-        var light = new THREE.PointLight( 0xffffff, 2 ); 
-        light.position.set( -160, -90, -120 );
-        this.scene.add( light );
+        var light2 = new THREE.PointLight( 0xffffff, 2 ); 
+        light2.position.set( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z );
+        this.scene.add( light2 );
+        
+        var aboveLight = new THREE.DirectionalLight( 0xFFFFFF );
+        aboveLight.position.set(0,Constants.MAX_SIZE.y,0);
+        aboveLight.target.position.set(0,-Constants.MAX_SIZE.y,0);
+        aboveLight.castShadow = true;
+       // aboveLight.shadowCameraVisible = true;
+        aboveLight.shadowCameraLeft = -Constants.MAX_SIZE.z;
+        aboveLight.shadowCameraTop = -Constants.MAX_SIZE.x;
+        aboveLight.shadowCameraRight = Constants.MAX_SIZE.z;
+        aboveLight.shadowCameraBottom = Constants.MAX_SIZE.x;
+        aboveLight.shadowCameraNear = .1;
+        aboveLight.shadowCameraFar = Constants.MAX_SIZE.y*2;
+        aboveLight.shadowBias = -.001;
+        aboveLight.shadowMapWidth = 2048;
+        aboveLight.shadowMapHeight = 2048;
+        aboveLight.shadowDarkness = .95;
+        this.scene.add( aboveLight );
+        
       },
       
       /**
@@ -137,7 +155,7 @@ define(["./Constants"],function(Constants) {
        * @private
        */
       setupAxis: function() {
-        var material = new THREE.LineBasicMaterial( { color: 0x2f2f2f, opacity: 0.2 } );
+        var material = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.2 } );
         
         var plane1 = new THREE.Geometry();
         plane1.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
@@ -212,6 +230,12 @@ define(["./Constants"],function(Constants) {
         var line3 = new THREE.Line( plane3, material );
         line3.type = THREE.LinePieces;
         this.group.add( line3 );
+        
+        var floor = new THREE.Mesh(new THREE.PlaneGeometry(Constants.MAX_SIZE.x*2,Constants.MAX_SIZE.z*2),new THREE.MeshLambertMaterial( { color: 0x00ff00 } ));
+        floor.position.set(0,-Constants.MAX_SIZE.y,0);
+        floor.rotation.x = Math.PI / -2;
+        floor.receiveShadow = true;
+        this.group.add( floor );
       },
       
       /**
