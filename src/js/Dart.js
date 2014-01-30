@@ -58,7 +58,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   };
   
   
-  //Dart is 13.598, we want it 96*scale
+  //Dart obj is 13.598 units, we want it 96*scale
   var expectedSize = 96*Constants.SCALE;
   var SCALE_TO = expectedSize/13.598;
   
@@ -267,7 +267,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
        * @private
        */
       calculateAxisPos: function(axis,rateFactor) {
-        return this.dart.position[axis] + this.dinamics[axis] * 0.002 * rateFactor;
+        return this.dart.position[axis] + this.dinamics[axis] * Constants.TRANSLATE_DELTA * rateFactor;
       },
       
       calculate: function(rateFactor) { 
@@ -275,7 +275,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         
         
         if ( this.dinamics["z"] != 0) {
-          var g = 500 * 0.002 * rateFactor;
+          var g = 500 * Constants.TRANSLATE_DELTA * rateFactor;
           this.dinamics["y"] -= g;
         }
        

@@ -15,13 +15,17 @@ Copyright 2014 Weswit s.r.l.
 */
 define(function() {
   
+  function cmToUnit(cm) {
+    return cm*4.37445319335;
+  }
+  
   var scale = 0.20;
   
-  var SIZE_X = 1333;
-  var SIZE_Y = 666;
-  var SIZE_Z = 1053;
+  var SIZE_X = cmToUnit(300);
+  var SIZE_Y = cmToUnit(150);
+  var SIZE_Z = cmToUnit(236.855);
   
-  var CENTER_FROM_FLOOR = 769;
+  var CENTER_FROM_FLOOR = cmToUnit(172.2);
   
   return {
     OWN: "own",
@@ -34,7 +38,7 @@ define(function() {
     
     SCALE: scale,
        
-    ARM_REACH: 142*scale,
+    ARM_REACH: cmToUnit(32)*scale,
     
     MAX_SIZE: {
      x:SIZE_X/2*scale,
@@ -52,6 +56,8 @@ define(function() {
     
     FRAME_INTERVAL: 50,
     BASE_RATE: 10,
+    TRANSLATE_DELTA: 0.002,
+    
     LOCAL_PLAYER_RT: false,
     
     DEFAULT_NICK: "Anonymous",
