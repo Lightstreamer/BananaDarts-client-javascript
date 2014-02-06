@@ -28,6 +28,7 @@ define(["./Utils"],function(Utils) {
   var GRAVITY = 9.82;
   var ACCELERATION_UNIT_MS_SQUARE = Utils.cmToUnit(GRAVITY/10000)*scale; //(9.81/1000000)*100 cm/ms^2;
   
+  
   return {
     OWN: "own",
     OTHER: "other",
@@ -58,6 +59,8 @@ define(["./Utils"],function(Utils) {
     FRAME_INTERVAL: 50,
 
     HALF_ACCELERATION: ACCELERATION_UNIT_MS_SQUARE/2,
+    
+    SPEED_FACTOR: 1,
     
     
     DEFAULT_NICK: "Anonymous",
