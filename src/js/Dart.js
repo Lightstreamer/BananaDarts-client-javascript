@@ -281,7 +281,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         
         if (value > Constants.MAX_SIZE[axis] || value < -Constants.MAX_SIZE[axis]) {
           if (axis == "y") {
-            this.calculateTimestampY(value);
+            return this.calculateTimestampY(value);
           } else if ( value > Constants.MAX_SIZE[axis]) {
             return this.calculateTimestamp(axis,Constants.MAX_SIZE[axis]);
           } else if (value < -Constants.MAX_SIZE[axis]) {
@@ -358,7 +358,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           var tEnd = endXt;
           tEnd = tEnd === null || endYt !== null && endYt < tEnd ? endYt : tEnd;
           tEnd = tEnd === null || endZt !== null && endZt < tEnd ? endZt : tEnd;
-          
           x = this.calculateAxisPos("x",tEnd);
           y = this.calculateYPosition(tEnd);
           z = this.calculateAxisPos("z",tEnd);
