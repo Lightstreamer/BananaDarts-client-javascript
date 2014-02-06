@@ -278,10 +278,15 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
        * @private
        */
       getFinalTimeIfOverflow: function(axis,value) {
-        if ( value > Constants.MAX_SIZE[axis]) {
-          return this.calculateTimestamp(axis,Constants.MAX_SIZE[axis]);
-        } else if (value < -Constants.MAX_SIZE[axis]) {
-          return this.calculateTimestamp(axis,-Constants.MAX_SIZE[axis]);
+        
+        if (value > Constants.MAX_SIZE[axis] || value < -Constants.MAX_SIZE[axis]) {
+          if (axis == "y") {
+            this.calculateTimestampY(value);
+          } else if ( value > Constants.MAX_SIZE[axis]) {
+            return this.calculateTimestamp(axis,Constants.MAX_SIZE[axis]);
+          } else if (value < -Constants.MAX_SIZE[axis]) {
+            return this.calculateTimestamp(axis,-Constants.MAX_SIZE[axis]);
+          }
         }
         
         return null;
@@ -304,23 +309,22 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       /**
        * @private
        */
-      calculateZPosition: function(tNow) {
+      calculateYPosition: function(tNow) {
         //s = v*t + (1/2)at^2
         var units = Constants.HALF_ACCELERATION*Math.pow(tNow,2);
-        
-        return this.calculateAxisPos("z",tNow) + units;
+        return this.calculateAxisPos("y",tNow) - units;
       },
       
       /**
        * @private
        */
-      calculateTimestampZ: function(value) {
-        var c = -(value-this.startPos["z"]);
+      calculateTimestampY: function(value) {
+        var c = -(value-this.startPos["y"]);
         var a = Constants.HALF_ACCELERATION;
-        var b = this.dinamics["z"];
+        var b = this.dinamics["y"];
         if (c<0) {
           return (-b + Math.sqrt(Math.pow(b,2)-4*a*c))/(2*a);
-        } else {
+        } else if(c>0) {
           return (-b - Math.sqrt(Math.pow(b,2)-4*a*c))/(2*a);
         }
         return 0;
@@ -342,7 +346,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         */
 
         var x = this.calculateAxisPos("x",tNow);
-        var y = this.calculateAxisPos("y",tNow);
+        var y = this.calculateYPosition(tNow);
         var z = this.calculateAxisPos("z",tNow);
         
         var endXt = this.getFinalTimeIfOverflow("x",x);
@@ -356,7 +360,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           tEnd = tEnd === null || endZt !== null && endZt < tEnd ? endZt : tEnd;
           
           x = this.calculateAxisPos("x",tEnd);
-          y = this.calculateAxisPos("y",tEnd);
+          y = this.calculateYPosition(tEnd);
           z = this.calculateAxisPos("z",tEnd);
           
           /*

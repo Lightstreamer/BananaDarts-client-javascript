@@ -26,7 +26,7 @@ define(["./Utils"],function(Utils) {
   //gravity --> 9.80665 m/s2
   
   var GRAVITY = 9.82;
-  var ACCELERATION_UNIT_MS_SQUARE = Utils.cmToUnit(GRAVITY/100000000); //(9.81/1000000)/100 cm/ms^2;
+  var ACCELERATION_UNIT_MS_SQUARE = Utils.cmToUnit(GRAVITY/10000)*scale; //(9.81/1000000)*100 cm/ms^2;
   
   return {
     OWN: "own",
