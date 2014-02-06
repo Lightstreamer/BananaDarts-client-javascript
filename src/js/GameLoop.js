@@ -15,13 +15,12 @@ Copyright 2014 Weswit s.r.l.
 */
 define(["Executor"],function(Executor) {
   
-  var GameLoop = function(game,field,frameInterval,baseRate) {
+  var GameLoop = function(game,field,frameInterval) {
     this.thread = null;
     this.game = game;
     this.field = field;
     
     this.frameInterval = frameInterval;
-    this.rateFactor = frameInterval/baseRate;
   };
   
   GameLoop.prototype = {
@@ -40,9 +39,10 @@ define(["Executor"],function(Executor) {
        delete(this.thread);
      },
      calculate: function() {
-       var f = this.rateFactor;
        this.game.forEachPlayer(function(player) {
-         player.calculate(f);
+         if (player.isFlying()) {
+           player.calculate();
+         }
        });
        this.field.render();
      }

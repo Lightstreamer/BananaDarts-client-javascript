@@ -47,6 +47,19 @@ define(function() {
       } );
     },
     
+    cmToUnit: function(cm) {
+      return cm*4.37445319335;
+    },
+    
+    mmsToUnitms: function(mms) {
+        //double cms = mms/10; //from cm/s to mm/s
+        //double cmms = cms/1000; //from cm/s to cm/ms
+        //double unitms = cmToUnit(cmms); //from cm/ms to unit/ms
+        
+        return this.cmToUnit(mms/10000);
+    },
+    
+    
     
     fromBase64: function(dataToConvert) {
 

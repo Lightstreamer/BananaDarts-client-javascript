@@ -13,19 +13,20 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(function() {
-  
-  function cmToUnit(cm) {
-    return cm*4.37445319335;
-  }
+define(["./Utils"],function(Utils) {
   
   var scale = 0.20;
   
-  var SIZE_X = cmToUnit(300);
-  var SIZE_Y = cmToUnit(150);
-  var SIZE_Z = cmToUnit(236.855);
+  var SIZE_X = Utils.cmToUnit(300);
+  var SIZE_Y = Utils.cmToUnit(150);
+  var SIZE_Z = Utils.cmToUnit(236.855);
   
-  var CENTER_FROM_FLOOR = cmToUnit(172.2);
+  var CENTER_FROM_FLOOR = Utils.cmToUnit(172.2);
+  
+  //gravity --> 9.80665 m/s2
+  
+  var GRAVITY = 9.82;
+  var ACCELERATION_UNIT_MS_SQUARE = Utils.cmToUnit(GRAVITY/100000000); //(9.81/1000000)/100 cm/ms^2;
   
   return {
     OWN: "own",
@@ -38,7 +39,7 @@ define(function() {
     
     SCALE: scale,
        
-    ARM_REACH: cmToUnit(32)*scale,
+    ARM_REACH: Utils.cmToUnit(32)*scale,
     
     MAX_SIZE: {
      x:SIZE_X/2*scale,
@@ -55,10 +56,9 @@ define(function() {
     },
     
     FRAME_INTERVAL: 50,
-    BASE_RATE: 10,
-    TRANSLATE_DELTA: 0.002,
+
+    HALF_ACCELERATION: ACCELERATION_UNIT_MS_SQUARE/2,
     
-    LOCAL_PLAYER_RT: false,
     
     DEFAULT_NICK: "Anonymous",
     ROOM: "dart"

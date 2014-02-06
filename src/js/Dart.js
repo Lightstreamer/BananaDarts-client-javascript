@@ -67,6 +67,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     
     this.dart = null;
     this.dinamics =  new THREE.Vector3( 0, 0, 0 );
+    this.startPos =  new THREE.Vector3( 0, 0, 0 );
     
     this.text = null; 
     this.nick = null;
@@ -74,10 +75,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     
     this.timestamp = 0;
     
-    this.serverLocked = true;
-    
     this.key = key;
     this.type = type;
+    
+    this.flying = false;
     
     this.initDart();
   };
@@ -102,11 +103,17 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.field.addObject(this.dart);
       },
       
+      /**
+       * @private
+       */
       createDart: function() {
         this.dart = clonable[this.type].clone();
         this.dart.scale.set(SCALE_TO,SCALE_TO,SCALE_TO);
       },
       
+      /**
+       * @private
+       */
       convertDart: function() {
         var tmp = this.dart;
         this.createDart();
@@ -143,6 +150,9 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.showNick(this.showNickFlag);
       },
       
+      /**
+       * @private
+       */
       showNick: function(show) {
         if (this.text != null) {
           this.field.removeObject(this.text);
@@ -187,21 +197,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       getNick: function() {
         return this.nick;
       },
-      isServerLocked: function() {
-        return this.serverLocked;
-      },
-      setServerLocked: function(locked) {
-        this.serverLocked = locked === "true";
-      },
-     
-      setDVX: function(val) {
-        this.dinamics.x = val;
-      },
-      setDVY: function(val) {
-        this.dinamics.y = val;
-      },
-      setDVZ: function(val) {
-        this.dinamics.z = val;
+      isFlying: function() {
+        return this.dinamics.z != 0;
       },
       
       //Rotation
@@ -224,33 +221,45 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.field.render();
       },
       
+      //speed
+      
+      setSpeed: function(vx,vy,vz) {
+        this.dinamics.x = vx;
+        this.dinamics.y = vy;
+        this.dinamics.z = vz;
+        
+        if (vz !== 0) {
+          this.flying = true;
+          this.timestamp = new Date().getTime();
+          this.fixStartPosition();
+          this.calculate();
+        } else {
+          this.flying = false;
+        }
+      },
+      
+      
       //Position
       
-      hasNewerPosition: function(timestamp) {
-        return this.timestamp > timestamp;
+      /**
+       * @private
+       */
+      fixStartPosition: function(x,y,z) {
+        this.startPos.x = this.dart.position.x;
+        this.startPos.y = this.dart.position.y;
+        this.startPos.z = this.dart.position.z;
+      },
+    
+      setPosition: function(x,y,z) {
+        this.setPos("x",x);
+        this.setPos("y",y);
+        this.setPos("z",z);
       },
       
-      setTimestamp: function(timestamp) {
-        this.timestamp = timestamp;
-      },
-      
-      setPosX: function(val) {
-        this.setPos("x",val);
-      },
-      setPosY: function(val) {  
-        this.setPos("y",val);
-      },
-      setPosZ: function(val) {
-        this.setPos("z",val);
-      },
-      
+      /**
+       * @private
+       */
       setPos: function(axis,value) {
-        if ( value >= Constants.MAX_SIZE[axis] ) {
-          value = Constants.MAX_SIZE[axis];
-        }else if ( value <= (Constants.MAX_SIZE[axis] * -1) ) {
-          value = -Constants.MAX_SIZE[axis];
-        }
-        
         if (value ==  this.dart.position[axis]) {
           return;
         }
@@ -263,33 +272,104 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.field.render();
       },
       
+      //calculus
+      
       /**
        * @private
        */
-      calculateAxisPos: function(axis,rateFactor) {
-        return this.dart.position[axis] + this.dinamics[axis] * Constants.TRANSLATE_DELTA * rateFactor;
+      getFinalTimeIfOverflow: function(axis,value) {
+        if ( value > Constants.MAX_SIZE[axis]) {
+          return this.calculateTimestamp(axis,Constants.MAX_SIZE[axis]);
+        } else if (value < -Constants.MAX_SIZE[axis]) {
+          return this.calculateTimestamp(axis,-Constants.MAX_SIZE[axis]);
+        }
+        
+        return null;
       },
       
-      calculate: function(rateFactor) { 
-        this.setPos("z", this.calculateAxisPos("z",rateFactor));
+      /**
+       * @private
+       */
+      calculateTimestamp: function(axis,value) {
+        return Math.abs((value-this.startPos[axis])/this.dinamics[axis]);
+      },
+      
+      /**
+       * @private
+       */
+      calculateAxisPos: function(axis,tNow) {
+        return this.startPos[axis] + this.dinamics[axis]*tNow;
+      },
+      
+      /**
+       * @private
+       */
+      calculateZPosition: function(tNow) {
+        //s = v*t + (1/2)at^2
+        var units = Constants.HALF_ACCELERATION*Math.pow(tNow,2);
         
-        
-        if ( this.dinamics["z"] != 0) {
-          var g = 500 * Constants.TRANSLATE_DELTA * rateFactor;
-          this.dinamics["y"] -= g;
+        return this.calculateAxisPos("z",tNow) + units;
+      },
+      
+      /**
+       * @private
+       */
+      calculateTimestampZ: function(value) {
+        var c = -(value-this.startPos["z"]);
+        var a = Constants.HALF_ACCELERATION;
+        var b = this.dinamics["z"];
+        if (c<0) {
+          return (-b + Math.sqrt(Math.pow(b,2)-4*a*c))/(2*a);
+        } else {
+          return (-b - Math.sqrt(Math.pow(b,2)-4*a*c))/(2*a);
         }
-       
+        return 0;
         
-        if (this.dart.position["z"] != -Constants.MAX_SIZE["z"]) {
-          this.setPos("y", this.calculateAxisPos("y",rateFactor));
-          
-          if (this.dart.position["y"] != -Constants.MAX_SIZE["y"]) {
-            this.setPos("x", this.calculateAxisPos("x",rateFactor));
-          }
-          
-          
+      },
+      
+      
+      calculate: function() { 
+        if (!this.flying) {
+          return;
         }
         
+        var tNow = new Date().getTime() - this.timestamp;
+        
+        /*
+         TODO add gravity to the mix
+        var gz = this.calculateZPosition(tNow);
+        this.calculateTimestampZ(gz);
+        */
+
+        var x = this.calculateAxisPos("x",tNow);
+        var y = this.calculateAxisPos("y",tNow);
+        var z = this.calculateAxisPos("z",tNow);
+        
+        var endXt = this.getFinalTimeIfOverflow("x",x);
+        var endYt = this.getFinalTimeIfOverflow("y",y);
+        var endZt = this.getFinalTimeIfOverflow("z",z);
+        
+        
+        if (endXt !== null || endYt !== null ||  endZt !== null) {
+          var tEnd = endXt;
+          tEnd = tEnd === null || endYt !== null && endYt < tEnd ? endYt : tEnd;
+          tEnd = tEnd === null || endZt !== null && endZt < tEnd ? endZt : tEnd;
+          
+          x = this.calculateAxisPos("x",tEnd);
+          y = this.calculateAxisPos("y",tEnd);
+          z = this.calculateAxisPos("z",tEnd);
+          
+          /*
+          console.log("Start "+this.startPos.x+"|"+this.startPos.y+"|"+this.startPos.z);
+          console.log("Speed "+this.dinamics.x+"|"+this.dinamics.y+"|"+this.dinamics.z);
+          console.log(tEnd);
+          console.log("End "+x+"|"+y+"|"+z);
+          */
+          
+          this.setSpeed(0,0,0);
+        }
+        
+        this.setPosition(x,y,z);
         
         this.field.render();
       }

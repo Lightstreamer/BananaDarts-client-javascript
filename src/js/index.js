@@ -74,7 +74,7 @@ require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/GameLoo
   
   
   var game = new Game(lsClient,Constants.ROOM,field);
-  var gameLoop = new GameLoop(game,field,Constants.FRAME_INTERVAL,Constants.BASE_RATE);
+  var gameLoop = new GameLoop(game,field,Constants.FRAME_INTERVAL);
   gameLoop.start();
   
   var scoreboard = new Scoreboard(lsClient,game,field);

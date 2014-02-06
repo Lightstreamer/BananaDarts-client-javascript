@@ -15,44 +15,12 @@ Copyright 2014 Weswit s.r.l.
 */
 define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscription"],
     function(Constants,Utils,Dart,ConsoleSubscriptionListener,Subscription) {
-  
-  var BRIDGE_CALL = {
-    nick: "setNick",
-    posX: "setPosX",
-    posY: "setPosY",
-    posZ: "setPosZ",
-    dVx: "setDVX",
-    dVy: "setDVY",
-    dVz: "setDVZ",
-    locked: "setServerLocked",
-    timestamp: "setTimestamp"
-  };
-  
-  var POS_RELATED = {
-      timestamp: true,  
-      posX: true,
-      posY: true,
-      posZ: true
-  };
-  
-  var LOCKABLE_PROPS = {
-      posX: true,
-      posY: true,
-      posZ: true
-  };
-  
-  var CONVERT = {
-      posX: true,
-      posY: true,
-      posZ: true,
-  };
-  
+    
   var Game = function(client,room,field) {
     this.players = {};
     this.field = field;
     
     this.localPlayerKey = null;
-    this.localPlayerIsLocked = false;
     
     this.extraInfo = null;
     this.showExtraInfo(true);
@@ -63,23 +31,14 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
     //roomSubscription.setRequestedMaxFrequency("unfiltered");
     roomSubscription.setCommandSecondLevelFields(["nick","status",
                                                   "dVx","dVy","dVz",
-                                                  "posX","posY","posZ","timestamp",
-                                                  "locked"]);
+                                                  "posX","posY","posZ"]);
     roomSubscription.addListener(this);
-    
-    var posSubscription = new Subscription("COMMAND","roompos_"+room,["command","key", 
-                                                                        "posX","posY","posZ","timestamp"]); //ROOMPOSITION_SUBSCRIPTION contains list of users and object positions
-    posSubscription.setRequestedSnapshot("yes");
-    posSubscription.setRequestedMaxFrequency(0.5);
-    posSubscription.addListener(this);
     
     if (Constants.LOG_UPDATES_ON_CONSOLE) {
       roomSubscription.addListener(new ConsoleSubscriptionListener("User Status"));
-      posSubscription.addListener(new ConsoleSubscriptionListener("Sync Positions"));
     }
     
     client.subscribe(roomSubscription);
-    client.subscribe(posSubscription);
     
   };
   
@@ -106,13 +65,6 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
         }
       },
       
-      isLocalPlayerServerLocked: function() {
-        if (this.localPlayerKey && this.players[this.localPlayerKey]) {
-          return this.players[this.localPlayerKey].isServerLocked();
-        }
-        return true;
-      },
-      
       onItemUpdate: function(itemUpdate) {
         
         var key = itemUpdate.getValue("key");
@@ -120,14 +72,12 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
       
         if (command == "DELETE") {
           this.removePlayer(key);
-          return;
-        } 
-        
-        if (command == "ADD") {
+          
+        } else if (command == "ADD") {
           this.addPlayer(key);
+        } else {
+          this.updatePlayer(key,itemUpdate);
         }
-
-        this.updatePlayer(key,itemUpdate);
       },
       
       onUnsubscription: function() {
@@ -168,23 +118,27 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
           return;
         }
         
-        var locked = this.localPlayerIsLocked && key == this.localPlayerKey;
+        if (itemUpdate.isValueChanged("nick")) {
+          player.setNick(itemUpdate.getValue("nick"));
+        }
         
-        var ignorePositions = player.hasNewerPosition(itemUpdate.getValue("timestamp"));
-
-        itemUpdate.forEachChangedField(function(name,pos,val) {
-          if (locked && LOCKABLE_PROPS[name]) {
-            return;
+     
+        if (key == this.localPlayerKey) {
+          //we do not need any information, we calculate everything locally
+          return;
+        }
+        
+        var x = Utils.toDouble(Utils.fromBase64(itemUpdate.getValue("posX")));
+        var y = Utils.toDouble(Utils.fromBase64(itemUpdate.getValue("posY")));
+        var z = Utils.toDouble(Utils.fromBase64(itemUpdate.getValue("posZ")));
+        player.setPosition(x,y,z);
+        
+        if (itemUpdate.isValueChanged("dVz")) {
+          var vZ = itemUpdate.getValue("dVz");
+          if (vZ != null) {
+            player.setSpeed(Number(itemUpdate.getValue("dVx")),Number(itemUpdate.getValue("dVy")),Number(vZ));
           }
-          
-          var tc = BRIDGE_CALL[name];
-          if (val !== null && tc && (!ignorePositions || !POS_RELATED[name])) {
-            if (CONVERT[name]) {
-              val = Utils.toDouble(Utils.fromBase64(val));
-            }
-            player[tc](val);
-          }
-        });
+        } 
       },
       moveLocalPlayer: function(x,y,z) {
         if (this.localPlayerKey) {
@@ -193,15 +147,33 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
       },
       movePlayer: function(id,x,y,z) {
         if (this.players[id]) {
-          this.players[id].setPosX(x);
-          this.players[id].setPosY(y);
-          this.players[id].setPosZ(z);
+          this.players[id].setPosition(x,y,z);
         }
       },
-      lockLocalPlayer: function(locked) {
-        this.localPlayerIsLocked = locked;
-      }
       
+      throwLocalPlayer: function(sx,sy,sz) {
+        if (this.localPlayerKey) {
+          this.throwPlayer(this.localPlayerKey,sx,sy,sz);
+        } 
+      },
+      throwPlayer: function(id,sx,sy,sz) {
+        if (this.players[id]) {
+          this.players[id].setSpeed(sx,sy,sz);
+        }
+      },
+      
+      isLocalPlayerFlying: function() {
+        if (this.localPlayerKey) {
+          return this.isPlayerFlying(this.localPlayerKey);
+        }
+        return true;
+      },
+      isPlayerFlying: function(id) {
+        if (this.players[id]) {
+          return this.players[id].isFlying();
+        }
+        return false;
+      }
   };
   
   return Game;

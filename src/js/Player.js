@@ -13,8 +13,8 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleSubscriptionListener"],
-    function(Inheritance,EventDispatcher,Subscription,Constants,ConsoleSubscriptionListener) {
+define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleSubscriptionListener","./Utils"],
+    function(Inheritance,EventDispatcher,Subscription,Constants,ConsoleSubscriptionListener,Utils) {
 
   function generateId() {
     return "u-"+Math.round(Math.random()*1000);
@@ -130,42 +130,43 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
       },
       
       grab: function(room) {
-        if (this.game.isLocalPlayerServerLocked()) {
+        if (this.game.isLocalPlayerFlying()) {
           return;
         }
         this.holding = true;
         this.sendRoomMessage("grab|"+room,"3D",room);
-        if (!Constants.LOCAL_PLAYER_RT) {
-          this.game.lockLocalPlayer(true);
-        }
       },
       
       release: function(room,sx,sy,sz) {
-        if (this.game.isLocalPlayerServerLocked()) {
+        if (this.game.isLocalPlayerFlying() || sz == 0) {
           return;
         }
         this.holding = false;
+        
+        sx = Utils.mmsToUnitms(sx)*Constants.SCALE;
+        sy = Utils.mmsToUnitms(sy)*Constants.SCALE;
+        sz = Utils.mmsToUnitms(sz)*Constants.SCALE;
+        
+        //convert from mm/s to unit/ms 
         if (Constants.CHEAT) {
           sx = 0;
-          sy = 100;
+          sy = 0;
         }
-        this.sendRoomMessage("release|"+room+"|"+sx+"|"+sy+"|"+sz,"3D",room);
-        if (!Constants.LOCAL_PLAYER_RT) {
-          this.game.lockLocalPlayer(false);
-        }
+        this.sendRoomMessage("release|"+room+"|"+sx+"|"+sy+"|"+sz,"3D",room); //as sent in sequence the curreent pos on the server is the last pos sent from here
+        
+        this.game.throwLocalPlayer(sx,sy,sz);
       },
       
       move: function(room,x,y,z) {
-        if (this.game.isLocalPlayerServerLocked()) {
+        if (this.game.isLocalPlayerFlying()) {
           return;
         }
         if (!this.holding) {
           this.grab(room);
         }
         this.sendRoomMessage("move|"+room+"|"+x+"|"+y+"|"+z,"3D",room);
-        if (!Constants.LOCAL_PLAYER_RT) {
-          this.game.moveLocalPlayer(x,y,z); //update local player locally - TODO prevent server synch on local player during grabbing
-        }
+        
+        this.game.moveLocalPlayer(x,y,z); //update local player locally - TODO prevent server synch on local player during grabbing
       },
       
       changeNick: function(newNick) {
