@@ -114,18 +114,12 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         var v = this.webGLinUse ? 0.1 : 1;
         this.camera = new THREE.PerspectiveCamera(Constants.MAX_SIZE.y, WIDTH/HEIGHT, v, 10000); 
         
+        this.controls = new THREE.OrbitControls(this.camera, this.htmlEl);
         
-        
-        this.controls = new THREE.TrackballControls(this.camera, this.htmlEl);
-        this.controls.rotateSpeed = 1.0;
-        this.controls.zoomSpeed = 1.2;
-        this.controls.panSpeed = 0.8;
-        this.controls.noZoom = false;
-        this.controls.noPan = false;
-        this.controls.staticMoving = false;
-        this.controls.dynamicDampingFactor = 0.3;
-        this.controls.keys = [ 65, 83, 68 ];
-        
+        var that = this;
+        this.controls.addEventListener('change', function() {
+          that.render();
+        });
         
         this.rotateCamera(0);
         this.render();
@@ -315,8 +309,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         } else if(this.currentCameraPosition < 0) {
           this.currentCameraPosition = CAMERA_POSITIONS.length-1;
         }
-
-        this.controls.reset();
         
         this.camera.position.set(CAMERA_POSITIONS[this.currentCameraPosition].x,CAMERA_POSITIONS[this.currentCameraPosition].y,CAMERA_POSITIONS[this.currentCameraPosition].z);
         this.camera.lookAt( {x:0,y:0,z:0} );
