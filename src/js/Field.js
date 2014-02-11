@@ -41,7 +41,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     this.webGLinUse = this.setupRenderer();
     htmlEl.appendChild(this.renderer.domElement);
     
-    this.setupAxis();
+    this.setupRoom();
 
     this.currentCameraPosition = -1;
     this.setupCamera();
@@ -139,16 +139,16 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.scene.add( light2 );
         
         var aboveLight = new THREE.DirectionalLight( 0xFFFFFF );
-        aboveLight.position.set(0,Constants.MAX_SIZE.y,0);
+        aboveLight.position.set(0,Constants.MAX_SIZE.y+1,0); //+1 or else when touching the ceiling the shadow is not shown
         aboveLight.target.position.set(0,-Constants.MAX_SIZE.y,0);
         aboveLight.castShadow = true;
-       // aboveLight.shadowCameraVisible = true;
-        aboveLight.shadowCameraLeft = -Constants.MAX_SIZE.z;
+        //aboveLight.shadowCameraVisible = true;
+        aboveLight.shadowCameraLeft = -Constants.MAX_SIZE.z-Constants.FLOOR_OVERFLOW;
         aboveLight.shadowCameraTop = -Constants.MAX_SIZE.x;
         aboveLight.shadowCameraRight = Constants.MAX_SIZE.z;
         aboveLight.shadowCameraBottom = Constants.MAX_SIZE.x;
-        aboveLight.shadowCameraNear = .1;
-        aboveLight.shadowCameraFar = Constants.MAX_SIZE.y*2+1; //+1 or else part of the floor might be out of reach 
+        aboveLight.shadowCameraNear = 0;
+        aboveLight.shadowCameraFar = Constants.MAX_SIZE.y*2+2; //+2 or else part of the floor might be out of reach 
         aboveLight.shadowBias = -.001;
         aboveLight.shadowMapWidth = 2048;
         aboveLight.shadowMapHeight = 2048;
@@ -174,88 +174,20 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       /**
        * @private
        */
-      setupAxis: function() {
-        var material = new THREE.LineBasicMaterial( { color: 0x000000, opacity: 0.2 } );
+      setupRoom: function() {
         
-        var plane1 = new THREE.Geometry();
-        plane1.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        plane1.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        plane1.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        plane1.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        
-        var plane2 = new THREE.Geometry();
-        plane2.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        plane2.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        plane2.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        plane2.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        
-        var plane3 = new THREE.Geometry();
-        plane3.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        plane3.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        plane3.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        plane3.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        
-        var plane4 = new THREE.Geometry();
-        plane4.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        plane4.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        plane4.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        plane4.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-
-        var plane5 = new THREE.Geometry();
-        plane5.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        plane5.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        plane5.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        plane5.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        
-        var plane6 = new THREE.Geometry();
-        plane6.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        plane6.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        plane6.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        plane6.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        
-        var plane7 = new THREE.Geometry();
-        plane7.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        plane7.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        plane7.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        plane7.vertices.push( new THREE.Vector3( Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        
-        var plane8 = new THREE.Geometry();
-        plane8.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, Constants.MAX_SIZE.z ) );
-        plane8.vertices.push( new THREE.Vector3( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z ) );
-        
-        var line8 = new THREE.Line( plane8, material );
-        line8.type = THREE.LinePieces;
-        this.group.add( line8 );
-        
-        var line7 = new THREE.Line( plane7, material );
-        line7.type = THREE.LinePieces;
-        this.group.add( line7 );
-        
-        var line5 = new THREE.Line( plane5, material );
-        line5.type = THREE.LinePieces;
-        this.group.add( line5 );
-        
-        var line4 = new THREE.Line( plane4, material );
-        line4.type = THREE.LinePieces;
-        this.group.add( line4 );
-        
-        var line1 = new THREE.Line( plane1, material );
-        line1.type = THREE.LinePieces;
-        this.group.add( line1 );
-        
-        var line2 = new THREE.Line( plane2, material );
-        line2.type = THREE.LinePieces;
-        this.group.add( line2 );
-        
-        var line3 = new THREE.Line( plane3, material );
-        line3.type = THREE.LinePieces;
-        this.group.add( line3 );
-        
-        var floor = new THREE.Mesh(new THREE.PlaneGeometry(Constants.MAX_SIZE.x*2,Constants.MAX_SIZE.z*2),new THREE.MeshLambertMaterial( { color: 0x00ff00 } ));
-        floor.position.set(0,-Constants.MAX_SIZE.y,0);
+        var floor = new THREE.Mesh(new THREE.PlaneGeometry(Constants.MAX_SIZE.x*2,Constants.MAX_SIZE.z*2+Constants.FLOOR_OVERFLOW),new THREE.MeshLambertMaterial( { color: 0x00ff00 } ));
+        floor.position.set(0,-Constants.MAX_SIZE.y,Constants.FLOOR_OVERFLOW/2);
         floor.rotation.x = Math.PI / -2;
         floor.receiveShadow = true;
         this.group.add( floor );
+        
+        var backWall = new THREE.Mesh(new THREE.PlaneGeometry(Constants.MAX_SIZE.x*2,Constants.MAX_SIZE.y*2),new THREE.MeshLambertMaterial( { color: 0x00ff00 } ));
+        backWall.position.set(0,0,-Constants.MAX_SIZE.z);
+        backWall.receiveShadow = false;
+        this.group.add( backWall );
+        
+        
       },
       
       /**
