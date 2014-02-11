@@ -43,7 +43,7 @@ define(["./Utils"],function(Utils) {
        
     DART_ORIGINAL_SIZE: dartSize,
     ARM_REACH: Utils.cmToUnit(32)*scale,
-    FLOOR_OVERFLOW: dartSize*2*scale,
+    FLOOR_OVERFLOW: dartSize*scale,
     
     MAX_SIZE: {
      x:SIZE_X/2*scale,
