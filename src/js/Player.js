@@ -138,14 +138,14 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
       },
       
       release: function(room,sx,sy,sz) {
-        if (this.game.isLocalPlayerFlying() || sz == 0) {
+        if (this.game.isLocalPlayerFlying() || sz >= 0) {
           return;
         }
         this.holding = false;
         
-        sx = Utils.mmsToUnitms(sx)*Constants.SCALE*Constants.SPEED_FACTOR;
-        sy = Utils.mmsToUnitms(sy)*Constants.SCALE*Constants.SPEED_FACTOR;
-        sz = Utils.mmsToUnitms(sz)*Constants.SCALE*Constants.SPEED_FACTOR;
+        sx = Utils.mmsToUnitms(sx)*Constants.SCALE;
+        sy = Utils.mmsToUnitms(sy)*Constants.SCALE;
+        sz = Utils.mmsToUnitms(sz)*Constants.SCALE;
         
         //convert from mm/s to unit/ms 
         if (Constants.CHEAT) {

@@ -24,6 +24,8 @@ define(["Inheritance","EventDispatcher","./Constants"],
       z: 2
   };
   
+  
+  
   function checkHandValidPositionOnAxis(frame,leapPos,axis) {
     if (Constants.LEAP_PADDING[axis] == 0) {
       return true;
@@ -44,6 +46,12 @@ define(["Inheritance","EventDispatcher","./Constants"],
     y: Constants.MAX_SIZE["y"]*2,
     z: Constants.ARM_REACH
   };
+  
+  function getSign(v) {
+    //return Math.sign(v);
+    return v >= 0 ? 1 : -1;
+  }
+  
   
   function convert(leapPos,axis) {
     var pos = POSITIONS[axis];
@@ -68,10 +76,13 @@ define(["Inheritance","EventDispatcher","./Constants"],
     this.fist = false;
     
     this.handInUse == null;
+    this.speed = [];
     
     this.controller = new Leap.Controller();
     this.registerCallbacks();
     this.controller.connect();
+    
+    
     
     this.ready = false;
   };
@@ -86,7 +97,7 @@ define(["Inheritance","EventDispatcher","./Constants"],
         this.controller.on('frame', function(frame) { 
           that.onFrame(frame);
         });
-        
+
         this.controller.on('ready', function() { 
           that.setReady(true);
         });
@@ -135,6 +146,8 @@ define(["Inheritance","EventDispatcher","./Constants"],
         
        
         this.dispatchEvent(this.isFist() ? "onFistMove" : "onPalmMove",pos);
+        
+        this.modifySpeed(hand.palmVelocity);
 
       },
       
@@ -175,23 +188,49 @@ define(["Inheritance","EventDispatcher","./Constants"],
           return;
         }
 
-        var speeds = [];
         if (hand) {
-          for (var i=0; i<3; i++) {
-            speeds[i] = Math.round(hand.palmVelocity[i]||0);
-          }
+          this.modifySpeed(hand.palmVelocity);
         } else {
-          speeds = [0,0,0];
+          this.speed = [0,0,0];
         }
-        this.dispatchEvent(isFist ? "onFist" : "onFistReleased",speeds);
+        
+        //The code looks solid to me.   
+        //You may want to play with the palm velocity a bit more over time to give it a more natural feel vs right when the palm opens.   
+        //This could also give you a good idea of the arc of the palm as it travels.
+        
+        this.dispatchEvent(isFist ? "onFist" : "onFistReleased",this.speed);
+
+        this.speed = [];
+        
         this.fist = isFist;
+      },
+      
+      modifySpeed: function(palmVelocity) {
+        var speeds = [];
+        for (var i=0; i<3; i++) {
+          var current = Math.round(palmVelocity[i]||0)*Constants.SPEED_FACTOR;
+          
+          if (!Constants.USE_LAST_SPEED && this.speed[i] && current!= 0 && getSign(current) == getSign(this.speed[i])) {
+            if (Constants.USE_PEAK_SPEED) {
+              //peak speed
+              this.speed[i] = Maths.abs(this.speed[i]) > Math.abs(current) ? this.speed[i] : current;
+            } else {
+              //moving average
+              this.speed[i] = this.speed[i] * Constants.HISTORY_WEIGHT + current * (1 - Constants.HISTORY_WEIGHT);
+            }
+            
+            
+          } else {
+            this.speed[i] = current;
+          }
+          
+        }
+        
+        
+        
       }
       
-      
-      
-      
   };
-  
   
   Inheritance(LeapMotion,EventDispatcher,true,true);
   return new LeapMotion(); //singleton

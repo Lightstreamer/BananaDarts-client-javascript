@@ -15,7 +15,8 @@ Copyright 2014 Weswit s.r.l.
 */
 define(["./Utils"],function(Utils) {
   
-  var scale = 0.20;
+  var scale = 0.20; //need scale because our unit is based on the original scoreboard that is in turn scaled 
+  var dartSize = 96;
   
   var SIZE_X = Utils.cmToUnit(300);
   var SIZE_Y = Utils.cmToUnit(150);
@@ -23,10 +24,10 @@ define(["./Utils"],function(Utils) {
   
   var CENTER_FROM_FLOOR = Utils.cmToUnit(172.2);
   
-  //gravity --> 9.80665 m/s2
+  var EARTH_GRAVITY = 9.82; //m/s^2
+  var MOON_GRAVITY =  1.6249; //m/s^2
+  var ACCELERATION_UNIT_MS_SQUARE = Utils.cmToUnit(MOON_GRAVITY/10000)*scale; //(9.81/1000000)*100 cm/ms^2;
   
-  var GRAVITY = 9.82;
-  var ACCELERATION_UNIT_MS_SQUARE = Utils.cmToUnit(GRAVITY/10000)*scale; //(9.81/1000000)*100 cm/ms^2;
   
   
   return {
@@ -40,7 +41,9 @@ define(["./Utils"],function(Utils) {
     
     SCALE: scale,
        
+    DART_ORIGINAL_SIZE: dartSize,
     ARM_REACH: Utils.cmToUnit(32)*scale,
+    FLOOR_OVERFLOW: dartSize*2*scale,
     
     MAX_SIZE: {
      x:SIZE_X/2*scale,
@@ -60,7 +63,10 @@ define(["./Utils"],function(Utils) {
 
     HALF_ACCELERATION: ACCELERATION_UNIT_MS_SQUARE/2,
     
-    SPEED_FACTOR: 1,
+    SPEED_FACTOR: 6,
+    USE_PEAK_SPEED: false,
+    USE_LAST_SPEED: false,
+    HISTORY_WEIGHT: 0.5,
     
     
     DEFAULT_NICK: "Anonymous",
