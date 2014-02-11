@@ -13,14 +13,18 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["Executor"],function(Executor) {
+define([],function() {
   
-  var GameLoop = function(game,field,frameInterval) {
+  function run(who) {
+    return function() {
+      who.calculate();
+    };
+  }
+  
+  var GameLoop = function(game,field) {
     this.thread = null;
     this.game = game;
     this.field = field;
-    
-    this.frameInterval = frameInterval;
   };
   
   GameLoop.prototype = {
@@ -28,23 +32,29 @@ define(["Executor"],function(Executor) {
        if (this.thread) {
          return;
        }
-       this.thread = Executor.addRepetitiveTask(this.calculate,this.frameInterval,this);
+
+       this.thread = true;
+       requestAnimationFrame(run(this));
        
      },
      stop: function() {
        if (!this.thread) {
          return;
        }
-       Executor.stopRepetitiveTask(this.thread);
-       delete(this.thread);
+
+       this.thread = false;
      },
      calculate: function() {
+       if (!this.thread) {
+         return;
+       }
        this.game.forEachPlayer(function(player) {
          if (player.isFlying()) {
            player.calculate();
          }
        });
        this.field.render();
+       requestAnimationFrame(run(this));
      }
   };
   

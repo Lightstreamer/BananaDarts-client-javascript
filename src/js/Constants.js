@@ -58,8 +58,6 @@ define(["./Utils"],function(Utils) {
       y: 0,
       z: 10
     },
-    
-    FRAME_INTERVAL: 50,
 
     HALF_ACCELERATION: ACCELERATION_UNIT_MS_SQUARE/2,
     
