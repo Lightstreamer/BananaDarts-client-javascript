@@ -20,7 +20,7 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
     return "u-"+Math.round(Math.random()*1000);
   }
   
-  var Player = function(nick,status,client,game) {
+  var Player = function(nick,status,client,game,notLocal) {
     this.initDispatcher();
     
     this.game = game;
@@ -28,6 +28,7 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
     this.client = client;
     this.nick = nick;
     this.status = status;
+    this.notLocal = notLocal || false;
     
     this.id = generateId(); 
     this.userSubscription = new Subscription("DISTINCT","user_"+this.id,["message","from"]); //USER_SUBSCRIPTION used only to signal presence
@@ -55,7 +56,9 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
         this.holding = false;
 
         this.dispatchEvent("onIdConfirmed",[this.id]);
-        this.game.setLocalPlayerKey(this.id);
+        if (!this.notLocal) {
+          this.game.setLocalPlayerKey(this.id);
+        }
        
         //conf nick & status
         this.sendNick();
@@ -130,15 +133,19 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
       },
       
       grab: function(room) {
-        if (this.game.isLocalPlayerFlying()) {
+        if (this.game.isPlayerFlying(this.id)) {
           return;
         }
         this.holding = true;
+        
         this.sendRoomMessage("grab|"+room,"3D",room);
+        if (!this.notLocal) {
+          this.game.resetPlayer(this.id);
+        }
       },
       
       release: function(room,sx,sy,sz) {
-        if (this.game.isLocalPlayerFlying() || sz >= 0) {
+        if (this.game.isPlayerFlying(this.id) || sz >= 0) {
           return;
         }
         this.holding = false;
@@ -154,11 +161,13 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
         }
         this.sendRoomMessage("release|"+room+"|"+sx+"|"+sy+"|"+sz,"3D",room); //as sent in sequence the curreent pos on the server is the last pos sent from here
         
-        this.game.throwLocalPlayer(sx,sy,sz);
+        if (!this.notLocal) {
+          this.game.throwPlayer(this.id,sx,sy,sz);
+        }
       },
       
       move: function(room,x,y,z) {
-        if (this.game.isLocalPlayerFlying()) {
+        if (this.game.isPlayerFlying(this.id)) {
           return;
         }
         if (!this.holding) {
@@ -166,7 +175,9 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
         }
         this.sendRoomMessage("move|"+room+"|"+x+"|"+y+"|"+z,"3D",room);
         
-        this.game.moveLocalPlayer(x,y,z); //update local player locally - TODO prevent server synch on local player during grabbing
+        if (!this.notLocal) {
+          this.game.movePlayer(this.id,x,y,z); //update local player locally
+        }
       },
       
       changeNick: function(newNick) {

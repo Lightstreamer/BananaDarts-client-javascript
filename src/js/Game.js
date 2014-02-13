@@ -140,34 +140,25 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
           }
         } 
       },
-      moveLocalPlayer: function(x,y,z) {
-        if (this.localPlayerKey) {
-          this.movePlayer(this.localPlayerKey,x,y,z);
-        } 
+      
+      resetPlayer: function() {
+        if (this.players[id]) {
+          this.players[id].reset();
+        }
       },
+      
       movePlayer: function(id,x,y,z) {
         if (this.players[id]) {
           this.players[id].setPosition(x,y,z);
         }
       },
-      
-      throwLocalPlayer: function(sx,sy,sz) {
-        if (this.localPlayerKey) {
-          this.throwPlayer(this.localPlayerKey,sx,sy,sz);
-        } 
-      },
+
       throwPlayer: function(id,sx,sy,sz) {
         if (this.players[id]) {
           this.players[id].setSpeed(sx,sy,sz);
         }
       },
       
-      isLocalPlayerFlying: function() {
-        if (this.localPlayerKey) {
-          return this.isPlayerFlying(this.localPlayerKey);
-        }
-        return true;
-      },
       isPlayerFlying: function(id) {
         if (this.players[id]) {
           return this.players[id].isFlying();
