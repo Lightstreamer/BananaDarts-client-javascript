@@ -273,12 +273,12 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       getFinalTimeIfOverflow: function(axis,value) {
         
         if (value > Constants.MAX_SIZE[axis] || value < -Constants.MAX_SIZE[axis]) {
+          var endValue =  value > Constants.MAX_SIZE[axis] ? Constants.MAX_SIZE[axis] : -Constants.MAX_SIZE[axis]; 
+          
           if (axis == "y") {
-            return this.calculateTimestampY(value);
-          } else if ( value > Constants.MAX_SIZE[axis]) {
-            return this.calculateTimestamp(axis,Constants.MAX_SIZE[axis]);
-          } else if (value < -Constants.MAX_SIZE[axis]) {
-            return this.calculateTimestamp(axis,-Constants.MAX_SIZE[axis]);
+            return this.calculateTimestampY(endValue);
+          } else {
+            return this.calculateTimestamp(axis,endValue);
           }
         }
         
@@ -312,13 +312,19 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
        * @private
        */
       calculateTimestampY: function(value) {
+        
+        //s =  v*t + (1/2)at^2
+        
         var c = -(value-this.startPos["y"]);
-        var a = Constants.HALF_ACCELERATION;
+        var a = -Constants.HALF_ACCELERATION;
         var b = this.dinamics["y"];
+        
+        var d = Math.pow(b,2) - 4*a*c;
+        
         if (c<0) {
-          return (-b + Math.sqrt(Math.pow(b,2)-4*a*c))/(2*a);
+          return (-b + Math.sqrt(d))/(2*a);
         } else if(c>0) {
-          return (-b - Math.sqrt(Math.pow(b,2)-4*a*c))/(2*a);
+          return (-b - Math.sqrt(d))/(2*a);
         }
         return 0;
         
@@ -340,7 +346,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         var endXt = this.getFinalTimeIfOverflow("x",x);
         var endYt = this.getFinalTimeIfOverflow("y",y);
         var endZt = this.getFinalTimeIfOverflow("z",z);
-        
         
         if (endXt !== null || endYt !== null ||  endZt !== null) {
           var tEnd = endXt;
