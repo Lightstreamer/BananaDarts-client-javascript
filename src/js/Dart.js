@@ -98,8 +98,9 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           this.createDart();
         }
         
-        this.dart.position.set(0,0,Constants.MAX_SIZE.z);
-        this.dart.quaternion.set(0.707,0,0,0.707); //0.64,0,0,0.76); //0.57,0,0,0.81
+        
+        this.reset();
+        
         this.field.addObject(this.dart);
       },
       
@@ -203,22 +204,14 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       
       //Rotation
       
-      setRotX: function(val) {
-        this.setRotation("x",val);
-      },
-      setRotY: function(val) {  
-        this.setRotation("y",val);
-      },
-      setRotZ: function(val) {
-        this.setRotation("z",val);
-      },
-      setRotW: function(val) {
-        this.setRotation("w",val);
+      setRotation: function(x,y,z) {
+        this.setRot("x",x);
+        this.setRot("y",y);
+        this.setRot("z",z);
       },
       
-      setRotation: function(axis,val) {
-        this.dart.quaternion[axis] = val;
-        this.field.render();
+      setRot: function(axis,val) {
+        this.dart.rotation[axis] = val;
       },
       
       //speed
@@ -339,15 +332,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         
         var tNow = new Date().getTime() - this.timestamp;
         
-        /*
-         TODO add gravity to the mix
-        var gz = this.calculateZPosition(tNow);
-        this.calculateTimestampZ(gz);
-        */
-
         var x = this.calculateAxisPos("x",tNow);
         var y = this.calculateYPosition(tNow);
         var z = this.calculateAxisPos("z",tNow);
+       
         
         var endXt = this.getFinalTimeIfOverflow("x",x);
         var endYt = this.getFinalTimeIfOverflow("y",y);
@@ -375,7 +363,13 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.setPosition(x,y,z);
         
         this.field.render();
-      }
+      },
+      
+      reset: function() {
+        console.log("RESET")
+        this.setPosition(0,0,Constants.MAX_SIZE.z);
+        this.setRotation(Math.PI/2,0,0);
+      } 
   };
   
   return Dart;
