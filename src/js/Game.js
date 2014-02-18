@@ -141,7 +141,7 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
         } 
       },
       
-      resetPlayer: function() {
+      resetPlayer: function(id) {
         if (this.players[id]) {
           this.players[id].reset();
         }
