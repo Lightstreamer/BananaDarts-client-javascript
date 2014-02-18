@@ -19,7 +19,7 @@ define(["./Utils"],function(Utils) {
   var dartSize = 96;
   
   var SIZE_X = Utils.cmToUnit(300);
-  var SIZE_Y = Utils.cmToUnit(150);
+  var SIZE_Y = Utils.cmToUnit(200);
   var SIZE_Z = Utils.cmToUnit(236.855);
   
   var CENTER_FROM_FLOOR = Utils.cmToUnit(172.2);
@@ -27,8 +27,6 @@ define(["./Utils"],function(Utils) {
   var EARTH_GRAVITY = 9.82; //m/s^2
   var MOON_GRAVITY =  1.6249; //m/s^2
   var ACCELERATION_UNIT_MS_SQUARE = Utils.cmToUnit(MOON_GRAVITY/10000)*scale; //(9.81/1000000)*100 cm/ms^2;
-  
-  
   
   return {
     OWN: "own",
@@ -51,24 +49,27 @@ define(["./Utils"],function(Utils) {
      z:SIZE_Z/2*scale
     },
     
-    CENTER_Y: (CENTER_FROM_FLOOR-SIZE_X/2)*scale,
+    CENTER_Y: (CENTER_FROM_FLOOR-SIZE_Y/2)*scale,
     
     LEAP_PADDING: {
       x: 10,
       y: 0,
-      z: 10
+      z: 2
     },
 
+    ACCELERATION: ACCELERATION_UNIT_MS_SQUARE,
     HALF_ACCELERATION: ACCELERATION_UNIT_MS_SQUARE/2,
     
-    SPEED_FACTOR: 6,
+    SPEED_FACTOR: 2,
     USE_PEAK_SPEED: false,
     USE_LAST_SPEED: false,
     HISTORY_WEIGHT: 0.5,
     
     
     DEFAULT_NICK: "Anonymous",
-    ROOM: "dart"
+    ROOM: "dart",
+    
+    SIMULATED_PLAYERS: 0
   };
   
 });
