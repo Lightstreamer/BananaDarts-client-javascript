@@ -47,6 +47,10 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
   
   Player.prototype = {
     
+      getId: function() {
+        return this.id;
+      },
+      
       ready: function() {
         
         if (this.playing) {
@@ -153,7 +157,7 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
         sx = Utils.mmsToUnitms(sx)*Constants.SCALE;
         sy = Utils.mmsToUnitms(sy)*Constants.SCALE;
         sz = Utils.mmsToUnitms(sz)*Constants.SCALE;
-        
+
         //convert from mm/s to unit/ms 
         if (Constants.CHEAT) {
           sx = 0;
