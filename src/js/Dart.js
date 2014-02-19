@@ -342,7 +342,41 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         var y = this.calculateYPosition(tNow);
         var z = this.calculateAxisPos("z",tNow);
        
+        var isLanded = this.calculateLanding(x,y,z);
+        if (!isLanded) {
+          this.setPosition(x,y,z);
+          this.calculateRotation(x,y,z,tNow);
+        }
         
+        this.field.render();
+      },
+      
+      calculateRotation: function(x,y,z,tNow) {
+        var currentSpeedY = this.dinamics.y + -Constants.ACCELERATION*tNow;
+        
+        var x = this.getRotationRadians(currentSpeedY,this.dinamics.z) + Math.PI/2;
+        var y = this.getRotationRadians(this.dinamics.x,this.dinamics.z);
+        
+        this.setRotation(x,0,y);
+      },
+     
+      
+      getRotationRadians: function(v1,v2) {
+        var up = v1 > 0;
+        var v1IsBigger = Math.abs(v1) > Math.abs(v2);
+        var rot = Math.atan(v1IsBigger ? v1/v2 : v2/v1);
+        
+        if (v1IsBigger) {
+          return -rot;
+        } else if (up) {
+          return rot + Math.PI/2;
+        } else {
+          return rot - Math.PI/2;
+        }
+
+      },
+      
+      calculateLanding: function(x,y,z) {
         var endXt = this.getFinalTimeIfOverflow("x",x);
         var endYt = this.getFinalTimeIfOverflow("y",y);
         var endZt = this.getFinalTimeIfOverflow("z",z);
@@ -355,6 +389,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           y = this.calculateYPosition(tEnd);
           z = this.calculateAxisPos("z",tEnd);
           
+          this.setPosition(x,y,z);
+          this.calculateRotation(x,y,z,tEnd);
+          this.setSpeed(0,0,0);
+          
           /*
           console.log("Start "+this.startPos.x+"|"+this.startPos.y+"|"+this.startPos.z);
           console.log("Speed "+this.dinamics.x+"|"+this.dinamics.y+"|"+this.dinamics.z);
@@ -362,16 +400,12 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           console.log("End "+x+"|"+y+"|"+z);
           */
           
-          this.setSpeed(0,0,0);
+          return true;
         }
-        
-        this.setPosition(x,y,z);
-        
-        this.field.render();
+        return false;
       },
       
       reset: function() {
-        console.log("RESET")
         this.setPosition(0,0,Constants.MAX_SIZE.z);
         this.setRotation(Math.PI/2,0,0);
       } 
