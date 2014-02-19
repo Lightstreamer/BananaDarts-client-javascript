@@ -148,7 +148,7 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
       },
       
       release: function(room,sx,sy,sz) {
-        if (this.game.isPlayerFlying(this.id) || sz >= 0) {
+        if (!this.holding || this.game.isPlayerFlying(this.id) || sz >= 0) {
           return;
         }
         this.holding = false;
