@@ -145,9 +145,11 @@ define(["Inheritance","EventDispatcher","./Constants"],
                    ];
         
        
-        this.dispatchEvent(this.isFist() ? "onFistMove" : "onPalmMove",pos);
+        
         
         this.modifySpeed(hand.palmVelocity);
+        
+        this.dispatchEvent(this.isFist() ? "onFistMove" : "onPalmMove",pos.concat(this.speed));
 
       },
       
