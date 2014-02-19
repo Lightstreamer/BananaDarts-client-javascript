@@ -58,8 +58,8 @@ require(["js/Constants","js/LeapMotion"],
 });
   
 
-require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/GameLoop","js/Player","js/LeapMotion","js/Scoreboard"],
-    function(Field,Constants,Dart,Game,lsClient,GameLoop,Player,LeapMotion,Scoreboard) {
+require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/GameLoop","js/Player","js/LeapMotion","js/Scoreboard","js/Simulator"],
+    function(Field,Constants,Dart,Game,lsClient,GameLoop,Player,LeapMotion,Scoreboard,Simulator) {
   
   var field = new Field($("#theWorld")[0]);
   $("#resetCamera").click(function(){
@@ -88,17 +88,17 @@ require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/GameLoo
     player.changeStatus($(this).val());
   });
   
+  
   LeapMotion.addListener({
-    onFist: function(sx,sy,sz) {
-      player.grab(Constants.ROOM);
-    },
-    onFistReleased: function(sx,sy,sz) {
-      player.release(Constants.ROOM,sx,sy,sz);
-    },
-    onFistMove: function(x,y,z) {
-      if (LeapMotion.isFist()) {
+    onFistMove: function(x,y,z,sx,sy,sz) {
+      
+      if (z <= Constants.MAX_SIZE.z-Constants.ARM_REACH+Constants.GO_LINE) {
+        console.log(sx+"|"+sy+"|"+sz)
+        player.release(Constants.ROOM,sx,sy,sz);
+      } else {
         player.move(Constants.ROOM,x,y,z);
       }
+     
     }
   });
   
@@ -115,6 +115,12 @@ require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/GameLoo
       }
     });
   }
+  
+  
+  for (var i=0; i < Constants.SIMULATED_PLAYERS; i++) {
+    new Simulator(game);
+  }
+  
 });
 
   
