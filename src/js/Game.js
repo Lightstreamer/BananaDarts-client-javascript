@@ -131,14 +131,19 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
         var x = Utils.toDouble(Utils.fromBase64(itemUpdate.getValue("posX")));
         var y = Utils.toDouble(Utils.fromBase64(itemUpdate.getValue("posY")));
         var z = Utils.toDouble(Utils.fromBase64(itemUpdate.getValue("posZ")));
+        
+        if (player.isPlanted() && z >= Constants.MAX_SIZE["z"] - Constants.ARM_REACH) {
+          player.reset();
+        }
+        
         player.setPosition(x,y,z);
         
         if (itemUpdate.isValueChanged("dVz")) {
           var vZ = itemUpdate.getValue("dVz");
-          if (vZ != null) {
+          if (vZ !== null) {
             player.setSpeed(Number(itemUpdate.getValue("dVx")),Number(itemUpdate.getValue("dVy")),Number(vZ));
           }
-        } 
+        }
       },
       
       resetPlayer: function(id) {

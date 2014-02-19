@@ -78,7 +78,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     this.key = key;
     this.type = type;
     
-    this.flying = false;
+    this.planted = false;
     
     this.initDart();
   };
@@ -201,6 +201,9 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       isFlying: function() {
         return this.dinamics.z != 0;
       },
+      isPlanted: function() {
+        return this.planted;
+      },
       
       //Rotation
       
@@ -222,13 +225,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.dinamics.z = vz;
         
         if (vz !== 0) {
-          this.flying = true;
           this.timestamp = new Date().getTime();
           this.fixStartPosition();
           this.calculate();
-        } else {
-          this.flying = false;
-        }
+        } 
       },
       
       
@@ -332,7 +332,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       
       
       calculate: function() { 
-        if (!this.flying) {
+        if (!this.isFlying()) {
           return;
         }
         
@@ -400,6 +400,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           console.log("End "+x+"|"+y+"|"+z);
           */
           
+          this.planted = true;
+          
           return true;
         }
         return false;
@@ -408,6 +410,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       reset: function() {
         this.setPosition(0,0,Constants.MAX_SIZE.z);
         this.setRotation(Math.PI/2,0,0);
+        this.planted = false;
       } 
   };
   
