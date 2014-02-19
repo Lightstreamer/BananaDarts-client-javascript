@@ -91,9 +91,7 @@ require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/GameLoo
   
   LeapMotion.addListener({
     onFistMove: function(x,y,z,sx,sy,sz) {
-      
       if (z <= Constants.MAX_SIZE.z-Constants.ARM_REACH+Constants.GO_LINE) {
-        console.log(sx+"|"+sy+"|"+sz)
         player.release(Constants.ROOM,sx,sy,sz);
       } else {
         player.move(Constants.ROOM,x,y,z);
