@@ -362,7 +362,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
      
       
       getRotationRadians: function(v1,v2) {
-        var up = v1 > 0;
+        var up = v1 >= 0;
         var v1IsBigger = Math.abs(v1) > Math.abs(v2);
         var rot = Math.atan(v1IsBigger ? v1/v2 : v2/v1);
         
