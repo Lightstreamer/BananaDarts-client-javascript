@@ -142,7 +142,6 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
         }
         this.holding = true;
         
-        this.sendRoomMessage("grab|"+room,"3D",room);
         if (!this.notLocal) {
           this.game.resetPlayer(this.id);
         }
