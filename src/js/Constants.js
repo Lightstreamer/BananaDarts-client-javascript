@@ -24,6 +24,7 @@ define(["./Utils"],function(Utils) {
   
   var CENTER_FROM_FLOOR = Utils.cmToUnit(172.2);
   
+  var NO_GRAVITY = 0;
   var EARTH_GRAVITY = 9.82; //m/s^2
   var MOON_GRAVITY =  1.6249; //m/s^2
   var ACCELERATION_UNIT_MS_SQUARE = Utils.cmToUnit(MOON_GRAVITY/10000)*scale; //(9.81/1000000)*100 cm/ms^2;
@@ -35,12 +36,13 @@ define(["./Utils"],function(Utils) {
     ADAPTER: "DART",
     LOG_UPDATES_ON_CONSOLE: false,
     DEBUG_LEAP: false,
-    CHEAT: true,
+    CHEAT: false,
     
     SCALE: scale,
        
     DART_ORIGINAL_SIZE: dartSize,
     ARM_REACH: Utils.cmToUnit(32)*scale,
+    GO_LINE: 10,
     FLOOR_OVERFLOW: dartSize*scale,
     
     MAX_SIZE: {
