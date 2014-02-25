@@ -69,21 +69,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         WIDTH = window.innerWidth;
         HEIGHT = window.innerHeight;
 
-        if ( (WIDTH/HEIGHT) >  1.5) {
-          this.renderer.setSize(WIDTH-(WIDTH*0.075), HEIGHT-(HEIGHT*0.075));
-          //this.cssRenderer.setSize(WIDTH-(WIDTH*0.075), HEIGHT-(HEIGHT*0.075));
+        this.camera.aspect = window.innerWidth / window.innerHeight;
+        this.camera.updateProjectionMatrix();
 
-          this.camera.aspect = 2;
-          this.camera.updateProjectionMatrix();
-          
-        } else {
-          var zWide = (WIDTH-(WIDTH*0.075));
-          this.renderer.setSize(zWide, zWide/1.77777);
-          //this.cssRenderer.setSize(zWide, zWide/1.77777);
-          
-          this.camera.aspect = 1.77777;
-          this.camera.updateProjectionMatrix();
-        }
+        this.renderer.setSize( window.innerWidth, window.innerHeight );
         
         this.render();
       },
