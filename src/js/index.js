@@ -15,8 +15,8 @@ Copyright 2014 Weswit s.r.l.
 */
 
 
-require(["js/Constants","js/LeapMotion"],
-    function(Constants,LeapMotion) {
+require(["js/LeapMotion"],
+    function(LeapMotion) {
   
   $(document).ready(function() {
     function showInstructions(show) {
@@ -36,25 +36,31 @@ require(["js/Constants","js/LeapMotion"],
         showInstructions(ready);
       }
     });
-    
-    if (Constants.DEBUG_LEAP) {
-      $("#debug").show();
-      LeapMotion.addListener({
-        onFist: function(sx,sy,sz) {
-          $("#h").html("fist");
-        },
-        onFistReleased: function(sx,sy,sz) {
-          $("#h").html("palm");
-          $("#s").html(sx + " | " + sy + " | " + sz);
-        },
-        onFistMove: function(x,y,z) {
-          $("#x").html(x);
-          $("#y").html(y);
-          $("#z").html(z);
-        }
-      });
-    }
   });
+});
+
+$(document).ready(function(){
+  var open = false;
+  
+  var x = new Image();
+  x.src = "images/up.png";//preload
+  x = null;
+  
+  $("#tools").show();
+  var hideTop =  -$("#tools_stuff").height()+2; //show 2px
+  $("#tools").css("top",hideTop);
+  
+  $("#tools_button").click(function() {
+    if (open) {
+      $("#tools").css("top",hideTop);
+      $(this).attr("src","images/down.png");
+    } else {
+      $("#tools").css("top",0);
+      $(this).attr("src","images/up.png");
+    }
+    open = !open;
+  });
+  
 });
   
 

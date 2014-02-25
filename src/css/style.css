@@ -13,39 +13,51 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+
 body {
   background-color: #FFFFFF;
   color: #000000;
   font-family: 'helvetica neue', Helvetica, Arial;
+  margin: 0;
+  overflow: hidden;
 }
-#wrap {
+
+#tools_button {
+  position: relative;
+  top:0px;
+  height: 64px;
+  width:64px;
+}
+#tools_stuff {
+  background-color: #689a68;
+  padding: 0 20px;
+}
+.spacer {
+   height:20px;
+}
+#tools {
+  position: fixed;
   margin: 0 auto;
+  left: 0; 
+  right: 0; 
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+  display:none;
 }
+#leap_instructions, #waiting_leap {
+  padding-bottom: 25px;
+}
+#leap_instructions {
+  display:none;
+}
+
 #theWorld {
   background-color: #FFFFFF;
   border: 0;
 }
 
-#debug {
-	display: none;
-}
-#leap_instructions, #waiting_leap {
-	display: none;
-	padding-bottom: 25px;
-}
-
-#logo, #logoLeap {
-  float: left;
-}
-#logoLeap {
-  padding-left: 50px;
-}
-
-#content {
-  clear:both;
-  padding-top:12px;
-}
-
 .button {
-	cursor:pointer;
+  cursor:pointer;
 }

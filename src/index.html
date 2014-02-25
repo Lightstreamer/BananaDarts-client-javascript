@@ -19,12 +19,15 @@
 
 <html>
   <head>
-    <title>Lightstreamer :: Leap Motion Demo</title>
+    <title>Lightstreamer :: Dart</title>
+    
+    <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
   
     <link rel="stylesheet" type="text/css" href="css/style.css" />
     
     <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js"></script>
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
+    <!--  script src="http://code.jquery.com/ui/1.10.4/jquery-ui.min.js"></script -->
     <script src="http://js.leapmotion.com/0.3.0-beta2/leap.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r61/three.min.js"></script>
     <script src="js/helvetiker_regular.typeface.js"></script>
@@ -41,35 +44,32 @@
   </head>
   <body>
     <a href="https://github.com/Weswit/Lightstreamer-example-Darts-LeapMotion-client-javascript"><img style="position: absolute; top: 0; right: 0; border: 0; z-index:1" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
-    <div id="wrap">
-      <div>
+   
+    <div id="tools">
+      <div id="tools_stuff">
+       <div class="spacer"></div>
+       <!-- 
         <a id="logo" href="http://www.lightstreamer.com" target="_blank"><img src="images/logo.png" alt="LIGHTSTREAMER" hspace="0" border="0" /></a>
         <a id="logoLeap" href="https://www.leapmotion.com/" target="_blank"><img src="images/leap.png" alt="LEAP MOTION" hspace="0" border="0" /></a>
-      </div>
-      
-      
-      
-      <div id="content">
+       -->
         <div id="waiting_leap">Please connect your leap motion device!</div>
         <div id="leap_instructions">Grab your dart (the red one).....</div>
-        
+         
         <div>
           <span class="label">Nick:</span> <input id="nick" type="text" disabled /> <span class="label">Status Message:</span> <input id="status" type="text" disabled /> 
         </div>
-        <div id="debug">
-          <div id="x"></div>
-          <div id="y"></div>
-          <div id="z"></div>
-          <div id="h"></div>
-          <div id="s"></div>
-        </div>
+        
         <span id="resetCamera" class="button">Reset camera</span>
         <div>
           <span id="goLeftCamera" class="button">Rotate Left</span>|<span id="goRightCamera" class="button">Rotate Right</span>
-         </div>
-        
-        <div id="theWorld"></div>
-      </div>
+        </div>
+        <div class="spacer"></div>
+      </div>  
+      <img class="button" src="images/down.png" id="tools_button">
+       
     </div>
+    
+    <div id="theWorld"></div>
+    
   </body>
 </html>
