@@ -25,6 +25,8 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
     this.extraInfo = null;
     this.showExtraInfo(true);
     
+    this.cameraHandling = true;
+    
     
     var roomSubscription = new Subscription("COMMAND","roomchatlist_"+room,["command","key"]);  //ROOMCHATLIST_SUBSCRIPTION contains user statuses and user nicks
     roomSubscription.setRequestedSnapshot("yes");
@@ -53,6 +55,10 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
           });
           this.extraInfo = newV;
         } 
+      },
+      
+      enableCameraHandling: function(enabled) {
+        this.cameraHandling = enabled;
       },
       
       setLocalPlayerKey: function(key) {
@@ -158,8 +164,11 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
         }
       },
 
-      throwPlayer: function(id,sx,sy,sz) {
+      throwPlayer: function(id,sx,sy,sz,attachCamera) {
         if (this.players[id]) {
+          if (attachCamera && this.cameraHandling) {
+            this.players[id].attachCamera(true);
+          }
           this.players[id].setSpeed(sx,sy,sz);
         }
       },

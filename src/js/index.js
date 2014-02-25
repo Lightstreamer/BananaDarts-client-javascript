@@ -80,6 +80,11 @@ require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/GameLoo
   
   
   var game = new Game(lsClient,Constants.ROOM,field);
+  $("#autoCamera").change(function() {
+    game.enableCameraHandling($(this).prop("checked"));
+  });
+  game.enableCameraHandling($("#autoCamera").prop("checked")); 
+  
   var gameLoop = new GameLoop(game,field);
   gameLoop.start();
   

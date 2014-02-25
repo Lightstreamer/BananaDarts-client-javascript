@@ -22,9 +22,9 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   var LEFT = "left";
   var CAMERA_POSITIONS = [
                    {x: 0, y:0, z:Constants.MAX_SIZE.z*2},
-                   {x: -Constants.MAX_SIZE.x*2, y:0, z:0},
-                   {x: 0, y:0, z:-Constants.MAX_SIZE.z*2},
-                   {x: Constants.MAX_SIZE.x*2, y:0, z:0}
+                   {x: -Constants.MAX_SIZE.x, y:0, z:0},
+                   {x: 0, y:0, z:-Constants.MAX_SIZE.z},
+                   {x: Constants.MAX_SIZE.x, y:0, z:0}
                    ];
   
   var Field = function(htmlEl) {
@@ -208,7 +208,9 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         var that = this;
         requestAnimationFrame(function() {
           that.waitingToRender = false;
-          that.controls.update();
+          if (that.controls.enabled) {
+            that.controls.update();
+          }
           that.renderer.render(that.scene, that.camera); 
           //that.cssRenderer.render(that.cssScene, that.camera); 
         });
@@ -231,9 +233,22 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           this.currentCameraPosition = CAMERA_POSITIONS.length-1;
         }
         
-        this.camera.position.set(CAMERA_POSITIONS[this.currentCameraPosition].x,CAMERA_POSITIONS[this.currentCameraPosition].y,CAMERA_POSITIONS[this.currentCameraPosition].z);
-        this.camera.lookAt( {x:0,y:0,z:0} );
         
+        this.moveCamera(CAMERA_POSITIONS[this.currentCameraPosition].x,CAMERA_POSITIONS[this.currentCameraPosition].y,CAMERA_POSITIONS[this.currentCameraPosition].z);
+        this.pointCamera(0,0,0);
+      },
+      
+      moveCamera: function(x,y,z) {
+        this.camera.position.set(x,y,z);
+      },
+      
+      pointCamera: function(x,y,z) {
+        this.camera.lookAt( {x:x,y:y,z:z} );
+        this.controls.target.set(x,y,z);
+      },
+      
+      enableOrbit: function(enabled) {
+        this.controls.enabled = enabled;
       },
       
       addObject: function(obj) {

@@ -57,6 +57,12 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       z: 10,
   };
   
+  var CAMERA_OFFSET = {
+      x: 0,
+      y: 0,
+      z: 50,
+  };
+  
   
   //Dart obj is 13.598 units, we want it 96*scale
   var expectedSize = Constants.DART_ORIGINAL_SIZE*Constants.SCALE;
@@ -205,6 +211,11 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         return this.planted;
       },
       
+      attachCamera: function(attach) {
+        this.camera = attach;
+        this.field.enableOrbit(!attach);
+      },
+      
       //Rotation
       
       setRotation: function(x,y,z) {
@@ -247,6 +258,23 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.setPos("x",x);
         this.setPos("y",y);
         this.setPos("z",z);
+        
+        if (this.camera && this.isFlying()) {
+          this.repositionCamera();
+        }
+      },
+      
+      repositionCamera: function() {
+        var x = this.dart.position.x;
+        var y = this.dart.position.y;
+        var z = this.dart.position.z;
+        
+        var px = x+CAMERA_OFFSET.x;
+        var py = y+CAMERA_OFFSET.y;
+        var pz = z+CAMERA_OFFSET.z;
+        
+        this.field.moveCamera(px,py,pz);
+        this.field.pointCamera(x,y,z);
       },
       
       /**
@@ -261,7 +289,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         if (this.text) {
           this.text.position[axis] = value+NICK_OFFSET[axis];
         }
-               
+        
         this.field.render();
       },
       
@@ -346,6 +374,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         if (!isLanded) {
           this.setPosition(x,y,z);
           this.calculateRotation(x,y,z,tNow);
+        } else {
+          this.attachCamera(false);
         }
         
         this.field.render();
@@ -411,6 +441,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.setPosition(0,0,Constants.MAX_SIZE.z);
         this.setRotation(Math.PI/2,0,0);
         this.planted = false;
+        this.field.rotateCamera(0);
       } 
   };
   

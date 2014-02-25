@@ -165,7 +165,7 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
         this.sendRoomMessage("release|"+room+"|"+sx+"|"+sy+"|"+sz,"3D",room); //as sent in sequence the curreent pos on the server is the last pos sent from here
         
         if (!this.notLocal) {
-          this.game.throwPlayer(this.id,sx,sy,sz);
+          this.game.throwPlayer(this.id,sx,sy,sz,true);
         }
       },
       
