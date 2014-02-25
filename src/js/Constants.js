@@ -18,8 +18,8 @@ define(["./Utils"],function(Utils) {
   var scale = 0.20; //need scale because our unit is based on the original scoreboard that is in turn scaled 
   var dartSize = 96;
   
-  var SIZE_X = Utils.cmToUnit(300);
-  var SIZE_Y = Utils.cmToUnit(200);
+  var SIZE_X = Utils.cmToUnit(500);
+  var SIZE_Y = Utils.cmToUnit(300);
   var SIZE_Z = Utils.cmToUnit(236.855);
   
   var CENTER_FROM_FLOOR = Utils.cmToUnit(172.2);
@@ -35,7 +35,6 @@ define(["./Utils"],function(Utils) {
  
     ADAPTER: "DART",
     LOG_UPDATES_ON_CONSOLE: false,
-    DEBUG_LEAP: false,
     CHEAT: false,
     
     SCALE: scale,
@@ -56,7 +55,7 @@ define(["./Utils"],function(Utils) {
     LEAP_PADDING: {
       x: 10,
       y: 0,
-      z: 2
+      z: 4
     },
 
     ACCELERATION: ACCELERATION_UNIT_MS_SQUARE,
