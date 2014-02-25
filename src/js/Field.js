@@ -103,6 +103,9 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         var v = this.webGLinUse ? 0.1 : 1;
         this.camera = new THREE.PerspectiveCamera(Constants.MAX_SIZE.y, WIDTH/HEIGHT, v, 10000); 
         
+        //default 131
+        this.camera.fov = 70;
+        
         this.controls = new THREE.OrbitControls(this.camera, this.htmlEl);
         
         var that = this;
