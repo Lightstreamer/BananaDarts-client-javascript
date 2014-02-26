@@ -21,7 +21,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   var RIGHT = "right";
   var LEFT = "left";
   var CAMERA_POSITIONS = [
-                   {x: 0, y:0, z:Constants.MAX_SIZE.z*2},
+                   {x: 0, y:0, z:Constants.MAX_SIZE.z*4.3},
                    {x: -Constants.MAX_SIZE.x, y:0, z:0},
                    {x: 0, y:0, z:-Constants.MAX_SIZE.z},
                    {x: Constants.MAX_SIZE.x, y:0, z:0}
@@ -120,10 +120,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
        */
       setupCamera: function() {
         var v = this.webGLinUse ? 0.1 : 1;
-        this.camera = new THREE.PerspectiveCamera(Constants.MAX_SIZE.y, WIDTH/HEIGHT, v, 10000); 
-        
-        //default 131
-        this.camera.fov = 70;
+        this.camera = new THREE.PerspectiveCamera( 45, WIDTH/HEIGHT, v, 10000);
         
         this.controls = new THREE.OrbitControls(this.camera, this.htmlEl);
         
