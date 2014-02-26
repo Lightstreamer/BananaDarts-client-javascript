@@ -41,15 +41,16 @@ require(["js/LeapMotion"],
 
 $(document).ready(function(){
   var open = true;
+  var firsClick = false;
   
   var x = new Image();
   x.src = "images/down.png";//preload
   x = null;
   
   var hideTop =  -$("#tools_stuff").height()+2; //show 2px
- 
   
   $("#tools_button").click(function() {
+    firsClick = true;
     if (open) {
       $("#tools").css("top",hideTop);
       $(this).attr("src","images/down.png");
@@ -62,7 +63,7 @@ $(document).ready(function(){
   
   
   setTimeout(function() {
-    if (open) {
+    if (!firsClick) {
       $("#tools_button").click();
     }
   },2000);
@@ -91,7 +92,7 @@ require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/GameLoo
   });
   game.enableCameraHandling($("#autoCamera").prop("checked")); 
   
-  var gameLoop = new GameLoop(game,field);
+  var gameLoop = new GameLoop(game);
   gameLoop.start();
   
   var scoreboard = new Scoreboard(lsClient,game,field);
