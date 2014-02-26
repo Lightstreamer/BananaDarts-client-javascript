@@ -77,5 +77,25 @@
       
       <div id="theWorld"></div>
     </div>
+    
+
+    <div id="scoreboard">
+      <table>
+        <thead>
+          <tr>
+            <td width="50">Nick</td>
+            <td width="50">Message</td>
+            <td width="50">Score</td>
+          </tr>
+        </thead>
+        <tbody>
+          <tr id="scoreboardTemplate" data-source="lightstreamer">
+            <td data-source="lightstreamer" data-field="nick">-</td>
+            <td data-source="lightstreamer" data-field="status">-</td>
+            <td data-source="lightstreamer" data-field="score">-</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
   </body>
 </html>

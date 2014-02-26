@@ -69,6 +69,11 @@ body {
   
 }
 
+#scoreboard {
+  display: none;
+  height: 220px
+}
+
 .button {
   cursor:pointer;
 }
