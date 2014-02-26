@@ -257,11 +257,16 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
             that.controls.update();
           }
           that.renderer.render(that.scene, that.camera); 
+          if (that.waitingToRenderCSS) {
+            that.cssRenderer.render(that.cssScene, that.camera);
+            that.waitingToRenderCSS = false;
+          }
         });
       },
       
       cssRender: function() {
-        this.cssRenderer.render(this.cssScene, this.camera);
+        this.waitingToRenderCSS = true;
+        this.render();
       },
       
       rotateCamera: function(dir) {
@@ -288,11 +293,15 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       
       moveCamera: function(x,y,z) {
         this.camera.position.set(x,y,z);
+        this.render();
+        this.cssRender();
       },
       
       pointCamera: function(x,y,z) {
         this.camera.lookAt( {x:x,y:y,z:z} );
         this.controls.target.set(x,y,z);
+        this.render();
+        this.cssRender();
       },
       
       enableOrbit: function(enabled) {
