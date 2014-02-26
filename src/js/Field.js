@@ -27,19 +27,33 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
                    {x: Constants.MAX_SIZE.x, y:0, z:0}
                    ];
   
+  var posters = [ //posters go on the back wall
+               /* {
+                   x: Constants.MAX_SIZE.x/2,
+                   y: 0,
+                   img: "images/poster1.jpg",
+                   w: 70,
+                   h: 140
+                 },*/
+                 ];
+  
   var Field = function(htmlEl) {
      
-    this.scene = new THREE.Scene(); 
+    this.scene = new THREE.Scene();
+    //this.cssScene = new THREE.Scene();
     this.group = new THREE.Object3D();
     this.scene.add( this.group );
     
     this.renderer = null;
+    //this.cssRenderer = null;
     this.camera = null;
     this.controls = null;
     
     this.htmlEl = htmlEl;
-    this.webGLinUse = this.setupRenderer();
+    this.webGLinUse = this.setupRenderers();
     htmlEl.appendChild(this.renderer.domElement);
+    //htmlEl.appendChild(this.cssRenderer.domElement);
+    
     
     this.setupRoom();
 
@@ -73,6 +87,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.camera.updateProjectionMatrix();
 
         this.renderer.setSize( window.innerWidth, window.innerHeight );
+        //this.cssRenderer.setSize( window.innerWidth, window.innerHeight );
         
         this.render();
       },
@@ -80,7 +95,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       /**
        * @private
        */
-      setupRenderer: function() {
+      setupRenderers: function() {
         var webGl = true;
         try { 
           this.setupWebGL();
@@ -88,10 +103,14 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           webGl = false;
           this.setupCanvas();
         }
-        
-        
         this.renderer.shadowMapEnabled = true;
         this.renderer.sortObjects = false;
+        
+        //this.cssRenderer = new THREE.CSS3DRenderer();
+        //this.cssRenderer.domElement.style.position = 'absolute';
+        //this.cssRenderer.domElement.style.top = 0;
+        
+        
         
         return webGl;
       },
@@ -174,11 +193,25 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         floor.receiveShadow = true;
         this.group.add( floor );
         
-        var backWall = new THREE.Mesh(new THREE.PlaneGeometry(Constants.MAX_SIZE.x*2,Constants.MAX_SIZE.y*2),new THREE.MeshLambertMaterial( { color: 0x00ff00 } ));
+        //var texture = THREE.ImageUtils.loadTexture("images/wall.jpg");
+        //var wallMaterial = new THREE.MeshBasicMaterial({map: texture});
+        
+        var wallMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
+        
+        var backWall = new THREE.Mesh(new THREE.PlaneGeometry(Constants.MAX_SIZE.x*2,Constants.MAX_SIZE.y*2),wallMaterial);
         backWall.position.set(0,0,-Constants.MAX_SIZE.z);
         backWall.receiveShadow = false;
-        this.group.add( backWall );
+        this.group.add(backWall);        
         
+        for (var i=0; i<posters.length; i++) {
+          var texture = THREE.ImageUtils.loadTexture(posters[i].img);
+          var posterMaterial = new THREE.MeshBasicMaterial({map: texture});
+          
+          var poster =  new THREE.Mesh(new THREE.PlaneGeometry(posters[i].w,posters[i].h),posterMaterial);
+          poster.position.set(posters[i].x,posters[i].y,-Constants.MAX_SIZE.z+1);
+          poster.receiveShadow = false;
+          this.group.add( poster );
+        }
         
       },
       
