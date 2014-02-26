@@ -40,15 +40,14 @@ require(["js/LeapMotion"],
 });
 
 $(document).ready(function(){
-  var open = false;
+  var open = true;
   
   var x = new Image();
-  x.src = "images/up.png";//preload
+  x.src = "images/down.png";//preload
   x = null;
   
-  $("#tools").show();
   var hideTop =  -$("#tools_stuff").height()+2; //show 2px
-  $("#tools").css("top",hideTop);
+ 
   
   $("#tools_button").click(function() {
     if (open) {
@@ -60,6 +59,13 @@ $(document).ready(function(){
     }
     open = !open;
   });
+  
+  
+  setTimeout(function() {
+    if (open) {
+      $("#tools_button").click();
+    }
+  },2000);
   
 });
   
