@@ -33,7 +33,7 @@ define(["DynaGrid","./Constants","./ConsoleSubscriptionListener","Subscription"]
     grid.setNodeTypes(["td"]);
     grid.parseHtml();
     
-    grid.setMaxDynaRows(9);
+    grid.setMaxDynaRows(14);
     grid.setAddOnTop(true);
     
     $("#scoreboard").show();
