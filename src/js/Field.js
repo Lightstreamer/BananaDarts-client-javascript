@@ -40,19 +40,19 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   var Field = function(htmlEl) {
      
     this.scene = new THREE.Scene();
-    //this.cssScene = new THREE.Scene();
+    this.cssScene = new THREE.Scene();
     this.group = new THREE.Object3D();
     this.scene.add( this.group );
     
     this.renderer = null;
-    //this.cssRenderer = null;
+    this.cssRenderer = null;
     this.camera = null;
     this.controls = null;
     
     this.htmlEl = htmlEl;
     this.webGLinUse = this.setupRenderers();
     htmlEl.appendChild(this.renderer.domElement);
-    //htmlEl.appendChild(this.cssRenderer.domElement);
+    htmlEl.appendChild(this.cssRenderer.domElement);
     
     
     this.setupRoom();
@@ -95,7 +95,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.camera.updateProjectionMatrix();
 
         this.renderer.setSize( window.innerWidth, window.innerHeight );
-        //this.cssRenderer.setSize( window.innerWidth, window.innerHeight );
+        this.cssRenderer.setSize( window.innerWidth, window.innerHeight );
         
         this.render();
       },
@@ -114,9 +114,9 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.renderer.shadowMapEnabled = true;
         this.renderer.sortObjects = false;
         
-        //this.cssRenderer = new THREE.CSS3DRenderer();
-        //this.cssRenderer.domElement.style.position = 'absolute';
-        //this.cssRenderer.domElement.style.top = 0;
+        this.cssRenderer = new THREE.CSS3DRenderer();
+        this.cssRenderer.domElement.style.position = 'absolute';
+        this.cssRenderer.domElement.style.top = 0;
         
         
         
@@ -136,6 +136,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.controls.addEventListener('change', function() {
           //cChange++;
           that.render();
+          that.cssRender();
         });
         
         this.rotateCamera(0);
@@ -256,8 +257,11 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
             that.controls.update();
           }
           that.renderer.render(that.scene, that.camera); 
-          //that.cssRenderer.render(that.cssScene, that.camera); 
         });
+      },
+      
+      cssRender: function() {
+        this.cssRenderer.render(this.cssScene, this.camera);
       },
       
       rotateCamera: function(dir) {
@@ -303,6 +307,16 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       removeObject: function(obj) {
         this.group.remove(obj);
         this.render();
+      },
+      
+      addCSSObject: function(obj) {
+        this.cssScene.add(obj);
+        this.cssRender();
+      },
+      
+      removeCSSObject: function(obj) {
+        this.cssScene.remove(obj);
+        this.cssRender();
       }
   };
   
