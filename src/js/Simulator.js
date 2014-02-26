@@ -37,6 +37,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player"],
     this.series = 0;
     this.direction = false;
     this.current = max/2;
+    this.real = this.current + this.shift;
   };
   Pos.prototype = {
     nextPos: function() {
@@ -61,7 +62,9 @@ define(["LightstreamerClient","./Constants","Executor","./Player"],
         this.direction = !this.direction;
       }
       
-      return this.current + this.shift;
+      this.real = this.current + this.shift;
+      
+      return this.real;
       
     }  
   };
@@ -76,6 +79,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player"],
     this.client.connect();
     
     this.game = game;
+    this.wait = 20;
     
     this.axis = {
         x: new Pos(MAX_3JS_POS["x"],SHIFT_3JS_POS["x"]),
@@ -102,14 +106,19 @@ define(["LightstreamerClient","./Constants","Executor","./Player"],
           return;
         }
         
-        var move = rand(20);
-        if (move == 5) {
-          
-          this.player.release(Constants.ROOM,rand(1000),rand(1000),-(rand(3000)+1000));
-
+        if (this.wait > 0) {
+          this.wait--;
         } else {
+          var move = rand(20);
+          if (move == 5) {
+            var mulX = this.axis.x.real > 0 ? -1 : 1;
+            this.player.release(Constants.ROOM,rand(1500)*mulX,rand(1000),-(rand(3000)+1000));
+            this.wait = 20;
 
-          this.player.move(Constants.ROOM,this.randomPos("x"),this.randomPos("y"),this.randomPos("z"));
+          } else {
+
+            this.player.move(Constants.ROOM,this.randomPos("x"),this.randomPos("y"),this.randomPos("z"));
+          }
         }
         
         
