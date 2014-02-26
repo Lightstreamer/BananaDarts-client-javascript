@@ -40,9 +40,7 @@ define(["DynaGrid","./Constants","./ConsoleSubscriptionListener","Subscription"]
     var element = $("#scoreboard")[0];
     var cssObject = new THREE.CSS3DObject(element);
     cssObject.position.set(Constants.MAX_SIZE.x,0,0);
-    cssObject.rotation.x = Math.PI / -2;
     cssObject.rotation.y = Math.PI / -2;
-    cssObject.rotation.z = Math.PI / -2;
     field.addCSSObject(cssObject);
     
     
@@ -64,6 +62,9 @@ define(["DynaGrid","./Constants","./ConsoleSubscriptionListener","Subscription"]
 
         visualUpdate.setCellValue("nick",nick);
         visualUpdate.setCellValue("status",status);
+        
+        visualUpdate.setHotToColdTime(500);
+        visualUpdate.setAttribute("yellow","","backgroundColor");
         
       }
       
