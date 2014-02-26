@@ -75,6 +75,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     this.dinamics =  new THREE.Vector3( 0, 0, 0 );
     this.startPos =  new THREE.Vector3( 0, 0, 0 );
     
+    this.status = "";
+    
     this.text = null; 
     this.nick = null;
     this.showNickFlag = showInfo;
@@ -157,6 +159,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.showNick(this.showNickFlag);
       },
       
+      setStatus: function(status) {
+        this.status = status;
+      },
+      
       /**
        * @private
        */
@@ -201,6 +207,9 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       },
       getNick: function() {
         return this.nick;
+      },
+      getStatus: function() {
+        return this.status;
       },
       isFlying: function() {
         return this.dinamics.z != 0;
