@@ -194,21 +194,51 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
        */
       setupRoom: function() {
         
-        var floor = new THREE.Mesh(new THREE.PlaneGeometry(Constants.MAX_SIZE.x*2,Constants.MAX_SIZE.z*2+Constants.FLOOR_OVERFLOW),new THREE.MeshLambertMaterial( { color: 0x00ff00 } ));
+        //var texture = THREE.ImageUtils.loadTexture("images/wall.jpg");
+        //var backWallMaterial = new THREE.MeshBasicMaterial({map: texture});
+        
+        var backWallMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
+        var leftWallMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
+        var rightWallMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
+        var floorMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
+        var ceilingMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
+        
+        var sideWallGeometry = new THREE.PlaneGeometry(Constants.MAX_SIZE.z*2+Constants.FLOOR_OVERFLOW,Constants.MAX_SIZE.y*2);
+        var floorCeilingGeometry = new THREE.PlaneGeometry(Constants.MAX_SIZE.x*2,Constants.MAX_SIZE.z*2+Constants.FLOOR_OVERFLOW);
+        var backWallGeometry = new THREE.PlaneGeometry(Constants.MAX_SIZE.x*2,Constants.MAX_SIZE.y*2);
+        
+        var floor = new THREE.Mesh(floorCeilingGeometry,floorMaterial);
         floor.position.set(0,-Constants.MAX_SIZE.y,Constants.FLOOR_OVERFLOW/2);
         floor.rotation.x = Math.PI / -2;
         floor.receiveShadow = true;
-        this.group.add( floor );
+        this.group.add(floor);
         
-        //var texture = THREE.ImageUtils.loadTexture("images/wall.jpg");
-        //var wallMaterial = new THREE.MeshBasicMaterial({map: texture});
-        
-        var wallMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
-        
-        var backWall = new THREE.Mesh(new THREE.PlaneGeometry(Constants.MAX_SIZE.x*2,Constants.MAX_SIZE.y*2),wallMaterial);
+        var ceiling = new THREE.Mesh(floorCeilingGeometry,ceilingMaterial);
+        ceiling.position.set(0,Constants.MAX_SIZE.y,Constants.FLOOR_OVERFLOW/2);
+        ceiling.rotation.x = Math.PI / 2;
+        ceiling.receiveShadow = true;
+        this.group.add(ceiling);
+                
+        var backWall = new THREE.Mesh(backWallGeometry,backWallMaterial);
         backWall.position.set(0,0,-Constants.MAX_SIZE.z);
         backWall.receiveShadow = false;
-        this.group.add(backWall);        
+        this.group.add(backWall);
+        
+        var leftWall = new THREE.Mesh(sideWallGeometry,leftWallMaterial);
+        leftWall.position.set(-Constants.MAX_SIZE.x,0,Constants.FLOOR_OVERFLOW/2);
+        leftWall.receiveShadow = false;
+        leftWall.rotation.y = Math.PI / 2;
+        this.group.add(leftWall);
+        
+        var rightWall = new THREE.Mesh(sideWallGeometry,rightWallMaterial);
+        rightWall.position.set(Constants.MAX_SIZE.x,0,Constants.FLOOR_OVERFLOW/2);
+        rightWall.receiveShadow = false;
+        rightWall.rotation.y = Math.PI / -2;
+        this.group.add(rightWall);
+        
+        
+        
+        
         
         for (var i=0; i<posters.length; i++) {
           var texture = THREE.ImageUtils.loadTexture(posters[i].img);
