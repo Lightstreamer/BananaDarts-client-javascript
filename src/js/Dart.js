@@ -372,7 +372,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         if (!isLanded) {
           this.setPosition(x,y,z);
           this.calculateRotation(x,y,z,tNow);
+        } else if(this.camera) {
+          this.field.enableOrbit(true);
         }
+        
       },
       
       calculateRotation: function(x,y,z,tNow) {
