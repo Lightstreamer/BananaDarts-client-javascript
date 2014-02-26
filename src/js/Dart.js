@@ -188,8 +188,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.text.position.y = this.dart.position.y+NICK_OFFSET["y"];
         this.text.position.z = this.dart.position.z+NICK_OFFSET["z"];
         this.field.addObject(this.text);
-       
-        this.field.render();
       }, 
       
       getKey: function() {
@@ -374,11 +372,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         if (!isLanded) {
           this.setPosition(x,y,z);
           this.calculateRotation(x,y,z,tNow);
-        } else {
-          this.attachCamera(false);
         }
-        
-        this.field.render();
       },
       
       calculateRotation: function(x,y,z,tNow) {
@@ -441,7 +435,11 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.setPosition(0,0,Constants.MAX_SIZE.z);
         this.setRotation(Math.PI/2,0,0);
         this.planted = false;
-        this.field.rotateCamera(0);
+        if (this.camera) {
+          this.attachCamera(false);
+          this.field.rotateCamera(0);
+        }
+        
       } 
   };
   
