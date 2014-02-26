@@ -21,10 +21,9 @@ define([],function() {
     };
   }
   
-  var GameLoop = function(game,field) {
+  var GameLoop = function(game) {
     this.thread = null;
     this.game = game;
-    this.field = field;
   };
   
   GameLoop.prototype = {
@@ -53,7 +52,7 @@ define([],function() {
            player.calculate();
          }
        });
-       this.field.render();
+      
        requestAnimationFrame(run(this));
      }
   };
