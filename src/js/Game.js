@@ -128,6 +128,10 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
           player.setNick(itemUpdate.getValue("nick"));
         }
         
+        if (itemUpdate.isValueChanged("status")) {
+          player.setStatus(itemUpdate.getValue("status"));
+        }
+        
      
         if (key == this.localPlayerKey) {
           //we do not need any information, we calculate everything locally
