@@ -74,6 +74,14 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     });
   };
   
+  /*var cCall = 0;
+  var cExe = 0;
+  var cChange = 0;
+  setInterval(function() {
+    console.log(cCall + " - " + cExe + " - " + cChange);
+    cExe = cCall = cChange = 0;
+  },1000);*/
+  
   Field.prototype = {
       
       /**
@@ -126,6 +134,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         
         var that = this;
         this.controls.addEventListener('change', function() {
+          //cChange++;
           that.render();
         });
         
@@ -234,12 +243,14 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       },
 
       render: function() {
+        //cCall++;
         if (this.waitingToRender) {
           return;
         }
         this.waitingToRender = true;
         var that = this;
         requestAnimationFrame(function() {
+          //cExe++;
           that.waitingToRender = false;
           if (that.controls.enabled) {
             that.controls.update();
