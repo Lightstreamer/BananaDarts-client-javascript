@@ -13,8 +13,8 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscription"],
-    function(Constants,Utils,Dart,ConsoleSubscriptionListener,Subscription) {
+define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscription","./GameLoop"],
+    function(Constants,Utils,Dart,ConsoleSubscriptionListener,Subscription,GameLoop) {
     
   var Game = function(client,room,field) {
     this.players = {};
@@ -42,6 +42,7 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
     
     client.subscribe(roomSubscription);
     
+    this.gameLoop = new GameLoop(this);
   };
   
   Game.prototype = {
@@ -152,6 +153,7 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
           var vZ = itemUpdate.getValue("dVz");
           if (vZ !== null) {
             player.setSpeed(Number(itemUpdate.getValue("dVx")),Number(itemUpdate.getValue("dVy")),Number(vZ));
+            this.gameLoop.start();
           }
         }
       },
@@ -174,6 +176,7 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
             this.players[id].attachCamera(true);
           }
           this.players[id].setSpeed(sx,sy,sz);
+          this.gameLoop.start();
         }
       },
       

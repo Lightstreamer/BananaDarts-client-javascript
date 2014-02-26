@@ -31,7 +31,6 @@ define([],function() {
        if (this.thread) {
          return;
        }
-
        this.thread = true;
        requestAnimationFrame(run(this));
        
@@ -40,20 +39,25 @@ define([],function() {
        if (!this.thread) {
          return;
        }
-
        this.thread = false;
      },
      calculate: function() {
        if (!this.thread) {
          return;
        }
+       var goOn = false; 
        this.game.forEachPlayer(function(player) {
          if (player.isFlying()) {
+           goOn = true;
            player.calculate();
          }
        });
       
-       requestAnimationFrame(run(this));
+       if (goOn) {
+         requestAnimationFrame(run(this));
+       } else {
+         this.stop();
+       }
      }
   };
   

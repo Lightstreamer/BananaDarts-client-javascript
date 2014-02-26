@@ -71,8 +71,8 @@ $(document).ready(function(){
 });
   
 
-require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/GameLoop","js/Player","js/LeapMotion","js/Scoreboard","js/Simulator"],
-    function(Field,Constants,Dart,Game,lsClient,GameLoop,Player,LeapMotion,Scoreboard,Simulator) {
+require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/Player","js/LeapMotion","js/Scoreboard","js/Simulator"],
+    function(Field,Constants,Dart,Game,lsClient,Player,LeapMotion,Scoreboard,Simulator) {
   
   var field = new Field($("#theWorld")[0]);
   $("#resetCamera").click(function(){
@@ -91,9 +91,6 @@ require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/GameLoo
     game.enableCameraHandling($(this).prop("checked"));
   });
   game.enableCameraHandling($("#autoCamera").prop("checked")); 
-  
-  var gameLoop = new GameLoop(game);
-  gameLoop.start();
   
   var scoreboard = new Scoreboard(lsClient,game,field);
   
