@@ -63,7 +63,8 @@ define(["DynaGrid","./Constants","./ConsoleSubscriptionListener","Subscription"]
         visualUpdate.setCellValue("nick",nick);
         visualUpdate.setCellValue("status",status);
         
-        visualUpdate.setHotToColdTime(500);
+        visualUpdate.setHotTime(500);
+        visualUpdate.setHotToColdTime(700);
         visualUpdate.setAttribute("yellow","","backgroundColor");
         
       }

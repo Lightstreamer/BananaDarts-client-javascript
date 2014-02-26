@@ -71,7 +71,17 @@ body {
 
 #scoreboard {
   display: none;
-  height: 220px
+  height: 220px;
+  width: 200px;
+}
+
+#scoreboard table {
+  table-layout:fixed;
+  width: 183px;
+  word-wrap:break-word;
+}
+#scoreboard tbody {
+  font-size: 10px;
 }
 
 .button {
