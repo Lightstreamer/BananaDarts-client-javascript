@@ -148,13 +148,28 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
        */
       setupLight: function() {
         // Lighting the scene.
-        var light1 = new THREE.DirectionalLight( 0xffffff, 2 );
+        var light1 = new THREE.DirectionalLight( 0xffffff, 1 );
         light1.position.set( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z);
-        this.scene.add( light1 );
+        //light1.castShadow = true;
+        //light1.shadowCameraVisible = true;
+        this.scene.add(light1);
         
-        var light2 = new THREE.PointLight( 0xffffff, 2 ); 
+        var light2 = new THREE.PointLight( 0xffffff, 1 ); 
         light2.position.set( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z );
-        this.scene.add( light2 );
+        this.scene.add(light2);
+        
+        var boardLight = new THREE.DirectionalLight(0xffffff, 3.5);
+        boardLight.position.set(0,Constants.MAX_SIZE.y/3.5,-Constants.MAX_SIZE.z/1.5);
+        boardLight.target.position.set(0,0,-Constants.MAX_SIZE.z);
+        boardLight.shadowCameraLeft = -Constants.BOARD_DIAMETER/2;
+        boardLight.shadowCameraRight = Constants.BOARD_DIAMETER/2;//40
+        boardLight.shadowCameraTop = Constants.BOARD_DIAMETER/1.3;
+        boardLight.shadowCameraBottom = -Constants.BOARD_DIAMETER/2;
+        boardLight.shadowCameraNear = Constants.BOARD_DIAMETER/2;
+        boardLight.shadowCameraFar = Constants.BOARD_DIAMETER/0.6;
+        //boardLight.castShadow = true;
+        //boardLight.shadowCameraVisible = true;
+        this.scene.add(boardLight);
         
         var aboveLight = new THREE.DirectionalLight( 0xFFFFFF );
         aboveLight.position.set(0,Constants.MAX_SIZE.y+1,0); //+1 or else when touching the ceiling the shadow is not shown
@@ -262,6 +277,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           object.position.set(0,Constants.CENTER_Y,-(Constants.MAX_SIZE.z));
           object.scale.set(Constants.SCALE,Constants.SCALE,Constants.SCALE);
           object.quaternion.set(0,1,0,0);
+          
           that.group.add( object );
           that.render();
         });

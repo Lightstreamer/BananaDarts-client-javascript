@@ -44,6 +44,8 @@ define(["./Utils"],function(Utils) {
     GO_LINE: 10,
     FLOOR_OVERFLOW: dartSize*scale,
     
+    BOARD_DIAMETER: 200*scale,
+    
     MAX_SIZE: {
      x:SIZE_X/2*scale,
      y:SIZE_Y/2*scale,
