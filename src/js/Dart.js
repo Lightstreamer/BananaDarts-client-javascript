@@ -27,14 +27,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   mtls[Constants.OTHER] = "obj/dartb.obj.mtl";
   
   
-  function setShadowOnObject(object) {
-    object.castShadow = true;
-    var children = object.getDescendants();
-    for (var i = 0; i < children.length; i++) {
-      setShadowOnObject(children[i]);
-    }
-  }
-  
   var waiting = {};
   waiting[Constants.OWN] = [];
   waiting[Constants.OTHER] = [];
