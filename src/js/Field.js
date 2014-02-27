@@ -148,17 +148,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
        */
       setupLight: function() {
         // Lighting the scene.
-        var light1 = new THREE.DirectionalLight( 0xffffff, 1 );
-        light1.position.set( Constants.MAX_SIZE.x, Constants.MAX_SIZE.y, Constants.MAX_SIZE.z);
-        //light1.castShadow = true;
-        //light1.shadowCameraVisible = true;
-        this.scene.add(light1);
-        
-        var light2 = new THREE.PointLight( 0xffffff, 1 ); 
-        light2.position.set( -Constants.MAX_SIZE.x, -Constants.MAX_SIZE.y, -Constants.MAX_SIZE.z );
-        this.scene.add(light2);
-        
-        var boardLight = new THREE.DirectionalLight(0xffffff, 3.5);
+                
+        /*var boardLight = new THREE.DirectionalLight(0xffffff, 3.5);
         boardLight.position.set(0,Constants.MAX_SIZE.y/3.5,-Constants.MAX_SIZE.z/1.5);
         boardLight.target.position.set(0,0,-Constants.MAX_SIZE.z);
         boardLight.shadowCameraLeft = -Constants.BOARD_DIAMETER/2;
@@ -169,9 +160,26 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         boardLight.shadowCameraFar = Constants.BOARD_DIAMETER/0.6;
         //boardLight.castShadow = true;
         //boardLight.shadowCameraVisible = true;
-        this.scene.add(boardLight);
+        this.scene.add(boardLight);*/
         
-        var aboveLight = new THREE.DirectionalLight( 0xFFFFFF );
+        var pLight = new THREE.PointLight(0xffffff, 3.5);
+        pLight.position.set(0,Constants.MAX_SIZE.y/2,-Constants.MAX_SIZE.z/1.5);
+        this.scene.add(pLight);
+        
+        /*var pLight2 = new THREE.PointLight(0xffffff, 3.5);
+        pLight2.position.set(0,Constants.MAX_SIZE.y/2,Constants.MAX_SIZE.z/1.5);
+        this.scene.add(pLight2);*/
+        
+        var pLightLeft = new THREE.PointLight(0xffffff, 0.5);
+        pLightLeft.position.set(-Constants.MAX_SIZE.x,Constants.MAX_SIZE.y/2,Constants.MAX_SIZE.z/1.5);
+        this.scene.add(pLightLeft);
+        
+        var pLightRight = new THREE.PointLight(0xffffff, 0.5);
+        pLightRight.position.set(Constants.MAX_SIZE.x,Constants.MAX_SIZE.y/2,Constants.MAX_SIZE.z/1.5);
+        this.scene.add(pLightRight);
+        
+        
+        var aboveLight = new THREE.DirectionalLight( 0xFFFFFF, 0.1 );
         aboveLight.position.set(0,Constants.MAX_SIZE.y+1,0); //+1 or else when touching the ceiling the shadow is not shown
         aboveLight.target.position.set(0,-Constants.MAX_SIZE.y,0);
         aboveLight.castShadow = true;
