@@ -13,10 +13,9 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["LightstreamerClient","./Constants","Executor","./Player"],
-    function(LightstreamerClient,Constants,Executor,Player) {
+define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
+    function(LightstreamerClient,Constants,Executor,Player,lsClient) {
   
-  var protocolToUse = document.location.protocol != "file:" ? document.location.protocol : "http:";
   var simCount = 0;
   
   var MAX_3JS_POS = {
@@ -75,7 +74,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player"],
   }
   
   function Simulator(game) {
-    this.client = new LightstreamerClient(protocolToUse+"//localhost:8080",Constants.ADAPTER);
+    this.client = new LightstreamerClient(lsClient.connectionDetails.getServerAddress(),Constants.ADAPTER);
     this.client.connect();
     
     this.game = game;
@@ -109,11 +108,11 @@ define(["LightstreamerClient","./Constants","Executor","./Player"],
         if (this.wait > 0) {
           this.wait--;
         } else {
-          var move = rand(20);
+          var move = rand(40);
           if (move == 5) {
             var mulX = this.axis.x.real > 0 ? -1 : 1;
             this.player.release(Constants.ROOM,rand(1500)*mulX,rand(1000),-(rand(3000)+1000));
-            this.wait = 20;
+            this.wait = 50;
 
           } else {
 
