@@ -129,10 +129,18 @@ require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/Player"
     });
   }
   
+
+    var created = 0;
+    var creator = setInterval(function() {
+      if (created >= Constants.SIMULATED_PLAYERS) {
+        clearInterval(creator);
+        return;
+      }
+      created++;
+      console.log("Create new simulator " + created);
+      new Simulator(game);
+    },100);
   
-  for (var i=0; i < Constants.SIMULATED_PLAYERS; i++) {
-    new Simulator(game);
-  }
   
 });
 
