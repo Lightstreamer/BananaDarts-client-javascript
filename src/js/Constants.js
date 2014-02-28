@@ -15,7 +15,7 @@ Copyright 2014 Weswit s.r.l.
 */
 define(["./Utils"],function(Utils) {
   
-  var scale = 0.20; //need scale because our unit is based on the original scoreboard that is in turn scaled 
+  var scale = 0.2; //need scale because our unit is based on the original scoreboard that is in turn scaled 
   var dartSize = 96;
   
   var SIZE_X = Utils.cmToUnit(500);
@@ -65,7 +65,7 @@ define(["./Utils"],function(Utils) {
     
     SPEED_FACTOR: 2,
     USE_PEAK_SPEED: false,
-    USE_LAST_SPEED: false,
+    USE_LAST_SPEED: true,
     HISTORY_WEIGHT: 0.5,
     
     
