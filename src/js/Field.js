@@ -39,6 +39,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   
   var Field = function(htmlEl) {
      
+    this.htmlEl = htmlEl;
+    
     this.scene = new THREE.Scene();
     this.cssScene = new THREE.Scene();
     this.group = new THREE.Object3D();
@@ -49,12 +51,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     this.camera = null;
     this.controls = null;
     
-    this.htmlEl = htmlEl;
+    
     this.webGLinUse = this.setupRenderers();
-    htmlEl.appendChild(this.renderer.domElement);
-    htmlEl.appendChild(this.cssRenderer.domElement);
-    
-    
+    this.setupHtml();
+        
     this.setupRoom();
 
     this.currentCameraPosition = -1;
@@ -65,6 +65,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     this.setupBoard();
     
     this.setupSize();
+    
+   
     
     this.render();
     
@@ -115,12 +117,28 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.renderer.sortObjects = false;
         
         this.cssRenderer = new THREE.CSS3DRenderer();
-        this.cssRenderer.domElement.style.position = 'absolute';
-        this.cssRenderer.domElement.style.top = 0;
-        
-        
         
         return webGl;
+      },
+      
+      setupHtml: function() {
+        this.cssRenderer.domElement.style.position = 'absolute';
+        this.cssRenderer.domElement.style.top = 0;
+        /*this.cssRenderer.domElement.style.margin = 0;
+        this.cssRenderer.domElement.style.padding  = 0;
+        this.cssRenderer.domElement.style.zIndex  = 1;*/
+        
+        
+        
+        /*this.renderer.domElement.style.position = 'absolute';
+        this.renderer.domElement.style.top = 0;
+        this.renderer.domElement.style.zIndex = 1;*/
+        
+        this.htmlEl.appendChild(this.renderer.domElement);
+        this.htmlEl.appendChild(this.cssRenderer.domElement);
+        //this.cssRenderer.domElement.appendChild( this.renderer.domElement );
+        //this.renderer.domElement.appendChild( this.cssRenderer.domElement );
+        
       },
       
       /**
