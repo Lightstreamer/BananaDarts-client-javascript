@@ -42,9 +42,15 @@ define(["Inheritance","EventDispatcher","./Constants"],
   }
   
   var MAX_3JS_POS = {
-    x: Constants.MAX_SIZE["x"]*2,
-    y: Constants.MAX_SIZE["y"]*2,
+    x: Constants.ARM_LENGTH,
+    y: Constants.ARM_LENGTH,
     z: Constants.ARM_REACH
+  };
+  
+  var POS_SHIFT = {
+    x: -Constants.ARM_LENGTH/2,
+    y: -Constants.ARM_LENGTH/2 + Constants.TWENTY,
+    z: Constants.MAX_SIZE["z"] - Constants.ARM_REACH
   };
   
   function getSign(v) {
@@ -57,17 +63,8 @@ define(["Inheritance","EventDispatcher","./Constants"],
     var pos = POSITIONS[axis];
 
     //leapPos is normalized (0 >= leapPos[pos] <= 1)
-    //first we conver leapPos[pos] to the full range
-    var val = MAX_3JS_POS[axis]*leapPos[pos];
-  
-    //then we shift accordingly
-    if (axis == "z") {
-      val = Constants.MAX_SIZE["z"] - Constants.ARM_REACH + val;
-    } else {
-      val -= Constants.MAX_SIZE[axis];
-    }
-    
-    return val;
+    //first we conver leapPos[pos] to the full range and then we shift accordingly
+    return MAX_3JS_POS[axis]*leapPos[pos] + POS_SHIFT[axis];
   }
   
   
