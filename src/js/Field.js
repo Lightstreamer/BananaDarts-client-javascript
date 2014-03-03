@@ -21,21 +21,12 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   var RIGHT = "right";
   var LEFT = "left";
   var CAMERA_POSITIONS = [
-                   {x: 0, y:0, z:Constants.MAX_SIZE.z*4.3},
+                   {x: 0, y: Constants.INITIAL_CAMERA_POS_Y, z:Constants.INITIAL_CAMERA_POS_Z},
                    {x: -Constants.MAX_SIZE.x, y:0, z:0},
                    {x: 0, y:0, z:-Constants.MAX_SIZE.z},
                    {x: Constants.MAX_SIZE.x, y:0, z:0}
                    ];
   
-  var posters = [ //posters go on the back wall
-               /* {
-                   x: Constants.MAX_SIZE.x/2,
-                   y: 0,
-                   img: "images/poster1.jpg",
-                   w: 70,
-                   h: 140
-                 },*/
-                 ];
   
   var Field = function(htmlEl) {
      
@@ -118,6 +109,9 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         
         this.cssRenderer = new THREE.CSS3DRenderer();
         
+        //this.rendererStats  = new THREEx.RendererStats();
+        //this.stats = new Stats();
+        
         return webGl;
       },
       
@@ -136,9 +130,17 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         
         this.htmlEl.appendChild(this.renderer.domElement);
         this.htmlEl.appendChild(this.cssRenderer.domElement);
-        //this.cssRenderer.domElement.appendChild( this.renderer.domElement );
+        
+      //this.cssRenderer.domElement.appendChild( this.renderer.domElement );
         //this.renderer.domElement.appendChild( this.cssRenderer.domElement );
         
+        /*this.rendererStats.domElement.style.position   = 'absolute';
+        this.rendererStats.domElement.style.left  = '0px';
+        this.rendererStats.domElement.style.bottom    = '45px';
+        this.htmlEl.appendChild( this.rendererStats.domElement );
+        
+        this.htmlEl.appendChild(this.stats.domElement);*/
+
       },
       
       /**
@@ -208,10 +210,13 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         aboveLight.shadowCameraBottom = Constants.MAX_SIZE.x;
         aboveLight.shadowCameraNear = 0;
         aboveLight.shadowCameraFar = Constants.MAX_SIZE.y*2+2; //+2 or else part of the floor might be out of reach 
+        aboveLight.shadowMapWidth = 4096;
+        aboveLight.shadowMapHeight = 4096;
         aboveLight.shadowBias = -.001;
-        aboveLight.shadowMapWidth = 2048;
-        aboveLight.shadowMapHeight = 2048;
-        aboveLight.shadowDarkness = .95;
+        aboveLight.shadowDarkness = .85;
+        
+      
+        
         this.scene.add( aboveLight );
         
       },
@@ -235,19 +240,32 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
        */
       setupRoom: function() {
         
-        //var texture = THREE.ImageUtils.loadTexture("images/wall.jpg");
-        //var backWallMaterial = new THREE.MeshBasicMaterial({map: texture});
+        //textures
+        var floorTexture = THREE.ImageUtils.loadTexture("images/floor.jpg");
+        floorTexture.wrapS = floorTexture.wrapT = THREE.RepeatWrapping;
+        floorTexture.repeat.set( 8, 5 );
         
-        var backWallMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
-        var leftWallMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
-        var rightWallMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
-        var floorMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
-        var ceilingMaterial = new THREE.MeshLambertMaterial({ color: 0x00ff00 });
+        var ceilingTexture = THREE.ImageUtils.loadTexture("images/ceiling.jpg");
+        ceilingTexture.wrapS = ceilingTexture.wrapT = THREE.RepeatWrapping;
+        ceilingTexture.repeat.set( 4, 3 );
         
+        var leftWallTexture = THREE.ImageUtils.loadTexture("images/leftwall.jpg");
+        var backWallTexture = THREE.ImageUtils.loadTexture("images/wall.jpg");
+        var rightWallTexture = THREE.ImageUtils.loadTexture("images/rightwall.jpg");
+     
+        //create materials using textures
+        var floorMaterial = new THREE.MeshBasicMaterial({map: floorTexture});
+        var ceilingMaterial = new THREE.MeshBasicMaterial({ map: ceilingTexture });
+        var leftWallMaterial = new THREE.MeshBasicMaterial({ map: leftWallTexture });
+        var backWallMaterial =  new THREE.MeshBasicMaterial({ map: backWallTexture });
+        var rightWallMaterial = new THREE.MeshBasicMaterial({ map: rightWallTexture });
+        
+        //prepare geometries
         var sideWallGeometry = new THREE.PlaneGeometry(Constants.MAX_SIZE.z*2+Constants.FLOOR_OVERFLOW,Constants.MAX_SIZE.y*2);
         var floorCeilingGeometry = new THREE.PlaneGeometry(Constants.MAX_SIZE.x*2,Constants.MAX_SIZE.z*2+Constants.FLOOR_OVERFLOW);
         var backWallGeometry = new THREE.PlaneGeometry(Constants.MAX_SIZE.x*2,Constants.MAX_SIZE.y*2);
         
+        //put everything together
         var floor = new THREE.Mesh(floorCeilingGeometry,floorMaterial);
         floor.position.set(0,-Constants.MAX_SIZE.y,Constants.FLOOR_OVERFLOW/2);
         floor.rotation.x = Math.PI / -2;
@@ -276,20 +294,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         rightWall.receiveShadow = false;
         rightWall.rotation.y = Math.PI / -2;
         this.group.add(rightWall);
-        
-        
-        
-        
-        
-        for (var i=0; i<posters.length; i++) {
-          var texture = THREE.ImageUtils.loadTexture(posters[i].img);
-          var posterMaterial = new THREE.MeshBasicMaterial({map: texture});
-          
-          var poster =  new THREE.Mesh(new THREE.PlaneGeometry(posters[i].w,posters[i].h),posterMaterial);
-          poster.position.set(posters[i].x,posters[i].y,-Constants.MAX_SIZE.z+1);
-          poster.receiveShadow = false;
-          this.group.add( poster );
-        }
         
       },
       
@@ -329,6 +333,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
             that.controls.update();
           }
           that.renderer.render(that.scene, that.camera); 
+          that.rendererStats.update(that.renderer);
+          that.stats.update();
           if (that.waitingToRenderCSS) {
             that.cssRenderer.render(that.cssScene, that.camera);
             that.waitingToRenderCSS = false;
@@ -360,7 +366,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         
         
         this.moveCamera(CAMERA_POSITIONS[this.currentCameraPosition].x,CAMERA_POSITIONS[this.currentCameraPosition].y,CAMERA_POSITIONS[this.currentCameraPosition].z);
-        this.pointCamera(0,0,0);
+        this.pointCamera(0,Constants.INITIAL_CAMERA_POS_Y,0);
       },
       
       moveCamera: function(x,y,z) {
