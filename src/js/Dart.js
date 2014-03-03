@@ -436,7 +436,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       },
       
       reset: function() {
-        this.setPosition(0,0,Constants.MAX_SIZE.z);
+        this.setPosition(0,Constants.INITIAL_CAMERA_POS_Y,Constants.MAX_SIZE.z);
         this.setRotation(Math.PI/2,0,0);
         this.planted = false;
         if (this.camera) {
