@@ -40,9 +40,14 @@ define(["./Utils"],function(Utils) {
     SCALE: scale,
        
     DART_ORIGINAL_SIZE: dartSize,
+    
     ARM_REACH: Utils.cmToUnit(32)*scale,
-    GO_LINE: 10,
+    ARM_LENGTH: Utils.cmToUnit(70)*scale,
+    TWENTY: Utils.cmToUnit(20)*scale,
+    GO_LINE: 1,
+    
     FLOOR_OVERFLOW: dartSize*scale,
+    
     
     BOARD_DIAMETER: 200*scale,
     
@@ -53,6 +58,8 @@ define(["./Utils"],function(Utils) {
     },
     
     CENTER_Y: (CENTER_FROM_FLOOR-SIZE_Y/2)*scale,
+    INITIAL_CAMERA_POS_Y: (Utils.cmToUnit(170)-SIZE_Y/2)*scale,
+    INITIAL_CAMERA_POS_Z: (Utils.cmToUnit(280)+SIZE_Z/2)*scale,
     
     LEAP_PADDING: {
       x: 10,
