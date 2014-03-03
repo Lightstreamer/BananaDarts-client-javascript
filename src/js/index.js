@@ -92,6 +92,12 @@ require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/Player"
   });
   game.enableCameraHandling($("#autoCamera").prop("checked")); 
   
+  $("#showNicks").change(function() {
+    game.showExtraInfo($(this).prop("checked"));
+  });
+  game.showExtraInfo($("#showNicks").prop("checked"));
+  
+  
   var scoreboard = new Scoreboard(lsClient,game,field);
   
   var player = new Player(Constants.DEFAULT_NICK,"",lsClient,game);
