@@ -333,8 +333,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
             that.controls.update();
           }
           that.renderer.render(that.scene, that.camera); 
-          that.rendererStats.update(that.renderer);
-          that.stats.update();
+          //that.rendererStats.update(that.renderer);
+          //that.stats.update();
           if (that.waitingToRenderCSS) {
             that.cssRenderer.render(that.cssScene, that.camera);
             that.waitingToRenderCSS = false;
