@@ -15,7 +15,6 @@ Copyright 2014 Weswit s.r.l.
 */
 define(["./Utils"],function(Utils) {
   
-  var scale = 0.2; //need scale because our unit is based on the original scoreboard that is in turn scaled 
   var dartSize = 96;
   
   var SIZE_X = Utils.cmToUnit(500);
@@ -27,7 +26,7 @@ define(["./Utils"],function(Utils) {
   var NO_GRAVITY = 0;
   var EARTH_GRAVITY = 9.82; //m/s^2
   var MOON_GRAVITY =  1.6249; //m/s^2
-  var ACCELERATION_UNIT_MS_SQUARE = Utils.cmToUnit(MOON_GRAVITY/10000)*scale; //(9.81/1000000)*100 cm/ms^2;
+  var ACCELERATION_UNIT_MS_SQUARE = Utils.cmToUnit(MOON_GRAVITY/10000); //(9.81/1000000)*100 cm/ms^2;
   
   return {
     OWN: "own",
@@ -37,29 +36,27 @@ define(["./Utils"],function(Utils) {
     LOG_UPDATES_ON_CONSOLE: false,
     CHEAT: false,
     
-    SCALE: scale,
-       
     DART_ORIGINAL_SIZE: dartSize,
     
-    ARM_REACH: Utils.cmToUnit(32)*scale,
-    ARM_LENGTH: Utils.cmToUnit(70)*scale,
-    TWENTY: Utils.cmToUnit(20)*scale,
+    ARM_REACH: Utils.cmToUnit(32),
+    ARM_LENGTH: Utils.cmToUnit(70),
+    TWENTY: Utils.cmToUnit(20),
     GO_LINE: 1,
     
-    FLOOR_OVERFLOW: dartSize*scale,
+    FLOOR_OVERFLOW: dartSize,
     
     
-    BOARD_DIAMETER: 200*scale,
+    BOARD_DIAMETER: 200,
     
     MAX_SIZE: {
-     x:SIZE_X/2*scale,
-     y:SIZE_Y/2*scale,
-     z:SIZE_Z/2*scale
+     x:SIZE_X/2,
+     y:SIZE_Y/2,
+     z:SIZE_Z/2
     },
     
-    CENTER_Y: (CENTER_FROM_FLOOR-SIZE_Y/2)*scale,
-    INITIAL_CAMERA_POS_Y: (Utils.cmToUnit(170)-SIZE_Y/2)*scale,
-    INITIAL_CAMERA_POS_Z: (Utils.cmToUnit(280)+SIZE_Z/2)*scale,
+    CENTER_Y: (CENTER_FROM_FLOOR-SIZE_Y/2),
+    INITIAL_CAMERA_POS_Y: (Utils.cmToUnit(170)-SIZE_Y/2),
+    INITIAL_CAMERA_POS_Z: (Utils.cmToUnit(280)+SIZE_Z/2),
     
     LEAP_PADDING: {
       x: 10,

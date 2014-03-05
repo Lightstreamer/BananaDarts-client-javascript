@@ -56,8 +56,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   };
   
   
-  //Dart obj is 13.598 units, we want it 96*scale
-  var expectedSize = Constants.DART_ORIGINAL_SIZE*Constants.SCALE;
+  //Dart obj is 13.598 units, we want it 96
+  var expectedSize = Constants.DART_ORIGINAL_SIZE;
   var SCALE_TO = expectedSize/13.598;
   
   var Dart = function(key,type,field,showInfo) {

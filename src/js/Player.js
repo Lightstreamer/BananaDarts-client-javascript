@@ -153,9 +153,9 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
         }
         this.holding = false;
         
-        sx = Utils.mmsToUnitms(sx)*Constants.SCALE;
-        sy = Utils.mmsToUnitms(sy)*Constants.SCALE;
-        sz = Utils.mmsToUnitms(sz)*Constants.SCALE;
+        sx = Utils.mmsToUnitms(sx);
+        sy = Utils.mmsToUnitms(sy);
+        sz = Utils.mmsToUnitms(sz);
 
         //convert from mm/s to unit/ms 
         if (Constants.CHEAT) {

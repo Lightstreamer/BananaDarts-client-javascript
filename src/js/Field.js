@@ -292,7 +292,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         
         Utils.loadObj("obj/dartboard.obj", "obj/dartboard.obj.mtl", function (object) {
           object.position.set(0,Constants.CENTER_Y,-(Constants.MAX_SIZE.z));
-          object.scale.set(Constants.SCALE,Constants.SCALE,Constants.SCALE);
           object.quaternion.set(0,1,0,0);
           
           that.group.add( object );
@@ -387,7 +386,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       addCSSObject: function(obj) {
         //create the see-through panel that will permit the mix of html in the 3D scene
         var rect = obj.element.getBoundingClientRect();
-        var panelGeometry = new THREE.PlaneGeometry(rect.width,rect.height);
+        var panelGeometry = new THREE.PlaneGeometry(rect.width-10,rect.height-10); //if we don't give a margin (-10) we see white lines around the html snippet. take care to have 5 useless padding pixels in that html
         var panel = new THREE.Mesh(panelGeometry,SEE_THROUGH_MATERIAL);
         panel.position = obj.position;
         panel.rotation = obj.rotation;
