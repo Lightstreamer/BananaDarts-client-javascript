@@ -16,8 +16,6 @@ Copyright 2014 Weswit s.r.l.
 define(["DynaGrid","./Constants","./ConsoleSubscriptionListener","Subscription"],
     function(DynaGrid,Constants,ConsoleSubscriptionListener,Subscription) {
   
-  //TODO clean up this module
-  
   var Scoreboard = function(client,game,field) {
     
     this.game = game;
@@ -39,10 +37,14 @@ define(["DynaGrid","./Constants","./ConsoleSubscriptionListener","Subscription"]
     $("#scoreboard").show();
     var element = $("#scoreboard")[0];
     var cssObject = new THREE.CSS3DObject(element);
-    cssObject.position.set(Constants.MAX_SIZE.x,0,0);
-    cssObject.rotation.y = Math.PI / -2;
-    field.addCSSObject(cssObject);
     
+    //get its size and center it in the top left corner
+    var rect = element.getBoundingClientRect();
+    var x = -Constants.MAX_SIZE.x+rect.width/2;
+    var y = Constants.MAX_SIZE.y-rect.height/2;
+    cssObject.position.set(x,y,-Constants.MAX_SIZE.z+10); //stay away a bit from the wall or you'll get a strange flickering effect (makes sense @ 0 distance)
+
+    field.addCSSObject(cssObject);
     
     grid.addListener(this);
     scoreSubscription.addListener(grid);
@@ -61,11 +63,11 @@ define(["DynaGrid","./Constants","./ConsoleSubscriptionListener","Subscription"]
         status = player ?  player.getStatus() : "";
 
         visualUpdate.setCellValue("nick",nick);
-        visualUpdate.setCellValue("status",status);
         
         visualUpdate.setHotTime(500);
         visualUpdate.setHotToColdTime(700);
         visualUpdate.setAttribute("yellow","","backgroundColor");
+        visualUpdate.setAttribute("black","white","color");
         
       }
       

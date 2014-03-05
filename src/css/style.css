@@ -96,17 +96,22 @@ body {
 
 #scoreboard {
   display: none;
-  height: 220px;
-  width: 205px;
+  padding: 10px; //5+5
+  border: 0;
+  width: 875px; 
+  height: 525px;
+  color:white;
+  background-image:url(../images/score.jpg);
+  background-size: contain;
 }
 
 #scoreboard table {
   table-layout:fixed;
-  width: 183px;
+  width: 875px;
   word-wrap:break-word;
 }
 #scoreboard tbody {
-  font-size: 10px;
+  /*font-size: 10px;*/
 
 }
 
