@@ -302,9 +302,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       },
       
 ///////////////////---> end initialization code
-      getSeeThroughMaterial: function() {
-        return SEE_THROUGH_MATERIAL;
-      },
       
       isWebGLinUse: function() {
         return this.webGLinUse;
@@ -386,8 +383,17 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.group.remove(obj);
         this.render();
       },
-      
+
       addCSSObject: function(obj) {
+        //create the see-through panel that will permit the mix of html in the 3D scene
+        var rect = obj.element.getBoundingClientRect();
+        var panelGeometry = new THREE.PlaneGeometry(rect.width,rect.height);
+        var panel = new THREE.Mesh(panelGeometry,SEE_THROUGH_MATERIAL);
+        panel.position = obj.position;
+        panel.rotation = obj.rotation;
+        panel.quaternion = obj.quaternion;
+        this.scene.add(panel);
+        
         this.cssScene.add(obj);
         this.cssRender();
       },
