@@ -31,6 +31,14 @@ body {
   overflow: hidden;
 }
 
+.github {
+  position: absolute; 
+  top: 0; 
+  right: 0; 
+  border: 0; 
+  z-index: 4;
+}
+
 #tools_button {
   position: relative;
   top:0px;
@@ -65,8 +73,25 @@ body {
 }
 
 #theWorld {
-  background-color: #FFFFFF;
-  
+  background-color: transparent;
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  z-index:2;
+}
+
+#cssRenderer {
+  position: absolute;
+  top: 0;
+  margin: 0;
+  padding: 0;
+}
+#renderer {
+  position: absolute;
+  top: 0;
+  z-index: 1;
 }
 
 #scoreboard {
@@ -82,8 +107,12 @@ body {
 }
 #scoreboard tbody {
   font-size: 10px;
+
 }
 
 .button {
   cursor:pointer;
 }
+
+
+

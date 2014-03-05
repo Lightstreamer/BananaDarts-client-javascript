@@ -27,6 +27,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
                    {x: Constants.MAX_SIZE.x, y:0, z:0}
                    ];
   
+  var SEE_THROUGH_MATERIAL = new THREE.MeshBasicMaterial({color: "black",  blending: THREE.NoBlending, opacity:0});
+  
   
   var Field = function(htmlEl) {
      
@@ -56,9 +58,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     this.setupBoard();
     
     this.setupSize();
-    
-   
-    
+     
     this.render();
     
     var that = this;
@@ -97,6 +97,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
        * @private
        */
       setupRenderers: function() {
+        this.cssRenderer = new THREE.CSS3DRenderer();
+        
         var webGl = true;
         try { 
           this.setupWebGL();
@@ -106,33 +108,19 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         }
         this.renderer.shadowMapEnabled = true;
         this.renderer.sortObjects = false;
-        
-        this.cssRenderer = new THREE.CSS3DRenderer();
-        
+        this.renderer.setClearColor( "black", 1 );
+       
         //this.rendererStats  = new THREEx.RendererStats();
         //this.stats = new Stats();
-        
         return webGl;
       },
       
       setupHtml: function() {
-        this.cssRenderer.domElement.style.position = 'absolute';
-        this.cssRenderer.domElement.style.top = 0;
-        /*this.cssRenderer.domElement.style.margin = 0;
-        this.cssRenderer.domElement.style.padding  = 0;
-        this.cssRenderer.domElement.style.zIndex  = 1;*/
-        
-        
-        
-        /*this.renderer.domElement.style.position = 'absolute';
-        this.renderer.domElement.style.top = 0;
-        this.renderer.domElement.style.zIndex = 1;*/
-        
-        this.htmlEl.appendChild(this.renderer.domElement);
+        this.cssRenderer.domElement.id = "cssRenderer"; //css is important
         this.htmlEl.appendChild(this.cssRenderer.domElement);
         
-      //this.cssRenderer.domElement.appendChild( this.renderer.domElement );
-        //this.renderer.domElement.appendChild( this.cssRenderer.domElement );
+        this.renderer.domElement.id = "renderer"; //css is important
+        this.cssRenderer.domElement.appendChild(this.renderer.domElement);
         
         /*this.rendererStats.domElement.style.position   = 'absolute';
         this.rendererStats.domElement.style.left  = '0px';
@@ -140,7 +128,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.htmlEl.appendChild( this.rendererStats.domElement );
         
         this.htmlEl.appendChild(this.stats.domElement);*/
-
       },
       
       /**
@@ -255,10 +242,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
      
         //create materials using textures
         var floorMaterial = new THREE.MeshBasicMaterial({map: floorTexture});
-        var ceilingMaterial = new THREE.MeshBasicMaterial({ map: ceilingTexture });
-        var leftWallMaterial = new THREE.MeshBasicMaterial({ map: leftWallTexture });
-        var backWallMaterial =  new THREE.MeshBasicMaterial({ map: backWallTexture });
-        var rightWallMaterial = new THREE.MeshBasicMaterial({ map: rightWallTexture });
+        var ceilingMaterial = new THREE.MeshBasicMaterial({ map: ceilingTexture});
+        var leftWallMaterial = new THREE.MeshBasicMaterial({ map: leftWallTexture});
+        var backWallMaterial =  new THREE.MeshBasicMaterial({ map: backWallTexture});
+        var rightWallMaterial = new THREE.MeshBasicMaterial({ map: rightWallTexture});
         
         //prepare geometries
         var sideWallGeometry = new THREE.PlaneGeometry(Constants.MAX_SIZE.z*2+Constants.FLOOR_OVERFLOW,Constants.MAX_SIZE.y*2);
@@ -315,6 +302,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       },
       
 ///////////////////---> end initialization code
+      getSeeThroughMaterial: function() {
+        return SEE_THROUGH_MATERIAL;
+      },
+      
       isWebGLinUse: function() {
         return this.webGLinUse;
       },
