@@ -75,6 +75,8 @@ define(["./Utils"],function(Utils) {
     
     ROOM: "dart",
     
+    STORAGE_NAME: "dartOptions",
+    
     SIMULATED_PLAYERS: 0
   };
   

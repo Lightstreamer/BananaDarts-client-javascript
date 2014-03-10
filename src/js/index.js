@@ -74,17 +74,22 @@ $(document).ready(function(){
 });
   
 
-require(["Subscription","js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/Player","js/LeapMotion","js/Scoreboard","js/Simulator","js/ConsoleSubscriptionListener","js/RoomSubscription"],
-    function(Subscription,Field,Constants,Dart,Game,lsClient,Player,LeapMotion,Scoreboard,Simulator,ConsoleSubscriptionListener,RoomSubscription) {
+require(["Subscription","js/Field","js/Constants","js/Dart","js/Game",
+         "js/lsClient","js/Player","js/LeapMotion","js/Scoreboard",
+         "js/Simulator","js/ConsoleSubscriptionListener",
+         "js/RoomSubscription","js/Options"],
+    function(Subscription,Field,Constants,Dart,Game,lsClient,Player,LeapMotion,Scoreboard,Simulator,ConsoleSubscriptionListener,RoomSubscription,Options) {
   
-  var randomNick = "user-"+Math.round(Math.random()*10000);
+  var options = new Options();
+  
+  var userNick = options.getNick();
   
   
   //setup game
   var field = new Field($("#theWorld")[0]);
   var game = new Game(field);
   var scoreboard = new Scoreboard(game,field,"scoreboardTemplate",["td"],$("#scoreboard"));
-  var player = new Player(randomNick,"",lsClient,game);
+  var player = new Player(userNick,"",lsClient,game);
   
   //setup subscription
   var roomSubscription = new RoomSubscription(Constants.ROOM);
@@ -103,20 +108,24 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game","js/lsClie
   });
   
   //setup camera auto on/off
-  $("#autoCamera").change(function() {
-    game.enableCameraHandling($(this).prop("checked"));
+  
+  $("#autoCamera").prop("checked",options.getAutoCamera()).change(function() {
+    options.setAutoCamera($(this).prop("checked"));
+    game.enableCameraHandling(options.getAutoCamera());
   });
-  game.enableCameraHandling($("#autoCamera").prop("checked")); 
+  game.enableCameraHandling(options.getAutoCamera()); 
   
   //setup nicks on darts on/off
-  $("#showNicks").change(function() {
-    game.showExtraInfo($(this).prop("checked"));
+  $("#showNicks").prop("checked",options.getShowNicks()).change(function() {
+    options.setShowNicks($(this).prop("checked"));
+    game.showExtraInfo(options.getShowNicks());
   });
-  game.showExtraInfo($("#showNicks").prop("checked"));
+  game.showExtraInfo(options.getShowNicks());
   
   //setup nick & status inputs
-  $("#nick").val(randomNick).prop('disabled', false).keyup(function() {
-    player.changeNick($(this).val());
+  $("#nick").val(userNick).prop('disabled', false).keyup(function() {
+    options.setNick($(this).val());
+    player.changeNick(options.getNick());
   });
   $("#status").prop('disabled', false).keyup(function() {
     player.changeStatus($(this).val());
