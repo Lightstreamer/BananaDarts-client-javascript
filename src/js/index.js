@@ -122,13 +122,10 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game",
   });
   game.showExtraInfo(options.getShowNicks());
   
-  //setup nick & status inputs
+  //setup nick input
   $("#nick").val(userNick).prop('disabled', false).keyup(function() {
     options.setNick($(this).val());
     player.changeNick(options.getNick());
-  });
-  $("#status").prop('disabled', false).keyup(function() {
-    player.changeStatus($(this).val());
   });
   
   //bind leap motion and game
