@@ -73,7 +73,6 @@ define(["./Utils"],function(Utils) {
     HISTORY_WEIGHT: 0.5,
     
     
-    DEFAULT_NICK: "Anonymous",
     ROOM: "dart",
     
     SIMULATED_PLAYERS: 0

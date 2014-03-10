@@ -74,12 +74,14 @@ $(document).ready(function(){
 require(["Subscription","js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/Player","js/LeapMotion","js/Scoreboard","js/Simulator","js/ConsoleSubscriptionListener","js/RoomSubscription"],
     function(Subscription,Field,Constants,Dart,Game,lsClient,Player,LeapMotion,Scoreboard,Simulator,ConsoleSubscriptionListener,RoomSubscription) {
   
+  var randomNick = "user-"+Math.round(Math.random()*10000);
+  
   
   //setup game
   var field = new Field($("#theWorld")[0]);
   var game = new Game(field);
   var scoreboard = new Scoreboard(game,field,"scoreboardTemplate",["td"],$("#scoreboard"));
-  var player = new Player(Constants.DEFAULT_NICK,"",lsClient,game);
+  var player = new Player(randomNick,"",lsClient,game);
   
   //setup subscription
   var roomSubscription = new RoomSubscription(Constants.ROOM);
@@ -116,7 +118,7 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game","js/lsClie
   game.showExtraInfo($("#showNicks").prop("checked"));
   
   //setup nick & status inputs
-  $("#nick").val(Constants.DEFAULT_NICK).prop('disabled', false).keyup(function() {
+  $("#nick").val(randomNick).prop('disabled', false).keyup(function() {
     player.changeNick($(this).val());
   });
   $("#status").prop('disabled', false).keyup(function() {
