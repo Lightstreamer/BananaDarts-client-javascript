@@ -77,8 +77,8 @@ $(document).ready(function(){
 require(["Subscription","js/Field","js/Constants","js/Dart","js/Game",
          "js/lsClient","js/Player","js/LeapMotion","js/Scoreboard",
          "js/Simulator","js/ConsoleSubscriptionListener",
-         "js/RoomSubscription","js/Options"],
-    function(Subscription,Field,Constants,Dart,Game,lsClient,Player,LeapMotion,Scoreboard,Simulator,ConsoleSubscriptionListener,RoomSubscription,Options) {
+         "js/RoomSubscription","js/Options","js/ChatBoard"],
+    function(Subscription,Field,Constants,Dart,Game,lsClient,Player,LeapMotion,Scoreboard,Simulator,ConsoleSubscriptionListener,RoomSubscription,Options,ChatBoard) {
   
   var options = new Options();
   
@@ -90,6 +90,8 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game",
   var game = new Game(field);
   var scoreboard = new Scoreboard(game,field,"scoreboardTemplate",["td"],$("#scoreboard"));
   var player = new Player(userNick,"",lsClient,game);
+  
+  var chat = new ChatBoard(game,field,"chatTemplate",["div"],$("#chat"));
   
   //setup subscription
   var roomSubscription = new RoomSubscription(Constants.ROOM);

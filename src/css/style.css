@@ -121,5 +121,15 @@ body {
   width: 213px;
 }
 
-
+#chat {
+  display: none;
+  padding: 10px 10px 10px 45px; 
+  padding-left
+  border: 0;
+  width: 815px; 
+  height: 354px;
+  color:white;
+  background-image:url(../images/chat.jpg);
+  background-size: contain;
+}
 
