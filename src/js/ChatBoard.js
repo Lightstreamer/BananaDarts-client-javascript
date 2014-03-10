@@ -25,11 +25,9 @@ define(["DynaGrid","./Constants","Inheritance"],
       }
   };
   
-  var ChatBoard = function(game,field,template,cells,container) {
+  var ChatBoard = function(field,template,cells,container) {
     
-    this._callSuperConstructor(DynaGrid,[template]);
-    
-    this.game = game;
+    this._callSuperConstructor(ChatBoard,[template]);
     
     this.setNodeTypes(cells);
     this.parseHtml();

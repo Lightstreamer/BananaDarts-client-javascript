@@ -102,10 +102,11 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game",
   //setup game
   var field = new Field($("#theWorld")[0]);
   var game = new Game(field);
-  var scoreboard = new Scoreboard(game,field,"scoreboardTemplate",["td"],$("#scoreboard"));
+  var scoreboard = new Scoreboard(field,"scoreboardTemplate",["td"],$("#scoreboard"));
+  var chat = new ChatBoard(field,"chatTemplate",["div"],$("#chat"));
   var player = new Player(userNick,"",lsClient,game);
   
-  var chat = new ChatBoard(game,field,"chatTemplate",["div"],$("#chat"));
+  
   
   //setup subscription
   var roomSubscription = new RoomSubscription(Constants.ROOM);

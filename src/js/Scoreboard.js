@@ -25,12 +25,9 @@ define(["DynaGrid","./Constants","Inheritance"],
       }
   };
   
-  var Scoreboard = function(game,field,template,cells,container) {
+  var Scoreboard = function(field,template,cells,container) {
     
-    this._callSuperConstructor(DynaGrid,[template]);
-    
-    this.game = game;
-    
+    this._callSuperConstructor(Scoreboard,[template]); 
     this.setNodeTypes(cells);
     this.parseHtml();
     
@@ -52,6 +49,7 @@ define(["DynaGrid","./Constants","Inheritance"],
     this.addListener(effects);
    
   };
+  
   
   Inheritance(Scoreboard,DynaGrid);
   return Scoreboard;
