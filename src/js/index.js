@@ -71,10 +71,28 @@ $(document).ready(function(){
 });
   
 
-require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/Player","js/LeapMotion","js/Scoreboard","js/Simulator"],
-    function(Field,Constants,Dart,Game,lsClient,Player,LeapMotion,Scoreboard,Simulator) {
+require(["Subscription","js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/Player","js/LeapMotion","js/Scoreboard","js/Simulator","js/ConsoleSubscriptionListener","js/RoomSubscription"],
+    function(Subscription,Field,Constants,Dart,Game,lsClient,Player,LeapMotion,Scoreboard,Simulator,ConsoleSubscriptionListener,RoomSubscription) {
   
+  
+  //setup game
   var field = new Field($("#theWorld")[0]);
+  var game = new Game(field);
+  var scoreboard = new Scoreboard(game,field);
+  var player = new Player(Constants.DEFAULT_NICK,"",lsClient,game);
+  
+  //setup subscription
+  var roomSubscription = new RoomSubscription(Constants.ROOM);
+  if (Constants.LOG_UPDATES_ON_CONSOLE) {
+    roomSubscription.addListener(new ConsoleSubscriptionListener("Room Subscription "+Constants.ROOM));
+  }
+  roomSubscription.addListener(game);
+  roomSubscription.addListener(scoreboard.getGrid());
+  lsClient.subscribe(roomSubscription);
+  
+  //bind to UI
+  
+  //setup camera controls
   $("#resetCamera").click(function(){
     field.rotateCamera(0);
   });
@@ -85,23 +103,19 @@ require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/Player"
     field.rotateCamera("right");
   });
   
-  
-  var game = new Game(lsClient,Constants.ROOM,field);
+  //setup camera auto on/off
   $("#autoCamera").change(function() {
     game.enableCameraHandling($(this).prop("checked"));
   });
   game.enableCameraHandling($("#autoCamera").prop("checked")); 
   
+  //setup nicks on darts on/off
   $("#showNicks").change(function() {
     game.showExtraInfo($(this).prop("checked"));
   });
   game.showExtraInfo($("#showNicks").prop("checked"));
   
-  
-  var scoreboard = new Scoreboard(lsClient,game,field);
-  
-  var player = new Player(Constants.DEFAULT_NICK,"",lsClient,game);
-  
+  //setup nick & status inputs
   $("#nick").val(Constants.DEFAULT_NICK).prop('disabled', false).keyup(function() {
     player.changeNick($(this).val());
   });
@@ -109,7 +123,7 @@ require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/Player"
     player.changeStatus($(this).val());
   });
   
-  
+  //bind leap motion and game
   LeapMotion.addListener({
     onFistMove: function(x,y,z,sx,sy,sz) {
       if (z <= Constants.MAX_SIZE.z-Constants.ARM_REACH+Constants.GO_LINE) {
@@ -120,7 +134,6 @@ require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/Player"
      
     }
   });
-  
   if (LeapMotion.isReady()) {
     player.enterRoom(Constants.ROOM);
   } else {
@@ -135,17 +148,17 @@ require(["js/Field","js/Constants","js/Dart","js/Game","js/lsClient","js/Player"
     });
   }
   
-
-    var created = 0;
-    var creator = setInterval(function() {
-      if (created >= Constants.SIMULATED_PLAYERS) {
-        clearInterval(creator);
-        return;
-      }
-      created++;
-      console.log("Create new simulator " + created);
-      new Simulator(game);
-    },100);
+  //setup simulators
+  var created = 0;
+  var creator = setInterval(function() {
+    if (created >= Constants.SIMULATED_PLAYERS) {
+      clearInterval(creator);
+      return;
+    }
+    created++;
+    console.log("Create new simulator " + created);
+    new Simulator(game);
+  },100);
   
   
 });

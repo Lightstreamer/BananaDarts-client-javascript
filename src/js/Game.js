@@ -13,10 +13,10 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscription","./GameLoop"],
-    function(Constants,Utils,Dart,ConsoleSubscriptionListener,Subscription,GameLoop) {
+define(["./Constants","./Utils","./Dart","./GameLoop"],
+    function(Constants,Utils,Dart,GameLoop) {
     
-  var Game = function(client,room,field) {
+  var Game = function(field) {
     this.players = {};
     this.field = field;
     
@@ -28,19 +28,6 @@ define(["./Constants","./Utils","./Dart","./ConsoleSubscriptionListener","Subscr
     this.cameraHandling = true;
     
     
-    var roomSubscription = new Subscription("COMMAND","roomchatlist_"+room,["command","key"]);  //ROOMCHATLIST_SUBSCRIPTION contains user statuses and user nicks
-    roomSubscription.setRequestedSnapshot("yes");
-    //roomSubscription.setRequestedMaxFrequency("unfiltered");
-    roomSubscription.setCommandSecondLevelFields(["nick","status",
-                                                  "dVx","dVy","dVz",
-                                                  "posX","posY","posZ"]);
-    roomSubscription.addListener(this);
-    
-    if (Constants.LOG_UPDATES_ON_CONSOLE) {
-      roomSubscription.addListener(new ConsoleSubscriptionListener("User Status"));
-    }
-    
-    client.subscribe(roomSubscription);
     
     this.gameLoop = new GameLoop(this);
   };

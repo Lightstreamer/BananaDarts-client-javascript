@@ -89,18 +89,26 @@
 
     <div id="scoreboard">
       <table>
-        <col width="70">
-        <col width="45">
+        <colgroup>
+          <col class="nickCol">
+          <col class="scoreCol">
+          <col class="throwsCol">
+          <col class="totCol">
+        <colgroup>
         <thead>
           <tr>
-            <td>Nick</td>
-            <td>Score</td>
+            <th>Nick</th>
+            <th>Last Score</th>
+            <th>Number of throws</th>
+            <th>Total Score</th>
           </tr>
         </thead>
         <tbody>
           <tr id="scoreboardTemplate" data-source="lightstreamer">
             <td data-source="lightstreamer" data-field="nick">-</td>
-            <td data-source="lightstreamer" data-field="score">-</td>
+            <td data-source="lightstreamer" data-field="lastScore">-</td>
+            <td data-source="lightstreamer" data-field="numThrows">-</td>
+            <td data-source="lightstreamer" data-field="totalScore">-</td>
           </tr>
         </tbody>
       </table>

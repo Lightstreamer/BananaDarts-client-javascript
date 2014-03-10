@@ -21,6 +21,9 @@ body {
   margin: 0;
   overflow: hidden;
 }
+.button {
+  cursor:pointer;
+}
 #whole {
   border: 0;
   position: absolute;
@@ -30,7 +33,6 @@ body {
   right: 0;
   overflow: hidden;
 }
-
 .github {
   position: absolute; 
   top: 0; 
@@ -38,6 +40,7 @@ body {
   border: 0; 
   z-index: 4;
 }
+
 
 #tools_button {
   position: relative;
@@ -72,6 +75,7 @@ body {
   display:none;
 }
 
+
 #theWorld {
   background-color: transparent;
   position:absolute;
@@ -81,7 +85,6 @@ body {
   bottom:0;
   z-index:2;
 }
-
 #cssRenderer {
   position: absolute;
   top: 0;
@@ -94,6 +97,7 @@ body {
   z-index: 1;
 }
 
+
 #scoreboard {
   display: none;
   padding: 10px; //5+5
@@ -104,19 +108,17 @@ body {
   background-image:url(../images/score.jpg);
   background-size: contain;
 }
-
 #scoreboard table {
   table-layout:fixed;
-  width: 875px;
+  border-collapse:collapse;
+  width: 855px;
   word-wrap:break-word;
 }
 #scoreboard tbody {
   /*font-size: 10px;*/
-
 }
-
-.button {
-  cursor:pointer;
+.nickCol, .scoreCol, .throwsCol, .totCol {
+  width: 213px;
 }
 
 

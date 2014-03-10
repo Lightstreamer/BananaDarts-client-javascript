@@ -13,26 +13,19 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["DynaGrid","./Constants","./ConsoleSubscriptionListener","Subscription"],
-    function(DynaGrid,Constants,ConsoleSubscriptionListener,Subscription) {
+define(["DynaGrid","./Constants"],
+    function(DynaGrid,Constants) {
   
-  var Scoreboard = function(client,game,field) {
+  var Scoreboard = function(game,field) {
     
     this.game = game;
     
-    var scoreSubscription = new Subscription("DISTINCT","roomscore_"+Constants.ROOM,["id","score"]);  //ROOMCHATLIST_SUBSCRIPTION contains user statuses and user nicks
-    scoreSubscription.setRequestedSnapshot("yes");
-    if (Constants.LOG_UPDATES_ON_CONSOLE) {
-      scoreSubscription.addListener(new ConsoleSubscriptionListener("Room score"));
-    }
-    client.subscribe(scoreSubscription);
+    this.grid = new DynaGrid("scoreboardTemplate");
+    this.grid.setNodeTypes(["td"]);
+    this.grid.parseHtml();
     
-    var grid = new DynaGrid("scoreboardTemplate");
-    grid.setNodeTypes(["td"]);
-    grid.parseHtml();
-    
-    grid.setMaxDynaRows(14);
-    grid.setAddOnTop(true);
+    this.grid.setMaxDynaRows(14);
+    this.grid.setAddOnTop(true);
     
     $("#scoreboard").show();
     var element = $("#scoreboard")[0];
@@ -46,29 +39,23 @@ define(["DynaGrid","./Constants","./ConsoleSubscriptionListener","Subscription"]
 
     field.addCSSObject(cssObject);
     
-    grid.addListener(this);
-    scoreSubscription.addListener(grid);
+    this.grid.addListener(this);
+   
     
     
   };
   
   Scoreboard.prototype = {
       
+      getGrid: function() {
+        return this.grid;
+      },
+      
       onVisualUpdate: function(key,visualUpdate,domNode) {
-        
-        var id = visualUpdate.getChangedFieldValue("id");
-        
-        var player = this.game.getPlayer(id);
-        nick = player ?  player.getNick() : " n/a ";
-        status = player ?  player.getStatus() : "";
-
-        visualUpdate.setCellValue("nick",nick);
-        
         visualUpdate.setHotTime(500);
         visualUpdate.setHotToColdTime(700);
         visualUpdate.setAttribute("yellow","","backgroundColor");
         visualUpdate.setAttribute("black","white","color");
-        
       }
       
   };
