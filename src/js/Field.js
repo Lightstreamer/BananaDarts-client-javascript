@@ -18,15 +18,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   var WIDTH = window.innerWidth;
   var HEIGHT = window.innerHeight;
   
-  var RIGHT = "right";
-  var LEFT = "left";
-  var CAMERA_POSITIONS = [
-                   {x: 0, y: Constants.INITIAL_CAMERA_POS_Y, z:Constants.INITIAL_CAMERA_POS_Z},
-                   {x: -Constants.MAX_SIZE.x, y:0, z:0},
-                   {x: 0, y:0, z:-Constants.MAX_SIZE.z},
-                   {x: Constants.MAX_SIZE.x, y:0, z:0}
-                   ];
-  
   var SEE_THROUGH_MATERIAL = new THREE.MeshBasicMaterial({color: "black",  blending: THREE.NoBlending, opacity:0});
   
   
@@ -50,7 +41,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         
     this.setupRoom();
 
-    this.currentCameraPosition = -1;
     this.setupCamera();
     
     this.setupLight();
@@ -146,7 +136,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           that.cssRender();
         });
         
-        this.rotateCamera(0);
+        this.resetCamera();
         this.render();
       },
       
@@ -334,25 +324,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.render();
       },
       
-      rotateCamera: function(dir) {
-       
-        if (dir == RIGHT) {
-          this.currentCameraPosition--;
-        } else if (dir == LEFT) {
-          this.currentCameraPosition++;
-        } else {
-          this.currentCameraPosition = dir;
-        }
-        
-       
-        if (this.currentCameraPosition >= CAMERA_POSITIONS.length) {
-          this.currentCameraPosition = 0;
-        } else if(this.currentCameraPosition < 0) {
-          this.currentCameraPosition = CAMERA_POSITIONS.length-1;
-        }
-        
-        
-        this.moveCamera(CAMERA_POSITIONS[this.currentCameraPosition].x,CAMERA_POSITIONS[this.currentCameraPosition].y,CAMERA_POSITIONS[this.currentCameraPosition].z);
+      resetCamera: function() {
+        this.moveCamera(0,Constants.INITIAL_CAMERA_POS_Y,Constants.INITIAL_CAMERA_POS_Z);
         this.pointCamera(0,Constants.INITIAL_CAMERA_POS_Y,0);
       },
       

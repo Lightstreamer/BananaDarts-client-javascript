@@ -94,13 +94,7 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game","js/lsClie
   
   //setup camera controls
   $("#resetCamera").click(function(){
-    field.rotateCamera(0);
-  });
-  $("#goLeftCamera").click(function(){
-    field.rotateCamera("left");
-  });
-  $("#goRightCamera").click(function(){
-    field.rotateCamera("right");
+    field.resetCamera();
   });
   
   //setup camera auto on/off

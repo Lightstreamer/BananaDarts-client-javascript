@@ -441,7 +441,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.planted = false;
         if (this.camera) {
           this.attachCamera(false);
-          this.field.rotateCamera(0);
+          this.field.resetCamera();
         }
         
       } 
