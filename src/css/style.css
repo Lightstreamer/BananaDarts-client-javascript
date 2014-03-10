@@ -73,8 +73,9 @@ body {
 #tools h1, #tools h2 {
   text-align: center;
 }
-#waiting_leap {
-  padding-bottom: 25px;
+
+#ready_leap {
+  display: none;
 }
 
 .row, .col { 

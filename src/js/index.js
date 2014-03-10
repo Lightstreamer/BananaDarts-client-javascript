@@ -19,19 +19,21 @@ require(["js/LeapMotion"],
     function(LeapMotion) {
   
   $(document).ready(function() {
-    function showInstructions(show) {
-      if (show) {
+    function hideLeapRequest(hide) {
+      if (hide) {
         $("#waiting_leap").hide();
+        $("#ready_leap").show();
       } else {
         $("#waiting_leap").show();
+        $("#ready_leap").hide();
       }
     }
     setTimeout(function() {
-      showInstructions(LeapMotion.isReady());
+      hideLeapRequest(LeapMotion.isReady());
     },1000);
     LeapMotion.addListener({
       onReady: function(ready) {
-        showInstructions(ready);
+        hideLeapRequest(ready);
       }
     });
   });
