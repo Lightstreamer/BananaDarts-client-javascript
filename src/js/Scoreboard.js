@@ -13,22 +13,32 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["DynaGrid","./Constants"],
-    function(DynaGrid,Constants) {
+define(["DynaGrid","./Constants","Inheritance"],
+    function(DynaGrid,Constants,Inheritance) {
   
-  var Scoreboard = function(game,field) {
+  var effects = {
+      onVisualUpdate: function(key,visualUpdate,domNode) {
+        visualUpdate.setHotTime(500);
+        visualUpdate.setHotToColdTime(700);
+        visualUpdate.setAttribute("yellow","","backgroundColor");
+        visualUpdate.setAttribute("black","white","color");
+      }
+  };
+  
+  var Scoreboard = function(game,field,template,cells,container) {
+    
+    this._callSuperConstructor(DynaGrid,[template]);
     
     this.game = game;
     
-    this.grid = new DynaGrid("scoreboardTemplate");
-    this.grid.setNodeTypes(["td"]);
-    this.grid.parseHtml();
+    this.setNodeTypes(cells);
+    this.parseHtml();
     
-    this.grid.setMaxDynaRows(14);
-    this.grid.setAddOnTop(true);
+    this.setMaxDynaRows(14);
+    this.setAddOnTop(true);
     
-    $("#scoreboard").show();
-    var element = $("#scoreboard")[0];
+    container.show();
+    var element = container[0];
     var cssObject = new THREE.CSS3DObject(element);
     
     //get its size and center it in the top left corner
@@ -39,26 +49,11 @@ define(["DynaGrid","./Constants"],
 
     field.addCSSObject(cssObject);
     
-    this.grid.addListener(this);
+    this.addListener(effects);
    
-    
-    
   };
   
-  Scoreboard.prototype = {
-      
-      getGrid: function() {
-        return this.grid;
-      },
-      
-      onVisualUpdate: function(key,visualUpdate,domNode) {
-        visualUpdate.setHotTime(500);
-        visualUpdate.setHotToColdTime(700);
-        visualUpdate.setAttribute("yellow","","backgroundColor");
-        visualUpdate.setAttribute("black","white","color");
-      }
-      
-  };
+  Inheritance(Scoreboard,DynaGrid);
   return Scoreboard;
   
 });

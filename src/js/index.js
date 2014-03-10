@@ -78,7 +78,7 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game","js/lsClie
   //setup game
   var field = new Field($("#theWorld")[0]);
   var game = new Game(field);
-  var scoreboard = new Scoreboard(game,field);
+  var scoreboard = new Scoreboard(game,field,"scoreboardTemplate",["td"],$("#scoreboard"));
   var player = new Player(Constants.DEFAULT_NICK,"",lsClient,game);
   
   //setup subscription
@@ -87,7 +87,7 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game","js/lsClie
     roomSubscription.addListener(new ConsoleSubscriptionListener("Room Subscription "+Constants.ROOM));
   }
   roomSubscription.addListener(game);
-  roomSubscription.addListener(scoreboard.getGrid());
+  roomSubscription.addListener(scoreboard);
   lsClient.subscribe(roomSubscription);
   
   //bind to UI
