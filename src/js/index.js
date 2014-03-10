@@ -22,10 +22,8 @@ require(["js/LeapMotion"],
     function showInstructions(show) {
       if (show) {
         $("#waiting_leap").hide();
-        $("#leap_instructions").show();
       } else {
         $("#waiting_leap").show();
-        $("#leap_instructions").hide();
       }
     }
     setTimeout(function() {
