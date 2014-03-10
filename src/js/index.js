@@ -47,7 +47,7 @@ $(document).ready(function(){
   x.src = "images/down.png";//preload
   x = null;
   
-  var hideTop =  -$("#tools_stuff").height()+2; //show 2px
+  var hideTop =  -$("#tools_stuff").height()+15; //show 15px
   
   $("#tools_button").click(function() {
     firsClick = true;
