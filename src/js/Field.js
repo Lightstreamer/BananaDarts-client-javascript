@@ -80,6 +80,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.renderer.setSize( window.innerWidth, window.innerHeight );
         this.cssRenderer.setSize( window.innerWidth, window.innerHeight );
         
+        this.cssRender();
         this.render();
       },
       

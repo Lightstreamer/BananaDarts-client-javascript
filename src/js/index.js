@@ -47,7 +47,15 @@ $(document).ready(function(){
   x.src = "images/down.png";//preload
   x = null;
   
-  var hideTop =  -$("#tools_stuff").height()+15; //show 15px
+  var hideTop = 0;
+  function setup() {
+    hideTop =  -$("#tools_stuff").height()+15; //show 15px
+    if (!open) {
+      $("#tools").css("top",hideTop);
+    }
+  }
+  setup();
+  
   
   $("#tools_button").click(function() {
     firsClick = true;
@@ -65,6 +73,10 @@ $(document).ready(function(){
     if (open) {
       $("#tools_button").click();
     }
+  });
+  
+  $(window).resize(function(){
+    setup();
   });
   
   setTimeout(function() {
