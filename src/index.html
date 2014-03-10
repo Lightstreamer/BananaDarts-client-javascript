@@ -56,23 +56,38 @@
         <div id="tools_stuff">
          <div class="spacer"></div>
         
-          <div>
+          <div class="row title">
             <h1>Multiplayer Dart for LeapMotion</h1>
             <h2 id="waiting_leap">Please connect your leap motion device!</h2>
           </div>
-           
-          <div>
-            <span class="label">Nick:</span> <input id="nick" type="text" disabled />
-          </div>
           
-          <div>
-            <input type="checkbox" id="autoCamera" checked /> Automatic camera handling
+          <div class="row"> 
+            <div class="col options">
+              <div class="inputDiv">
+                <span class="label">Nick:</span> <input id="nick" type="text" disabled />
+              </div>
+              <div class="inputDiv">
+                <span class="label">Chat Message:</span> <input id="nick" type="text" disabled /><img id="sendChat" src="images/send.png" class="button"/>
+              </div>
+              
+              <div>
+                <input type="checkbox" id="autoCamera" checked /> Automatic camera handling
+              </div>
+              <div>
+                <input type="checkbox" id="showNicks" checked /> Show dart nicks
+              </div>
+              
+              <span id="resetCamera" class="button">Reset camera</span>
+            </div>
+            
+            <div class="col gInstructions">
+              How to play
+            </div>
+            
+            <div class="col cInstructions">
+              How to move camera
+            </div>
           </div>
-          <div>
-            <input type="checkbox" id="showNicks" checked /> Show dart nicks
-          </div>
-          
-          <span id="resetCamera" class="button">Reset camera</span>
           
           <div class="spacer"></div>
         </div>  
