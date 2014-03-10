@@ -59,6 +59,11 @@ $(document).ready(function(){
     open = !open;
   });
   
+  $("#theWorld").click(function() {
+    if (open) {
+      $("#tools_button").click();
+    }
+  });
   
   setTimeout(function() {
     if (!firsClick) {
