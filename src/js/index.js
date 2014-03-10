@@ -104,7 +104,7 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game",
   var game = new Game(field);
   var scoreboard = new Scoreboard(field,"scoreboardTemplate",["td"],$("#scoreboard"));
   var chat = new ChatBoard(field,"chatTemplate",["div"],$("#chat"));
-  var player = new Player(userNick,"",lsClient,game);
+  var player = new Player(userNick,lsClient,game);
   
   
   
@@ -144,6 +144,11 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game",
     options.setNick($(this).val());
     player.changeNick(options.getNick());
   });
+  
+  //send chat messages
+  //player.sendChatMessage
+  
+  
   
   //bind leap motion and game
   LeapMotion.addListener({

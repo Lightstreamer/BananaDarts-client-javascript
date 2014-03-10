@@ -20,14 +20,13 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
     return "u-"+Math.round(Math.random()*1000);
   }
   
-  var Player = function(nick,status,client,game,notLocal) {
+  var Player = function(nick,client,game,notLocal) {
     this.initDispatcher();
     
     this.game = game;
     
     this.client = client;
     this.nick = nick;
-    this.status = status;
     this.notLocal = notLocal || false;
     
     this.id = generateId(); 
@@ -64,9 +63,8 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
           this.game.setLocalPlayerKey(this.id);
         }
        
-        //conf nick & status
+        //conf nick
         this.sendNick();
-        this.sendStatus();
         
         //re-enter rooms
         for (var i in this.rooms) {
@@ -201,22 +199,8 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
         this.sendMessage("nick|"+this.nick,"nick");
       },
       
-      changeStatus: function(newStatus) {
-        if (this.status == newStatus) {
-          return;
-        }
-        this.status = newStatus;
-        this.sendStatus();
-      },
-  
-      /**
-       * @private
-       */
-      sendStatus: function() {
-        if (!this.status) {
-          return;
-        }
-        this.sendMessage("status|"+this.status,"status");
+      sendChatMessage: function(message) {
+        this.sendMessage("chat|"+message,"chat");
       },
       
       //subscription listener-->
