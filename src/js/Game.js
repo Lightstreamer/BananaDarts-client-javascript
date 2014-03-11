@@ -172,6 +172,13 @@ define(["./Constants","./Utils","./Dart","./GameLoop"],
           return this.players[id].isFlying();
         }
         return false;
+      },
+      
+      isPlayerPlanted: function(id) {
+        if (this.players[id]) {
+          return this.players[id].isPlanted();
+        }
+        return false;
       }
   };
   
