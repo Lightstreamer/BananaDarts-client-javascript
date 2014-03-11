@@ -16,15 +16,6 @@ Copyright 2014 Weswit s.r.l.
 define(["DynaGrid","./Constants","Inheritance"],
     function(DynaGrid,Constants,Inheritance) {
   
-  var effects = {
-      onVisualUpdate: function(key,visualUpdate,domNode) {
-        visualUpdate.setHotTime(500);
-        visualUpdate.setHotToColdTime(700);
-        visualUpdate.setAttribute("yellow","","backgroundColor");
-        visualUpdate.setAttribute("black","white","color");
-      }
-  };
-  
   var ChatBoard = function(field,template,cells,container) {
     
     this._callSuperConstructor(ChatBoard,[template]);
@@ -33,7 +24,7 @@ define(["DynaGrid","./Constants","Inheritance"],
     this.parseHtml();
     
     this.setMaxDynaRows(10);
-    this.setAddOnTop(true);
+    this.setAddOnTop(false);
     
     container.show();
     var element = container[0];
@@ -46,8 +37,6 @@ define(["DynaGrid","./Constants","Inheritance"],
     cssObject.position.set(-Constants.MAX_SIZE.x+10,y,z); //stay away a bit from the wall or you'll get a strange flickering effect (makes sense @ 0 distance)
     cssObject.rotation.y = Math.PI / 2;
     field.addCSSObject(cssObject);
-    
-    this.addListener(effects);
    
   };
   
