@@ -59,7 +59,8 @@ body {
 }
 #tools {
   position: fixed;
-  margin: 0;
+  margin: auto;
+  width: 790px;
   border: 0;
   top: 0;
   left: 0; 
@@ -145,7 +146,6 @@ body {
   color:white;
   background-image:url(../images/score.jpg);
   background-size: contain;
-  font-size: 30px;
 }
 #scoreboard table {
   table-layout:fixed;
@@ -154,21 +154,64 @@ body {
 }
 #scoreboard tbody {
   font-size: 25px;
-    
 }
-.nickCol, .scoreCol, .throwsCol, .totCol {
-  width: 200px;
+#scoreboard td {
+  overflow: hidden;  
+}
+#scoreboard tfoot {
+  font-size: 23px;
+  border-top: 1px solid white;
+  color: #ccc;
+}
+.nickCol {
+  width: 300px;
+}
+.leftHead {
+  text-align: left;
+}
+.rightHead {
+  text-align: center;
+  padding-right: 25px;
+}
+th {
+  font-size: 25px;
+  border-bottom: 1px solid white;
+}
+.scoreCol, .throwsCol, .totCol {
+  width: 100px;
 }
 
+[data-field=lastScore], [data-field=numThrows], [data-field=totalScore] {
+  text-align: center;
+  padding: 0 10px;
+}
+[data-field=totalScore] {
+  font-weight: bold;
+}
+
+#chatHeader {
+  font-weight: bold;
+  font-size:26px;
+}
 #chat {
   display: none;
   padding: 60px 10px 10px 45px; 
-  word-wrap:break-word;
   border: 0;
   width: 815px; 
   height: 304px;
   color:white;
   background-image:url(../images/chat.jpg);
   background-size: contain;
+  font-size: 23px;
+}
+#chatTemplate {
+  overflow: hidden;
+}
+#chat [data-field=nick] {
+  font-size: 16px;
+  background-color: #222;
+  font-weight: bold;
+  padding: 0 7px;
+  border-radius: 8px;
 }
 

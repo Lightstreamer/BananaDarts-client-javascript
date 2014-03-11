@@ -19,7 +19,7 @@
 
 <html>
   <head>
-    <title>Lightstreamer :: Multiplayer Dart for LeapMotion</title>
+    <title>Lightstreamer :: Multiplayer Darts for Leap Motion</title>
     
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
   
@@ -57,7 +57,7 @@
          <div class="spacer"></div>
         
           <div class="row title">
-            <h1>Multiplayer Dart for LeapMotion</h1>
+            <h1>Multiplayer Darts for Leap Motion</h1>
             <h2 id="waiting_leap">Please connect your leap motion device!</h2>
             <h2 id="ready_leap">Let's play!</h2>
           </div>
@@ -78,7 +78,13 @@
                 <input type="checkbox" id="showNicks" checked /> Show dart nicks
               </div>
               
-              <span id="resetCamera" class="button">Reset camera</span>
+              <div>
+                <span id="resetCamera" class="button">Reset camera</span>
+              </div>
+              
+              <div>
+                <span id="resetScore" class="button">Reset score</span>
+              </div>
             </div>
             
             <div class="col gInstructions">
@@ -114,10 +120,10 @@
         <colgroup>
         <thead>
           <tr>
-            <th>Name</th>
-            <th>Last Score</th>
-            <th>Number of throws</th>
-            <th>Total Score</th>
+            <th class="leftHead">Name</th>
+            <th class="rightHead">Last Score</th>
+            <th class="rightHead">Thrown Darts</th>
+            <th class="rightHead">Total Score</th>
           </tr>
         </thead>
         <tbody>
@@ -131,7 +137,12 @@
         <tfoot>
           <tr>
             <td colspan="4">
-              Use S and D to navigate the table
+              Use <b>S</b> and <b>D</b> to navigate the table
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              Use <b>L</b> to sort by Last Score or <b>T</b> to sort by Total Score
             </td>
           </tr>
         </tfoot>
@@ -139,9 +150,9 @@
     </div>
     
     <div id="chat">
-      <div>Chat:</div>
+      <div id="chatHeader">Chat:</div>
       <div id="chatTemplate" data-source="lightstreamer">
-        <span data-source="lightstreamer" data-field="nick">-</span>: <span data-source="lightstreamer" data-field="message">-</span>
+        <span data-source="lightstreamer" data-field="nick">-</span> <span data-source="lightstreamer" data-field="message">-</span>
       </div>
     </div>
     
