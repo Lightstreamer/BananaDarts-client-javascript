@@ -138,10 +138,10 @@ body {
 
 #scoreboard {
   display: none;
-  padding: 10px; //5+5
+  padding: 15px 10px 10px 60px; //5+5
   border: 0;
-  width: 875px; 
-  height: 525px;
+  width: 805px; 
+  height: 500px;
   color:white;
   background-image:url(../images/score.jpg);
   background-size: contain;
@@ -151,23 +151,22 @@ body {
   table-layout:fixed;
   border-collapse:collapse;
   width: 855px;
-  word-wrap:break-word;
 }
 #scoreboard tbody {
   font-size: 25px;
-  
+    
 }
 .nickCol, .scoreCol, .throwsCol, .totCol {
-  width: 213px;
+  width: 200px;
 }
 
 #chat {
   display: none;
-  padding: 10px 10px 10px 45px; 
-  padding-left
+  padding: 60px 10px 10px 45px; 
+  word-wrap:break-word;
   border: 0;
   width: 815px; 
-  height: 354px;
+  height: 304px;
   color:white;
   background-image:url(../images/chat.jpg);
   background-size: contain;
