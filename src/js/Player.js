@@ -203,6 +203,10 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
         this.sendRoomMessage("chat|"+room+"|"+message,null,room);
       },
       
+      resetScore: function(room) {
+        this.sendRoomMessage("reset|"+room,null,room);
+      },
+      
       //subscription listener-->
       
       onSubscription: function() {
