@@ -146,10 +146,19 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game",
   });
   
   //send chat messages
-  //player.sendChatMessage
-  
-  
-  
+  function doSend() {
+    player.sendChatMessage($("#chatMessage").val());
+    $("#chatMessage").val("");
+  }
+  $("#sendChat").click(function(){
+    doSend();
+  });
+  $("#chatMessage").keypress(function(e) {
+    if(e.which == 13) {
+      doSend();
+    }
+  });
+
   //bind leap motion and game
   LeapMotion.addListener({
     onFistMove: function(x,y,z,sx,sy,sz) {
@@ -161,15 +170,25 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game",
      
     }
   });
-  if (LeapMotion.isReady()) {
+  
+  //enter/exit room based on leap motion status
+  function doEnter() {
     player.enterRoom(Constants.ROOM);
+    $("#chatMessage").prop('disabled', false);
+  }
+  function doExit() {
+    player.exitRoom(Constants.ROOM);
+    $("#chatMessage").prop('disabled', true);
+  }
+  if (LeapMotion.isReady()) {
+    doEnter()
   } else {
     LeapMotion.addListener({
       onReady: function(ready) {
         if (ready) {
-          player.enterRoom(Constants.ROOM);
+          doEnter();
         } else {
-          player.exitRoom(Constants.ROOM);
+          doExit();
         }
       }
     });
