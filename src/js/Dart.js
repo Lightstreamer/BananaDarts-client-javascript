@@ -52,7 +52,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   var CAMERA_OFFSET = {
       x: 0,
       y: 0,
-      z: 50,
+      z: 250,
   };
   
   
