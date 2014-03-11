@@ -32,7 +32,7 @@ define(["DynaGrid","./Constants","Inheritance"],
     this.parseHtml();
     
     this.setMaxDynaRows(10);
-    this.setSort("totalScore",true,true,false);
+    this.sortByTot();
     
     container.show();
     var element = container[0];
@@ -48,6 +48,16 @@ define(["DynaGrid","./Constants","Inheritance"],
     
     this.addListener(effects);
    
+  };
+  
+  Scoreboard.prototype = {
+      sortByTot: function() {
+        this.setSort("totalScore",true,true,false);
+      },
+      
+      sortByLast: function() {
+        this.setSort("lastScore",true,true,false);
+      }
   };
   
   
