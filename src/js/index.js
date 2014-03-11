@@ -59,7 +59,7 @@ require(["js/Constants","js/Field","js/Game",
   var field = new Field($("#theWorld")[0]);
   var game = new Game(field);
   var scoreboard = new Scoreboard(field,"scoreboardTemplate",["td"],$("#scoreboard"));
-  var chat = new ChatBoard(field,"chatTemplate",["div"],$("#chat"));
+  var chat = new ChatBoard(field,"chatTemplate",["span"],$("#chat"));
   var player = new Player(userNick,lsClient,game);
   
   //setup chat subscription
