@@ -174,11 +174,11 @@ define(["./Constants","./Utils","./Dart","./GameLoop"],
         return false;
       },
       
-      isPlayerPlanted: function(id) {
+      getPlantedDelta: function(id) {
         if (this.players[id]) {
-          return this.players[id].isPlanted();
+          return this.players[id].getPlantedDelta();
         }
-        return false;
+        return 0;
       }
   };
   

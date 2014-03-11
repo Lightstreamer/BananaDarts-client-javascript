@@ -136,13 +136,19 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
       
       grab: function(room) {
         if (this.game.isPlayerFlying(this.id)) {
-          return;
+          return false;
         }
+        var pd = this.game.getPlantedDelta(this.id);
+        if (pd > 0 && pd < Constants.PLANTED_DELAY) {
+          return false;
+        }  
+        
         this.holding = true;
         
         if (!this.notLocal) {
           this.game.resetPlayer(this.id);
         }
+        return true;
       },
       
       release: function(room,sx,sy,sz) {
@@ -172,7 +178,9 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
           return;
         }
         if (!this.holding) {
-          this.grab(room);
+          if (!this.grab(room)) {
+            return;
+          }
         }
         this.sendRoomMessage("move|"+room+"|"+x+"|"+y+"|"+z,"3D",room);
         

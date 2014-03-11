@@ -79,6 +79,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     this.type = type;
     
     this.planted = false;
+    this.plantedTime = null;
     
     this.initDart();
   };
@@ -208,6 +209,12 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       },
       isPlanted: function() {
         return this.planted;
+      },
+      getPlantedDelta: function() {
+        if (this.plantedTime) {
+          return new Date().getTime() - this.plantedTime;
+        }
+        return 0;
       },
       
       attachCamera: function(attach) {
@@ -429,6 +436,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           */
           
           this.planted = true;
+          this.plantedTime = new Date().getTime();
           
           return true;
         }
@@ -439,6 +447,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.setPosition(0,Constants.INITIAL_CAMERA_POS_Y,Constants.MAX_SIZE.z);
         this.setRotation(Math.PI/2,0,0);
         this.planted = false;
+        this.plantedTime = null;
         if (this.camera) {
           this.attachCamera(false);
           this.field.resetCamera();
