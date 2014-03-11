@@ -18,7 +18,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
   
   var simCount = 0;
   
-  var MESSAGES = ["Hi!","Hello","I'm a simulator","\m/","Lightstreamer!","So Dart, Much Throw, Very Multiplayer"];
+  var MESSAGES = ["Hi!","Hello","I'm a simulator","\\m/","Lightstreamer!","Wow! So Dart, Much Throw, Very Multiplayer"];
   
   var MAX_3JS_POS = {
     x: Constants.MAX_SIZE["x"]*2,
