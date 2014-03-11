@@ -207,6 +207,15 @@ require(["js/Constants","js/Field","js/Game",
       doSend();
     }
   });
+  
+  //slightly move camera to show dart
+  field.moveCamera(Constants.INITIAL_CAMERA_POS_X, Constants.INITIAL_CAMERA_POS_Y, Constants.INITIAL_CAMERA_POS_Z);
+  LeapMotion.addListener({
+    onFistMove: function() {
+      field.resetCamera();
+      LeapMotion.removeListener(this);
+    }
+  });
 
   //bind leap motion and game
   LeapMotion.addListener({
@@ -216,7 +225,6 @@ require(["js/Constants","js/Field","js/Game",
       } else {
         player.move(Constants.ROOM,x,y,z);
       }
-     
     }
   });
   
