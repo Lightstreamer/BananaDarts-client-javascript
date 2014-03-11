@@ -32,7 +32,7 @@ define(["DynaGrid","./Constants","Inheritance"],
     this.setNodeTypes(cells);
     this.parseHtml();
     
-    this.setMaxDynaRows(14);
+    this.setMaxDynaRows(10);
     this.setAddOnTop(true);
     
     container.show();
