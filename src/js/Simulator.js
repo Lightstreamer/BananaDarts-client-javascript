@@ -18,6 +18,8 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
   
   var simCount = 0;
   
+  var MESSAGES = ["Hi!","Hello","I'm a simulator","\m/","Lightstreamer!","So Dart, Much Throw, Very Multiplayer"];
+  
   var MAX_3JS_POS = {
     x: Constants.MAX_SIZE["x"]*2,
     y: Constants.MAX_SIZE["y"]*2,
@@ -113,7 +115,9 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
             var mulX = this.axis.x.real > 0 ? -1 : 1;
             this.player.release(Constants.ROOM,rand(1500)*mulX,rand(1000),-(rand(3000)+1000));
             this.wait = 50;
-
+          } else if (move == 33) {
+            this.player.sendChatMessage(Constants.ROOM,MESSAGES[rand(MESSAGES.length-1)]);
+          
           } else {
 
             this.player.move(Constants.ROOM,this.randomPos("x"),this.randomPos("y"),this.randomPos("z"));
