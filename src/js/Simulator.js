@@ -86,7 +86,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
         z: new Pos(MAX_3JS_POS["z"],SHIFT_3JS_POS["z"]),
     };
    
-    this.player = new Player("Sim"+(simCount++),"",this.client,game,true);
+    this.player = new Player("Sim"+(simCount++),this.client,game,true);
     this.player.enterRoom(Constants.ROOM);
    
     
