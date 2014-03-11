@@ -39,55 +39,6 @@ require(["js/LeapMotion"],
   });
 });
 
-$(document).ready(function(){
-  var open = true;
-  var firsClick = false;
-  
-  var x = new Image();
-  x.src = "images/down.png";//preload
-  x = null;
-  
-  var hideTop = 0;
-  function setup() {
-    hideTop =  -$("#tools_stuff").height()+15; //show 15px
-    if (!open) {
-      $("#tools").css("top",hideTop);
-    }
-  }
-  setup();
-  
-  
-  $("#tools_button").click(function() {
-    firsClick = true;
-    if (open) {
-      $("#tools").css("top",hideTop);
-      $(this).attr("src","images/down.png");
-    } else {
-      $("#tools").css("top",0);
-      $(this).attr("src","images/up.png");
-    }
-    open = !open;
-  });
-  
-  $("#theWorld").click(function() {
-    if (open) {
-      $("#tools_button").click();
-    }
-  });
-  
-  $(window).resize(function(){
-    setup();
-  });
-  
-  setTimeout(function() {
-    if (!firsClick) {
-      $("#tools_button").click();
-    }
-  },2000);
-  
-});
-  
-
 require(["js/Constants","js/Field","js/Game",
          "js/Dart","js/Player","js/Options","js/LeapMotion",
          "js/lsClient","js/Simulator","js/ConsoleSubscriptionListener",
@@ -130,13 +81,85 @@ require(["js/Constants","js/Field","js/Game",
   
   //bind to UI
   
+  var menuIsOpen = true;
+  $(document).ready(function(){
+    var firsClick = false;
+    
+    var x = new Image();
+    x.src = "images/down.png";//preload
+    x = null;
+    
+    var hideTop = 0;
+    function setup() {
+      hideTop =  -$("#tools_stuff").height()+15; //show 15px
+      if (!menuIsOpen) {
+        $("#tools").css("top",hideTop);
+      }
+    }
+    setup();
+    
+    
+    $("#tools_button").click(function() {
+      firsClick = true;
+      if (menuIsOpen) {
+        $("#tools").css("top",hideTop);
+        $(this).attr("src","images/down.png");
+      } else {
+        $("#tools").css("top",0);
+        $(this).attr("src","images/up.png");
+      }
+      menuIsOpen = !menuIsOpen;
+    });
+    
+    $("#theWorld").click(function() {
+      if (menuIsOpen) {
+        $("#tools_button").click();
+      }
+    });
+    
+    $(window).resize(function(){
+      setup();
+    });
+    
+    setTimeout(function() {
+      if (!firsClick) {
+        $("#tools_button").click();
+      }
+    },2000);
+    
+  });
+  
+  
+  //paging handling
+  var current = 1;
+  function changePage(goTo) {
+    current = goTo;
+    var max = scoreboard.getCurrentPages();
+    if (current > max) {
+      current = max;
+    } else if (current < 1) {
+      current = 1;
+    }
+    scoreboard.goToPage(current);
+  }
+  $(document).keypress(function(e) {
+    console.log(e.which + " | " + menuIsOpen + " | " + scoreboard.getCurrentPages() + " | " + current);
+    if (menuIsOpen) {
+      return;
+    }
+    if (e.which == 100 || e.which == 68) {
+      changePage(current+1);
+    } else if(e.which == 115 || e.which == 83) {
+      changePage(current-1);
+    }
+  });
+  
   //setup camera controls
   $("#resetCamera").click(function(){
     field.resetCamera();
   });
   
   //setup camera auto on/off
-  
   $("#autoCamera").prop("checked",options.getAutoCamera()).change(function() {
     options.setAutoCamera($(this).prop("checked"));
     game.enableCameraHandling(options.getAutoCamera());
@@ -192,7 +215,7 @@ require(["js/Constants","js/Field","js/Game",
     $("#chatMessage").prop('disabled', true);
   }
   if (LeapMotion.isReady()) {
-    doEnter()
+    doEnter();
   } else {
     LeapMotion.addListener({
       onReady: function(ready) {

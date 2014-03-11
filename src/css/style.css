@@ -145,6 +145,7 @@ body {
   color:white;
   background-image:url(../images/score.jpg);
   background-size: contain;
+  font-size: 30px;
 }
 #scoreboard table {
   table-layout:fixed;
@@ -153,7 +154,8 @@ body {
   word-wrap:break-word;
 }
 #scoreboard tbody {
-  /*font-size: 10px;*/
+  font-size: 25px;
+  
 }
 .nickCol, .scoreCol, .throwsCol, .totCol {
   width: 213px;

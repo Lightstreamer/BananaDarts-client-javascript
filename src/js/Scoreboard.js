@@ -31,8 +31,8 @@ define(["DynaGrid","./Constants","Inheritance"],
     this.setNodeTypes(cells);
     this.parseHtml();
     
-    this.setMaxDynaRows(14);
-    this.setAddOnTop(true);
+    this.setMaxDynaRows(10);
+    this.setSort("totalScore",true,true,false);
     
     container.show();
     var element = container[0];
