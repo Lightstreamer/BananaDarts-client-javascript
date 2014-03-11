@@ -111,6 +111,12 @@ require(["js/Constants","js/Field","js/Game",
       menuIsOpen = !menuIsOpen;
     });
     
+    $(document).keyup(function(e) {
+      if (e.keyCode == 27 && menuIsOpen) {
+        $("#tools_button").click();
+      }   
+    });
+    
     $("#theWorld").click(function() {
       if (menuIsOpen) {
         $("#tools_button").click();
@@ -146,10 +152,15 @@ require(["js/Constants","js/Field","js/Game",
     if (menuIsOpen) {
       return;
     }
+    
     if (e.which == 100 || e.which == 68) {
       changePage(current+1);
     } else if(e.which == 115 || e.which == 83) {
       changePage(current-1);
+    } else if (e.which == 116 || e.which == 84) {
+      scoreboard.sortByTot();
+    } else if (e.which == 108 || e.which == 76) {
+      scoreboard.sortByLast();
     }
   });
   
@@ -176,6 +187,11 @@ require(["js/Constants","js/Field","js/Game",
   $("#nick").val(userNick).prop('disabled', false).keyup(function() {
     options.setNick($(this).val());
     player.changeNick(options.getNick());
+  });
+  
+  //reset score
+  $("#resetScore").click(function() {
+    player.resetScore(Constants.ROOM);
   });
   
   //send chat messages
