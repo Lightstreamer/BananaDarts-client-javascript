@@ -143,7 +143,6 @@ require(["js/Constants","js/Field","js/Game",
     scoreboard.goToPage(current);
   }
   $(document).keypress(function(e) {
-    console.log(e.which + " | " + menuIsOpen + " | " + scoreboard.getCurrentPages() + " | " + current);
     if (menuIsOpen) {
       return;
     }
