@@ -199,8 +199,8 @@ define(["Inheritance","EventDispatcher","Subscription","./Constants","./ConsoleS
         this.sendMessage("nick|"+this.nick,"nick");
       },
       
-      sendChatMessage: function(message) {
-        this.sendMessage("chat|"+message,"chat");
+      sendChatMessage: function(room,message) {
+        this.sendRoomMessage("chat|"+room+"|"+message,null,room);
       },
       
       //subscription listener-->

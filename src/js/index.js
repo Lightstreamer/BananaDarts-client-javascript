@@ -88,11 +88,16 @@ $(document).ready(function(){
 });
   
 
-require(["Subscription","js/Field","js/Constants","js/Dart","js/Game",
-         "js/lsClient","js/Player","js/LeapMotion","js/Scoreboard",
-         "js/Simulator","js/ConsoleSubscriptionListener",
-         "js/RoomSubscription","js/Options","js/ChatBoard"],
-    function(Subscription,Field,Constants,Dart,Game,lsClient,Player,LeapMotion,Scoreboard,Simulator,ConsoleSubscriptionListener,RoomSubscription,Options,ChatBoard) {
+require(["js/Constants","js/Field","js/Game",
+         "js/Dart","js/Player","js/Options","js/LeapMotion",
+         "js/lsClient","js/Simulator","js/ConsoleSubscriptionListener",
+         "js/Scoreboard","js/RoomSubscription",
+         "js/ChatBoard","js/ChatSubscription"],
+    function(Constants,Field,Game,
+        Dart,Player,Options,LeapMotion,
+        lsClient,Simulator,ConsoleSubscriptionListener,
+        Scoreboard,RoomSubscription,
+        ChatBoard,ChatSubscription) {
   
   var options = new Options();
   
@@ -106,9 +111,15 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game",
   var chat = new ChatBoard(field,"chatTemplate",["div"],$("#chat"));
   var player = new Player(userNick,lsClient,game);
   
+  //setup chat subscription
+  var chatSubscription = new ChatSubscription(Constants.ROOM);
+  if (Constants.LOG_UPDATES_ON_CONSOLE) {
+    chatSubscription.addListener(new ConsoleSubscriptionListener("Chat Subscription "+Constants.ROOM));
+  }
+  chatSubscription.addListener(chat);
+  lsClient.subscribe(chatSubscription);
   
-  
-  //setup subscription
+  //setup room subscription
   var roomSubscription = new RoomSubscription(Constants.ROOM);
   if (Constants.LOG_UPDATES_ON_CONSOLE) {
     roomSubscription.addListener(new ConsoleSubscriptionListener("Room Subscription "+Constants.ROOM));
@@ -147,7 +158,7 @@ require(["Subscription","js/Field","js/Constants","js/Dart","js/Game",
   
   //send chat messages
   function doSend() {
-    player.sendChatMessage($("#chatMessage").val());
+    player.sendChatMessage(Constants.ROOM,$("#chatMessage").val());
     $("#chatMessage").val("");
   }
   $("#sendChat").click(function(){
