@@ -71,6 +71,7 @@ define(["./Utils"],function(Utils) {
     USE_PEAK_SPEED: false,
     USE_LAST_SPEED: true,
     HISTORY_WEIGHT: 0.5,
+    MIN_SPEED: -200,
     
     
     ROOM: "dart",
