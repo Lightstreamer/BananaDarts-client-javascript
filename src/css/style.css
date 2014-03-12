@@ -41,24 +41,8 @@ body {
   z-index: 4;
 }
 
+/* MENU */
 
-#tools_button {
-  position: relative;
-  top: -20px;
-  left: 379px; /* 790/2 - 32/2 */
-  height: 32px;
-  width:32px;
-}
-#tools_stuff {
-  background-color: #689a68;
-  color:white;
-  padding: 0 20px;
-  border-radius: 0 0 10px 10px;
-}
-.spacer {
-   height:20px;
-   clear:both;
-}
 #tools {
   position: fixed;
   margin: auto;
@@ -74,6 +58,23 @@ body {
   z-index:3;
   opacity: 0.9;
 }
+#tools_button {
+  position: relative;
+  top: -20px;
+  left: 379px; /* 790/2 - 32/2 */
+  height: 32px;
+  width:32px;
+}
+#tools_stuff {
+  background-color: #689a68;
+  color:white;
+  padding: 0 20px;
+  border-radius: 0 0 10px 10px;
+}
+.spacer {
+  height:20px;
+  clear:both;
+}
 #tools h1, #tools h2 {
   text-align: center;
 }
@@ -87,7 +88,6 @@ body {
 #ready_leap {
   display: none;
 }
-
 .row, .col { 
   overflow: hidden; 
   position: relative; 
@@ -127,7 +127,6 @@ body {
   height:32px;
   vertical-align: middle;
 }
-
 .logoRow {
   padding-top: 30px;
   text-align: center;
@@ -136,6 +135,8 @@ body {
 .logoRow img {
   margin: auto;
 }
+
+/* 3D */
 
 #theWorld {
   background-color: transparent;
@@ -158,6 +159,7 @@ body {
   z-index: 1;
 }
 
+/* Scoreboard */
 
 #scoreboard {
   display: none;
@@ -202,7 +204,6 @@ th {
 .scoreCol, .throwsCol, .totCol {
   width: 100px;
 }
-
 [data-field=lastScore], [data-field=numThrows], [data-field=totalScore] {
   text-align: center;
   padding: 0 10px;
@@ -210,6 +211,8 @@ th {
 [data-field=totalScore] {
   font-weight: bold;
 }
+
+/* Chat */
 
 #chatHeader {
   font-weight: bold;
