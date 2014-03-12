@@ -91,7 +91,7 @@ require(["js/Constants","js/Field","js/Game",
     
     var hideTop = 0;
     function setup() {
-      hideTop =  -$("#tools_stuff").height()+15; //show 15px
+      hideTop =  -$("#tools_stuff").height()+100; //show 75px (including logo)
       if (!menuIsOpen) {
         $("#tools").css("top",hideTop);
       }
