@@ -44,16 +44,23 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   loadClonable(Constants.OTHER);
   
   var NICK_OFFSET = {
-      x: 2,
-      y: 1,
-      z: 10,
+      x: function(size) {
+        return -size/2;
+      },
+      y: -30,
+      z: 30,
   };
+  var FONT_SIZE = 20;
+  
+  //assumes  NICK_OFFSET.y is < 0
+  var SWITCH_NICK_POSITION = -(Constants.MAX_SIZE.y + NICK_OFFSET.y - FONT_SIZE);
   
   var CAMERA_OFFSET = {
       x: 0,
       y: 0,
       z: 250,
   };
+  
   
   
   //Dart obj is 13.598 units, we want it 96
@@ -172,7 +179,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         }
         
         var text3d = new THREE.TextGeometry( this.nick, {
-              size: 1.2,
+              size: FONT_SIZE,
               height: 0,
               curveSegments: 0,
               
@@ -183,7 +190,9 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
 
         this.text = new THREE.Mesh(text3d, materials[this.type]);
         
-        this.text.position.x = this.dart.position.x+NICK_OFFSET["x"];
+        this.nickOffsetX = NICK_OFFSET["x"](text3d.boundingBox.max.x);
+        
+        this.text.position.x = this.dart.position.x+this.nickOffsetX;
         this.text.position.y = this.dart.position.y+NICK_OFFSET["y"];
         this.text.position.z = this.dart.position.z+NICK_OFFSET["z"];
         this.field.addObject(this.text);
@@ -293,7 +302,13 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         
         this.dart.position[axis] = value;
         if (this.text) {
-          this.text.position[axis] = value+NICK_OFFSET[axis];
+          if (axis == "x") {
+            this.text.position[axis] = value+this.nickOffsetX;
+          } else if (axis == "y" && value < SWITCH_NICK_POSITION){
+            this.text.position[axis] = value-NICK_OFFSET[axis];
+          } else {
+            this.text.position[axis] = value+NICK_OFFSET[axis];
+          }
         }
         
         this.field.render();
