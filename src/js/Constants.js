@@ -81,7 +81,7 @@ define(["./Utils"],function(Utils) {
     
     STORAGE_NAME: "dartOptions.",
     
-    SIMULATED_PLAYERS: 0
+    SIMULATED_PLAYERS: 5
   };
   
 });

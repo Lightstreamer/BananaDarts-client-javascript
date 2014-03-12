@@ -16,9 +16,12 @@ Copyright 2014 Weswit s.r.l.
 define(["DynaGrid","./Constants","Inheritance"],
     function(DynaGrid,Constants,Inheritance) {
   
-  var ChatBoard = function(field,template,cells,container) {
+  var ChatBoard = function(field,template,cells,container,placeholder) {
     
     this._callSuperConstructor(ChatBoard,[template]);
+    
+    this.isEmpty = true;
+    this.placeholder = placeholder;
     
     this.setNodeTypes(cells);
     this.parseHtml();
@@ -38,6 +41,18 @@ define(["DynaGrid","./Constants","Inheritance"],
     cssObject.rotation.y = Math.PI / 2;
     field.addCSSObject(cssObject);
    
+  };
+  
+  ChatBoard.prototype = {
+      onItemUpdate: function() {
+        if (this.isEmpty) {
+          this.isEmpty = false;
+          if (this.placeholder) {
+            this.placeholder.hide();
+          }
+        }
+        this._callSuperMethod(ChatBoard,"onItemUpdate",arguments);
+      }
   };
   
   Inheritance(ChatBoard,DynaGrid);
