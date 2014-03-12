@@ -2,6 +2,12 @@ define(["./Constants"],function(Constants) {
 
   var CAN_SAVE = typeof localStorage != "undefined" && localStorage !== null && localStorage.getItem && localStorage.setItem;
   
+  var optionsList = [
+                     "nick",
+                     "autoCamera",
+                     "showNicks"
+                     ];
+  
   var Options = function() {
     
     this.nick = "Player"+Math.round(Math.random()*10000);
@@ -15,22 +21,26 @@ define(["./Constants"],function(Constants) {
       
       load: function() {
         if (CAN_SAVE) {
-          var settings = localStorage.getItem(Constants.STORAGE_NAME);
-          if (!settings) {
-            return;
+          for (var i=0; i<optionsList.length; i++) {
+            var val = localStorage.getItem(Constants.STORAGE_NAME+optionsList[i]);
+            if (!val) {
+              continue;
+            }
+            if (val == "true") {
+              val = true;
+            } else if (val == "false") {
+              val = false;
+            } 
+            
+            this[optionsList[i]] = val;
+            
           }
-          settingsObj = $.parseJSON(settings);
-          
-          this.nick = settingsObj.nick;
-          this.autoCamera = settingsObj.autoCamera;
-          this.showNicks = settingsObj.showNicks;
-          
         }
       },
       
       setNick: function(nick) {
         this.nick = nick;
-        this.save();
+        this.save("nick");
       },
       getNick: function() {
         return this.nick;
@@ -38,7 +48,7 @@ define(["./Constants"],function(Constants) {
       
       setAutoCamera: function(autoCamera) {
         this.autoCamera = autoCamera;
-        this.save();
+        this.save("autoCamera");
       },
       getAutoCamera: function() {
         return this.autoCamera;
@@ -46,16 +56,15 @@ define(["./Constants"],function(Constants) {
       
       setShowNicks: function(showNicks) {
         this.showNicks = showNicks;
-        this.save();
+        this.save("showNicks");
       },
       getShowNicks: function() {
         return this.showNicks;
       },
       
-      save: function() {
+      save: function(what) {
         if (CAN_SAVE) {
-          var objString = '{"nick": "' +this.nick+ '", "autoCamera":' +this.autoCamera+ ', "showNicks":' +this.showNicks+ '}';
-          localStorage.setItem(Constants.STORAGE_NAME,objString);
+          localStorage.setItem(Constants.STORAGE_NAME+what,this[what]);
         }
       }
       
