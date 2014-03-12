@@ -272,12 +272,12 @@ THREE.OrbitControls = function ( object, domElement ) {
 		phiDelta = 0;
 		scale = 1;
 		pan.set( 0, 0, 0 );
-		
-		if ( lastPosition.distanceTo( this.object.position ) > 1 ) {
+
+		if ( lastPosition.distanceTo( this.object.position ) > 0 ) {
+
+			this.dispatchEvent( changeEvent );
 
 			lastPosition.copy( this.object.position );
-		
-			this.dispatchEvent( changeEvent );
 
 		}
 
