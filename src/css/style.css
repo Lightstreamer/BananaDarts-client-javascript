@@ -44,14 +44,16 @@ body {
 
 #tools_button {
   position: relative;
-  top:0px;
-  height: 64px;
-  width:64px;
+  top: -20px;
+  left: 379px; /* 790/2 - 32/2 */
+  height: 32px;
+  width:32px;
 }
 #tools_stuff {
   background-color: #689a68;
   color:white;
   padding: 0 20px;
+  border-radius: 0 0 10px 10px;
 }
 .spacer {
    height:20px;
@@ -70,6 +72,7 @@ body {
   -o-transition: all 1s ease;
   transition: all 1s ease;
   z-index:3;
+  opacity: 0.9;
 }
 #tools h1, #tools h2 {
   text-align: center;
@@ -114,6 +117,14 @@ body {
   vertical-align: middle;
 }
 
+.logoRow {
+  padding-top: 30px;
+  text-align: center;
+  margin: auto;
+}
+.logoRow img {
+  margin: auto;
+}
 
 #theWorld {
   background-color: transparent;
@@ -213,5 +224,8 @@ th {
   font-weight: bold;
   padding: 0 7px;
   border-radius: 8px;
+}
+#chatPlaceHolder {
+  color: #ccc;
 }
 
