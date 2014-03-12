@@ -58,8 +58,8 @@
         
           <div class="row title">
             <h1>Multiplayer Darts for Leap Motion</h1>
-            <h2 id="waiting_leap">Please connect your leap motion device!</h2>
-            <h2 id="ready_leap">Let's play!</h2>
+            <h2 id="waiting_leap">Connect your Leap Motion device (or just lurk)</h2>
+            <h2 id="ready_leap">Leap Motion ready.</h2>
           </div>
           
           <div class="row"> 
@@ -68,7 +68,7 @@
                 <span class="label">Name:</span> <input id="nick" type="text" disabled />
               </div>
               <div class="inputDiv">
-                <span class="label">Chat Message:</span> <input id="chatMessage" type="text" disabled /><img id="sendChat" src="images/send.png" class="button"/>
+                <span class="label">Shout:</span> <input id="chatMessage" type="text" disabled /><img id="sendChat" src="images/send.png" class="button"/>
               </div>
               
               <div>
@@ -96,8 +96,13 @@
               <h3>How to move camera</h3>
               Using your mouse:<br/>
               Left click and move to rotate<br/>
-              Right click and move to pan
+              Right click and move to pan<br/>
+              Scroll wheel to zoom
             </div>
+          </div>
+          
+          <div class="logoRow">
+            <img src="images/logo.png" />
           </div>
           
           <div class="spacer"></div>
@@ -151,6 +156,7 @@
     
     <div id="chat">
       <div id="chatHeader">Chat:</div>
+      <div id="chatPlaceHolder">Your shouts will appear here!</div>
       <div id="chatTemplate" data-source="lightstreamer">
         <span data-source="lightstreamer" data-field="nick">-</span> <span data-source="lightstreamer" data-field="message">-</span>
       </div>
