@@ -62,7 +62,7 @@ body {
 #tools {
   position: fixed;
   margin: auto;
-  width: 790px;
+  width: 842px; /* 20 802 20 */
   border: 0;
   top: 0;
   left: 0; 
@@ -102,16 +102,21 @@ body {
   float:left;
 }
 .title {
-  width: 750px;
+  width: 802px; /* 240 20 1 20 240 20 1 20 240 */
 }
 .options {
-  width: 350px;
+  width: 240px;
+  height: 200px;
+  padding-right: 20px;
+}
+.gInstructions, .cInstructions {
+  width:240px;
+  padding-left: 20px;
+  border-left: 1px solid #ccc;
+  height: 200px;
 }
 .gInstructions {
-  width:200px;
-}
-.cInstructions {
-  width:200px;
+	padding-right: 20px;
 }
 .inputDiv {
   height: 32px;
