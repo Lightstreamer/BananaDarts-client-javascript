@@ -8,7 +8,7 @@ d 1
 illum 1
 
 newmtl Plastic
-kd 0.190196 0.115686 0.633333
+kd 0.190196 0.633333 0.115686 
 ks 1 1 1
 d 1
 illum 1

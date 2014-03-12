@@ -20,7 +20,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   
   var materials = {};
   materials[Constants.OWN] = new THREE.MeshLambertMaterial( { color: 0xff0000 } );
-  materials[Constants.OTHER] = new THREE.MeshLambertMaterial( { color: 0x0f87ff } );
+  materials[Constants.OTHER] = new THREE.MeshLambertMaterial( { color: 0x00ff00 } );
   
   var mtls = {};
   mtls[Constants.OWN] = "obj/dart.obj.mtl";
