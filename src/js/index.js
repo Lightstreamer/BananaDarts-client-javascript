@@ -43,12 +43,14 @@ require(["js/Constants","js/Field","js/Game",
          "js/Dart","js/Player","js/Options","js/LeapMotion",
          "js/lsClient","js/Simulator","js/ConsoleSubscriptionListener",
          "js/Scoreboard","js/RoomSubscription",
-         "js/ChatBoard","js/ChatSubscription"],
+         "js/ChatBoard","js/ChatSubscription",
+         "js/Menu"],
     function(Constants,Field,Game,
         Dart,Player,Options,LeapMotion,
         lsClient,Simulator,ConsoleSubscriptionListener,
         Scoreboard,RoomSubscription,
-        ChatBoard,ChatSubscription) {
+        ChatBoard,ChatSubscription,
+        Menu) {
   
   var options = new Options();
   
@@ -81,176 +83,159 @@ require(["js/Constants","js/Field","js/Game",
   
   //bind to UI
   
-  var menuIsOpen = true;
+  
+  
   $(document).ready(function(){
     var firsClick = false;
     
-    var x = new Image();
-    x.src = "images/down.png";//preload
-    x = null;
+    Menu.setup();    
     
-    var hideTop = 0;
-    function setup() {
-      hideTop =  -$("#tools_stuff").height()+100; //show 75px (including logo)
-      if (!menuIsOpen) {
-        $("#tools").css("top",hideTop);
-      }
-    }
-    setup();
-    
-    
-    $("#tools_button").click(function() {
+    $("#tools_button").click(function(e) {
+      e.stopPropagation();
       firsClick = true;
-      if (menuIsOpen) {
-        $("#tools").css("top",hideTop);
-        $(this).attr("src","images/down.png");
-      } else {
-        $("#tools").css("top",0);
-        $(this).attr("src","images/up.png");
-      }
-      menuIsOpen = !menuIsOpen;
+      Menu.toggle();
+      
     });
-    
+    $("#tools").click(function() {
+      Menu.open();
+    });
     $(document).keyup(function(e) {
-      if (e.keyCode == 27 && menuIsOpen) {
-        $("#tools_button").click();
+      if (e.keyCode == 27) {
+        Menu.close();
       }   
     });
-    
     $("#theWorld").click(function() {
-      if (menuIsOpen) {
-        $("#tools_button").click();
-      }
+      Menu.close();
     });
-    
-    $(window).resize(function(){
-      setup();
-    });
-    
     setTimeout(function() {
       if (!firsClick) {
-        $("#tools_button").click();
+        Menu.close();
       }
     },2000);
+    $(window).resize(function(){
+      Menu.setup();
+    });
     
-  });
-  
-  
-  //paging handling
-  var current = 1;
-  function changePage(goTo) {
-    current = goTo;
-    var max = scoreboard.getCurrentPages();
-    if (current > max) {
-      current = max;
-    } else if (current < 1) {
-      current = 1;
-    }
-    scoreboard.goToPage(current);
-  }
-  $(document).keypress(function(e) {
-    if (menuIsOpen) {
-      return;
-    }
-    
-    if (e.which == 100 || e.which == 68) {
-      changePage(current+1);
-    } else if(e.which == 115 || e.which == 83) {
-      changePage(current-1);
-    } else if (e.which == 116 || e.which == 84) {
-      scoreboard.sortByTot();
-    } else if (e.which == 108 || e.which == 76) {
-      scoreboard.sortByLast();
-    }
-  });
-  
-  //setup camera controls
-  $("#resetCamera").click(function(){
-    field.resetCamera();
-  });
-  
-  //setup camera auto on/off
-  $("#autoCamera").prop("checked",options.getAutoCamera()).change(function() {
-    options.setAutoCamera($(this).prop("checked"));
-    game.enableCameraHandling(options.getAutoCamera());
-  });
-  game.enableCameraHandling(options.getAutoCamera()); 
-  
-  //setup nicks on darts on/off
-  $("#showNicks").prop("checked",options.getShowNicks()).change(function() {
-    options.setShowNicks($(this).prop("checked"));
-    game.showExtraInfo(options.getShowNicks());
-  });
-  game.showExtraInfo(options.getShowNicks());
-  
-  //setup nick input
-  $("#nick").val(userNick).prop('disabled', false).keyup(function() {
-    options.setNick($(this).val());
-    player.changeNick(options.getNick());
-  });
-  
-  //reset score
-  $("#resetScore").click(function() {
-    player.resetScore(Constants.ROOM);
-  });
-  
-  //send chat messages
-  function doSend() {
-    player.sendChatMessage(Constants.ROOM,$("#chatMessage").val());
-    $("#chatMessage").val("");
-  }
-  $("#sendChat").click(function(){
-    doSend();
-  });
-  $("#chatMessage").keypress(function(e) {
-    if(e.which == 13) {
-      doSend();
-    }
-  });
-  
-  //slightly move camera to show dart
-  field.moveCamera(Constants.INITIAL_CAMERA_POS_X, Constants.INITIAL_CAMERA_POS_Y, Constants.INITIAL_CAMERA_POS_Z);
-  LeapMotion.addListener({
-    onFistMove: function() {
-      field.resetCamera();
-      LeapMotion.removeListener(this);
-    }
-  });
-
-  //bind leap motion and game
-  LeapMotion.addListener({
-    onFistMove: function(x,y,z,sx,sy,sz) {
-      if (z <= Constants.MAX_SIZE.z-Constants.ARM_REACH+Constants.GO_LINE) {
-        player.release(Constants.ROOM,sx,sy,sz);
-      } else {
-        player.move(Constants.ROOM,x,y,z);
+    //paging handling
+    var current = 1;
+    function changePage(goTo) {
+      current = goTo;
+      var max = scoreboard.getCurrentPages();
+      if (current > max) {
+        current = max;
+      } else if (current < 1) {
+        current = 1;
       }
+      scoreboard.goToPage(current);
     }
-  });
+    $(document).keypress(function(e) {
+      if (Menu.isOpen()) {
+        return;
+      }
+      
+      if (e.which == 100 || e.which == 68) {
+        changePage(current+1);
+      } else if(e.which == 115 || e.which == 83) {
+        changePage(current-1);
+      } else if (e.which == 116 || e.which == 84) {
+        scoreboard.sortByTot();
+      } else if (e.which == 108 || e.which == 76) {
+        scoreboard.sortByLast();
+      }
+    });
+    
+    //setup camera controls
+    $("#resetCamera").click(function(){
+      field.resetCamera();
+    });
+    
+    //setup camera auto on/off
+    $("#autoCamera").prop("checked",options.getAutoCamera()).change(function() {
+      options.setAutoCamera($(this).prop("checked"));
+      game.enableCameraHandling(options.getAutoCamera());
+    });
+    game.enableCameraHandling(options.getAutoCamera()); 
+    
+    //setup nicks on darts on/off
+    $("#showNicks").prop("checked",options.getShowNicks()).change(function() {
+      options.setShowNicks($(this).prop("checked"));
+      game.showExtraInfo(options.getShowNicks());
+    });
+    game.showExtraInfo(options.getShowNicks());
+    
+    //setup nick input
+    $("#nick").val(userNick).prop('disabled', false).keyup(function() {
+      options.setNick($(this).val());
+      player.changeNick(options.getNick());
+    }).keypress(function(e) {
+      if(e.which == 13) {
+        Menu.close();
+      }
+    });;
+    
+    //reset score
+    $("#resetScore").click(function() {
+      player.resetScore(Constants.ROOM);
+    });
+    
+    //send chat messages
+    function doSend() {
+      player.sendChatMessage(Constants.ROOM,$("#chatMessage").val());
+      $("#chatMessage").val("");
+    }
+    $("#sendChat").click(function(){
+      doSend();
+    });
+    $("#chatMessage").keypress(function(e) {
+      if(e.which == 13) {
+        doSend();
+      }
+    });
   
-  //enter/exit room based on leap motion status
-  function doEnter() {
-    player.enterRoom(Constants.ROOM);
-    $("#chatMessage").prop('disabled', false);
-  }
-  function doExit() {
-    player.exitRoom(Constants.ROOM);
-    $("#chatMessage").prop('disabled', true);
-  }
-  if (LeapMotion.isReady()) {
-    doEnter();
-  } else {
+  
+    //slightly move camera to show dart
+    field.moveCamera(Constants.INITIAL_CAMERA_POS_X, Constants.INITIAL_CAMERA_POS_Y, Constants.INITIAL_CAMERA_POS_Z);
     LeapMotion.addListener({
-      onReady: function(ready) {
-        if (ready) {
-          doEnter();
+      onFistMove: function() {
+        field.resetCamera();
+        LeapMotion.removeListener(this);
+      }
+    });
+  
+    //bind leap motion and game
+    LeapMotion.addListener({
+      onFistMove: function(x,y,z,sx,sy,sz) {
+        if (z <= Constants.MAX_SIZE.z-Constants.ARM_REACH+Constants.GO_LINE) {
+          player.release(Constants.ROOM,sx,sy,sz);
         } else {
-          doExit();
+          player.move(Constants.ROOM,x,y,z);
         }
       }
     });
-  }
-  
+    
+    //enter/exit room based on leap motion status
+    function doEnter() {
+      player.enterRoom(Constants.ROOM);
+      $("#chatMessage").prop('disabled', false);
+    }
+    function doExit() {
+      player.exitRoom(Constants.ROOM);
+      $("#chatMessage").prop('disabled', true);
+    }
+    if (LeapMotion.isReady()) {
+      doEnter();
+    } else {
+      LeapMotion.addListener({
+        onReady: function(ready) {
+          if (ready) {
+            doEnter();
+          } else {
+            doExit();
+          }
+        }
+      });
+    }
+  });
   //setup simulators
   var created = 0;
   var creator = setInterval(function() {
