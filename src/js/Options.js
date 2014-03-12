@@ -4,7 +4,7 @@ define(["./Constants"],function(Constants) {
   
   var Options = function() {
     
-    this.nick = "user-"+Math.round(Math.random()*10000);
+    this.nick = "Player"+Math.round(Math.random()*10000);
     this.autoCamera = true;
     this.showNicks = true;
     this.load();
