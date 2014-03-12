@@ -78,7 +78,11 @@ body {
   text-align: center;
 }
 #tools input {
-	border-radius: 5px;
+  border-radius: 5px;
+}
+#tools ul {
+  padding-left: 20px;
+  margin-top: 7px;
 }
 #ready_leap {
   display: none;
