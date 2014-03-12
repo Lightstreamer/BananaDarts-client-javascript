@@ -288,7 +288,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         var py = y+CAMERA_OFFSET.y;
         var pz = z+CAMERA_OFFSET.z;
         
-        this.field.moveCamera(px,py,pz);
+        this.field.moveCameraToward(px,py,pz);
         this.field.pointCamera(x,y,z);
       },
       

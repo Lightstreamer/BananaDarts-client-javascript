@@ -45,7 +45,6 @@ define(["./Utils"],function(Utils) {
     
     FLOOR_OVERFLOW: dartSize,
     
-    
     BOARD_DIAMETER: 200,
     
     MAX_SIZE: {
@@ -58,6 +57,7 @@ define(["./Utils"],function(Utils) {
     INITIAL_CAMERA_POS_Y: (Utils.cmToUnit(170)-SIZE_Y/2),
     INITIAL_CAMERA_POS_Z: (Utils.cmToUnit(280)+SIZE_Z/2),
     INITIAL_CAMERA_POS_X: Utils.cmToUnit(40),
+    MAX_MOVE_CAMERA_STEP: 60,
     
     LEAP_PADDING: {
       x: 10,
@@ -81,7 +81,7 @@ define(["./Utils"],function(Utils) {
     
     STORAGE_NAME: "dartOptions.",
     
-    SIMULATED_PLAYERS: 5
+    SIMULATED_PLAYERS: 0
   };
   
 });

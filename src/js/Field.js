@@ -330,6 +330,19 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.pointCamera(0,Constants.INITIAL_CAMERA_POS_Y,0);
       },
       
+      moveCameraToward: function(x,y,z) {
+        var diffZ = Math.abs(this.camera.position.z - z);
+        if (diffZ > Constants.MAX_MOVE_CAMERA_STEP) {
+          if (z > this.camera.position.z) {
+            z = this.camera.position.z+Constants.MAX_MOVE_CAMERA_STEP;
+          } else {
+            z = this.camera.position.z-Constants.MAX_MOVE_CAMERA_STEP;
+          }
+        }
+        
+        this.moveCamera(x,y,z);
+      },
+      
       moveCamera: function(x,y,z) {
         this.camera.position.set(x,y,z);
         this.render();
