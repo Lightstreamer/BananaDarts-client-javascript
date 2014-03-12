@@ -183,7 +183,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
               height: 0,
               curveSegments: 0,
               
-              font: "droid serif",
+              font: "droid sans",
               weight: "bold",
             });
         text3d.computeBoundingBox();
