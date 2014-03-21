@@ -11,7 +11,7 @@ define(function() {
     hideTop: 0,
     
     setup: function() {
-      hideTop =  -$("#tools_stuff").height()+100; //show 100px (including logo)
+      hideTop =  -$("#tools_stuff").outerHeight()+100; //show 100px (including logo)
       if (!isOpen) {
         $("#tools").css("top",hideTop);
       }

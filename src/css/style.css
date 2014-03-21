@@ -68,13 +68,10 @@ body {
 #tools_stuff {
   background-color: #689a68;
   color:white;
-  padding: 0 20px;
   border-radius: 0 0 10px 10px;
+  padding: 20px 0;
 }
-.spacer {
-  height:20px;
-  clear:both;
-}
+
 #tools h1, #tools h2 {
   text-align: center;
 }
@@ -102,21 +99,15 @@ body {
   float:left;
 }
 .title {
-  width: 802px; /* 240 20 1 20 240 20 1 20 240 */
+  width: 100%;
 }
 .options, .gInstructions, .cInstructions {
   width: 240px;
   height: 12em;
-}
-.options {
-  padding-right: 20px;
+  padding: 0 20px;
 }
 .gInstructions, .cInstructions {
-  padding-left: 20px;
   border-left: 1px solid #ccc;
-}
-.gInstructions {
-	padding-right: 20px;
 }
 .inputDiv {
   height: 32px;
