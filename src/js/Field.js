@@ -15,8 +15,6 @@ Copyright 2014 Weswit s.r.l.
 */
 define(["./Constants","./Utils"],function(Constants,Utils) {
   
-  var WIDTH = window.innerWidth;
-  var HEIGHT = window.innerHeight;
   
   var SEE_THROUGH_MATERIAL = new THREE.MeshBasicMaterial({color: "black",  blending: THREE.NoBlending, opacity:0});
   
@@ -71,14 +69,22 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
        * @private
        */
       setupSize: function() {
-        WIDTH = window.innerWidth;
-        HEIGHT = window.innerHeight;
-
-        this.camera.aspect = window.innerWidth / window.innerHeight;
+        var w = window.innerWidth;
+        var h = window.innerHeight;
+        
+        var aspect;
+        if (w/h > 1.5) {
+          aspect = w / h;
+        } else {
+          h = w/1.77777;
+          aspect = 1.77777;
+        }
+        
+        this.camera.aspect = aspect;
         this.camera.updateProjectionMatrix();
 
-        this.renderer.setSize( window.innerWidth, window.innerHeight );
-        this.cssRenderer.setSize( window.innerWidth, window.innerHeight );
+        this.renderer.setSize( w, h );
+        this.cssRenderer.setSize( w, h );
         
         this.cssRender();
         this.render();
@@ -126,7 +132,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
        */
       setupCamera: function() {
         var v = this.webGLinUse ? 0.1 : 1;
-        this.camera = new THREE.PerspectiveCamera( 45, WIDTH/HEIGHT, v, 10000);
+        this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, v, 10000);
         
         this.controls = new THREE.OrbitControls(this.camera, this.htmlEl);
         
