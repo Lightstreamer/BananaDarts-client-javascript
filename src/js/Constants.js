@@ -17,9 +17,9 @@ define(["./Utils"],function(Utils) {
   
   var dartSize = 96;
   
-  var SIZE_X = Utils.cmToUnit(500);
-  var SIZE_Y = Utils.cmToUnit(300);
-  var SIZE_Z = Utils.cmToUnit(236.855);
+  var SIZE_X = Math.round(Utils.cmToUnit(500));
+  var SIZE_Y = Math.round(Utils.cmToUnit(300));
+  var SIZE_Z = Math.round(Utils.cmToUnit(236.855));
   
   var CENTER_FROM_FLOOR = Utils.cmToUnit(172.2);
   
