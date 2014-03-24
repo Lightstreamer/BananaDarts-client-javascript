@@ -58,33 +58,20 @@ body {
   z-index:3;
   opacity: 0.9;
 }
+#logo {
+  -webkit-transition: all 1s ease;
+  -moz-transition: all 1s ease;
+  -o-transition: all 1s ease;
+  transition: all 1s ease;
+}
 #tools_button {
   position: relative;
   top: -20px;
-  left: 379px; /* 790/2 - 32/2 */
+  left: 410px; /* 852/2 - 32/2 */
   height: 32px;
   width:32px;
 }
-#tools_stuff {
-  background-color: #689a68;
-  color:white;
-  border-radius: 0 0 10px 10px;
-  padding: 20px 0;
-}
 
-#tools h1, #tools h2 {
-  text-align: center;
-}
-#tools input {
-  border-radius: 5px;
-}
-#tools ul {
-  padding-left: 20px;
-  margin-top: 7px;
-}
-#ready_leap {
-  display: none;
-}
 .row, .col { 
   overflow: hidden; 
   position: relative; 
@@ -98,34 +85,112 @@ body {
   bottom: 0; 
   float:left;
 }
+.right {
+  float: right;
+}
+
+/* MENU contents */
+
+#tools_stuff {
+  background-color: #0083cb;
+  color: #f9dc0b;
+  border-radius: 0 0 10px 10px;
+  padding: 10px 0 20px 0;
+}
+
+/* MENU contents - header */
+
 .title {
   width: 100%;
 }
+#tools h1 {
+  font-size: 40px;
+  margin-top: 15px;
+}
+#tools h2 {
+  font-weight: normal;
+}
+#tools h1, #tools h2 {
+  text-align: center;
+}
+#ready_leap {
+  display: none;
+}
+
+/* MENU contents - columns */
+
 .options, .gInstructions, .cInstructions {
   width: 240px;
-  height: 12em;
+  height: 14em;
   padding: 0 20px;
 }
 .gInstructions, .cInstructions {
-  border-left: 1px solid #ccc;
+  border-left: 1px solid #f9dc0b;
+}
+
+/* MENU contents - clicks & forms */
+
+#tools_stuff a {
+  color: #f9dc0b;
+  padding:1px;
+}
+#buttons .button {
+  margin-top: 2px;
+  padding:2px;
+}
+#buttons .button:hover, #tools_stuff a:hover {
+  background-color: #f9dc0b;
+  color: #0083cb;
+  border-radius: 8px;
 }
 .inputDiv {
   height: 32px;
   margin: 1em 0;
 }
+.inputDiv input {
+  background-color: #f6e994;
+  color: #0083cb;
+  border-radius: 5px;
+}
 #sendChat {
   width: 32px;
   height:32px;
   vertical-align: middle;
+  margin-left: -4px;
 }
-.logoRow {
+.checked {
+  background-image: url(../images/check.png);
+  background-position: center right;
+  background-repeat: no-repeat;
+}
+.checked:hover {
+  background-image: url(../images/checkhover.png);
+}
+
+/* MENU contents - writings */
+
+#tools ul {
+  padding-left: 20px;
+  margin-top: 7px;
+}
+#logoRow {
   padding-top: 30px;
   text-align: center;
   margin: auto;
 }
-.logoRow img {
+#logo {
   margin: auto;
 }
+#linksRow div {
+  padding: 0 20px;
+  font-size: 15px;
+}
+#linksRow img {
+  height: 15px;
+  vertical-align: middle;
+  margin-top: -1px;
+}
+
 
 /* 3D */
 

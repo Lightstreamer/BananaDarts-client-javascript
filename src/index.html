@@ -52,8 +52,8 @@
         <div id="tools_stuff">
           <div class="row title">
             <h1>Multiplayer Darts for Leap Motion</h1>
-            <h2 id="waiting_leap">Connect your Leap Motion device (or just lurk)</h2>
-            <h2 id="ready_leap">Leap Motion ready.</h2>
+            <h2 id="waiting_leap">&gt; Connect your Leap Motion device (or just lurk) &lt;</h2>
+            <h2 id="ready_leap">&gt; Leap Motion ready &lt;</h2>
           </div>
           
           <div class="row"> 
@@ -65,25 +65,28 @@
                 <span class="label">Shout:</span> <input id="chatMessage" type="text" disabled /><img id="sendChat" src="images/send.png" class="button"/>
               </div>
               
-              <div>
-                <input type="checkbox" id="autoCamera" checked /> Automatic camera handling
-              </div>
-              <div>
-                <input type="checkbox" id="showNicks" checked /> Show names on darts
-              </div>
-              
-              <div>
-                <span id="resetCamera" class="button">Reset camera</span>
-              </div>
-              
-              <div>
-                <span id="resetScore" class="button">Reset score</span>
+              <div id="buttons">
+                <div id="autoCameraButton" class="button checked">
+                  Automatic camera handling
+                </div>
+                <div id="showNicksButton" class="button checked">
+                  Show names on darts
+                </div>
+                
+                <div id="resetCamera" class="button">
+                  <span>Reset camera</span>
+                </div>
+                
+                <div id="resetScore" class="button">
+                  <span>Reset score</span>
+                </div>
               </div>
             </div>
             
             <div class="col gInstructions">
               <h3>How to play</h3>
-              Make a fist over the leap motion device, then push it to throw the dart.
+              <p>Make a fist over the Leap Motion device, then move it forward to throw the dart (no need to open your hand).</p>
+              <p>Try to aim at the target. Move your hand faster to increase dart speed.</p>
             </div>
             
             <div class="col cInstructions">
@@ -97,11 +100,18 @@
             </div>
           </div>
           
-          <div class="logoRow">
-            <img src="images/logo.png" />
+          <div id="logoRow">
+            <img id="logo" src="images/logo.png" />
           </div>
+          
+          <div class="row" id="linksRow">
+            <div class="col"><img src="images/github.png"> <a href="https://github.com/Weswit/Lightstreamer-example-Darts-LeapMotion-client-javascript" target="_blank">Source code on GitHub</a></div>
+            <div class="col right">Contact: <a href="mailto:support@lightstreamer.com" target="_blank">support@lightstreamer.com</a></div>          
+          </div>
+          
         </div>  
         <img class="button" src="images/up.png" id="tools_button">
+         
          
       </div>
       

@@ -111,7 +111,7 @@ require(["js/Constants","js/Field","js/Game",
       if (!firsClick) {
         Menu.close();
       }
-    },2000);
+    },5000);
     $(window).resize(function(){
       Menu.setup();
     });
@@ -149,22 +149,38 @@ require(["js/Constants","js/Field","js/Game",
       field.resetCamera();
     });
     
-    //setup camera auto on/off
-    $("#autoCamera").prop("checked",options.getAutoCamera()).change(function() {
-      options.setAutoCamera($(this).prop("checked"));
-      game.enableCameraHandling(options.getAutoCamera());
-    });
-    game.enableCameraHandling(options.getAutoCamera()); 
     
-    //setup nicks on darts on/off
-    $("#showNicks").prop("checked",options.getShowNicks()).change(function() {
-      options.setShowNicks($(this).prop("checked"));
-      game.showExtraInfo(options.getShowNicks());
+    var x = new Image();
+    x.src = "images/checkhover.png";//preload
+    x = null;
+    
+    function switchCheckedClass(el,flag) {
+      if (flag) {
+        $(el).addClass("checked");
+      } else {
+        $(el).removeClass("checked");
+      }
+    }
+    
+    switchCheckedClass("#autoCameraButton",options.getAutoCamera());
+    game.enableCameraHandling(options.getAutoCamera()); 
+    $("#autoCameraButton").click(function() {
+      options.toggleAutoCamera();
+      switchCheckedClass("#autoCameraButton",options.getAutoCamera());
+      game.enableCameraHandling(options.getAutoCamera()); 
     });
-    game.showExtraInfo(options.getShowNicks());
+   
+    //setup nicks on darts on/off
+    switchCheckedClass("#showNicksButton",options.getShowNicks());
+    game.showExtraInfo(options.getShowNicks()); 
+    $("#showNicksButton").click(function() {
+      options.toggleShowNicks();
+      switchCheckedClass("#showNicksButton",options.getShowNicks());
+      game.showExtraInfo(options.getShowNicks()); 
+    });
     
     //setup nick input
-    $("#nick").val(userNick).prop('disabled', false).keyup(function() {
+    $("#nick").val(userNick).keyup(function() {
       options.setNick($(this).val());
       player.changeNick(options.getNick());
     }).keypress(function(e) {
@@ -217,10 +233,12 @@ require(["js/Constants","js/Field","js/Game",
     function doEnter() {
       player.enterRoom(Constants.ROOM);
       $("#chatMessage").prop('disabled', false);
+      $("#nick").prop('disabled', false);
     }
     function doExit() {
       player.exitRoom(Constants.ROOM);
       $("#chatMessage").prop('disabled', true);
+      $("#nick").prop('disabled', true);
     }
     if (LeapMotion.isReady()) {
       doEnter();
