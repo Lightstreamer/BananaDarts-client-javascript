@@ -179,6 +179,20 @@ require(["js/Constants","js/Field","js/Game",
       game.showExtraInfo(options.getShowNicks()); 
     });
     
+    
+    if (typeof Audio != "undefined") {
+      switchCheckedClass("#audioButton",options.getAudio());
+      game.enableAudio(options.getAudio());
+      $("#audioButton").click(function() {
+        options.toggleAudio();
+        switchCheckedClass("#audioButton",options.getAudio());
+        game.enableAudio(options.getAudio()); 
+      });
+    } else {
+      $("#audioButton").hide();
+    }
+    
+    
     //setup nick input
     $("#nick").val(userNick).keyup(function() {
       options.setNick($(this).val());

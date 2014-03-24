@@ -121,7 +121,7 @@ body {
 
 .options, .gInstructions, .cInstructions {
   width: 240px;
-  height: 14em;
+  height: 15em;
   padding: 0 20px;
 }
 .gInstructions, .cInstructions {
@@ -136,7 +136,7 @@ body {
 }
 #buttons .button {
   margin-top: 2px;
-  padding:2px;
+  padding-top:2px;
 }
 #buttons .button:hover, #tools_stuff a:hover {
   background-color: #f9dc0b;

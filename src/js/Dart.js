@@ -61,13 +61,23 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       z: 250,
   };
   
+  var hitSound = null;
+  var throwSound = null;
+  if (typeof Audio != "undefined") {
+    hitSound = new Audio("sound/hit.ogg"); // https://www.youtube.com/watch?v=Zt_L-J6xcN0
+    hitSound.load();
+    
+    throwSound = new Audio("sound/throw.ogg"); // http://soundbible.com/963-Arrow.html
+    throwSound.load();
+  }
+  
   
   
   //Dart obj is 13.598 units, we want it 96
   var expectedSize = Constants.DART_ORIGINAL_SIZE;
   var SCALE_TO = expectedSize/13.598;
   
-  var Dart = function(key,type,field,showInfo) {
+  var Dart = function(key,type,field,showInfo,audio) {
     this.field = field;
     
     this.dart = null;
@@ -79,6 +89,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     this.text = null; 
     this.nick = null;
     this.showNickFlag = showInfo;
+    this.audio = audio;
     
     this.timestamp = 0;
     
@@ -161,6 +172,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       
       setStatus: function(status) {
         this.status = status;
+      },
+      
+      enableAudio: function(enable) {
+        this.audio = enable;
       },
       
       /**
@@ -254,8 +269,18 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           this.timestamp = new Date().getTime();
           this.fixStartPosition();
           this.calculate();
+          this.doSound(throwSound);
         } 
       },
+      
+      //Sound
+      
+      doSound: function(sound) {
+        if (sound && this.audio) {
+          sound.cloneNode(true).play();
+        }
+      },
+      
       
       
       //Position
@@ -268,7 +293,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.startPos.y = this.dart.position.y;
         this.startPos.z = this.dart.position.z;
       },
-    
+      
       setPosition: function(x,y,z) {
         this.setPos("x",x);
         this.setPos("y",y);
@@ -298,6 +323,12 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       setPos: function(axis,value) {
         if (value ==  this.dart.position[axis]) {
           return;
+        }
+        
+        if (value <= -Constants.MAX_SIZE[axis]) {
+          this.doSound(hitSound);
+        } else if (axis != "z" && value >= Constants.MAX_SIZE[axis]) {
+          this.doSound(hitSound);
         }
         
         this.dart.position[axis] = value;

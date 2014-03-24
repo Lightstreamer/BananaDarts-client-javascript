@@ -27,7 +27,7 @@ define(["./Constants","./Utils","./Dart","./GameLoop"],
     
     this.cameraHandling = true;
     
-    
+    this.audio = true;
     
     this.gameLoop = new GameLoop(this);
   };
@@ -42,6 +42,15 @@ define(["./Constants","./Utils","./Dart","./GameLoop"],
             player.showNick(newV);
           });
           this.extraInfo = newV;
+        } 
+      },
+      
+      enableAudio: function(enabled) {
+        if (this.audio != enabled) {
+          this.forEachPlayer(function(player) {
+            player.enableAudio(enabled);
+          });
+          this.audio = enabled;
         } 
       },
       
@@ -100,7 +109,7 @@ define(["./Constants","./Utils","./Dart","./GameLoop"],
           return;
         }
 
-        this.players[key] = new Dart(key,key == this.localPlayerKey ? Constants.OWN : Constants.OTHER,this.field,this.extraInfo);
+        this.players[key] = new Dart(key,key == this.localPlayerKey ? Constants.OWN : Constants.OTHER,this.field,this.extraInfo,this.audio);
       },
       getPlayer: function(key) {
         return this.players[key];

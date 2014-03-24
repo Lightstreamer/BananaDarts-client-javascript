@@ -13,6 +13,7 @@ define(["./Constants"],function(Constants) {
     this.nick = "Player"+Math.round(Math.random()*10000);
     this.autoCamera = true;
     this.showNicks = true;
+    this.audio = typeof Audio != "undefined";
     this.load();
     
   };
@@ -66,6 +67,17 @@ define(["./Constants"],function(Constants) {
       },
       toggleShowNicks: function() {
         this.setShowNicks(!this.showNicks);
+      },
+      
+      setAudio: function(audio) {
+        this.audio = audio;
+        this.save("audio");
+      },
+      getAudio: function() {
+        return this.audio;
+      },
+      toggleAudio: function() {
+        this.setAudio(!this.audio);
       },
       
       save: function(what) {
