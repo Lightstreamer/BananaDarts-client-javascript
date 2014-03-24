@@ -53,6 +53,9 @@ define(["./Constants"],function(Constants) {
       getAutoCamera: function() {
         return this.autoCamera;
       },
+      toggleAutoCamera: function() {
+        this.setAutoCamera(!this.autoCamera);
+      },
       
       setShowNicks: function(showNicks) {
         this.showNicks = showNicks;
@@ -60,6 +63,9 @@ define(["./Constants"],function(Constants) {
       },
       getShowNicks: function() {
         return this.showNicks;
+      },
+      toggleShowNicks: function() {
+        this.setShowNicks(!this.showNicks);
       },
       
       save: function(what) {
