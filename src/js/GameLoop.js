@@ -13,7 +13,7 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define([],function() {
+define(function() {
   
   function run(who) {
     return function() {
