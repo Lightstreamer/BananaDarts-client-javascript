@@ -45,6 +45,7 @@ body {
 
 #tools {
   position: fixed;
+  margin: auto;
   width: 842px; /* 20 802 20 */
   border: 0;
   top: 0;
@@ -110,8 +111,9 @@ body {
   display: none;
 }
 #waiting_leap {
-  animation: blinker 0.8s cubic-bezier(.3, 0, 1, 1) infinite alternate;  
+  animation: blinker 0.8s cubic-bezier(.42, .01, 0, 1) infinite alternate;  
   -webkit-animation: blinker 0.8s cubic-bezier(.3, 0, 1, 1) infinite alternate;  
+  transition-delay: 0.5s
 }
 
 @keyframes blinker {  

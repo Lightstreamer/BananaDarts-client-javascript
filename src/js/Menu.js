@@ -24,6 +24,7 @@ define(function() {
     
     setup: function() {
       if (firstSetup) {
+        $("#tools").css("margin",0);
         originalHeight = $("#tools").outerHeight();
         originalWidth = $("#tools").outerWidth();
         originalStuffHeight = $("#tools_stuff").outerHeight();
@@ -34,7 +35,7 @@ define(function() {
     
 
       zoom=1;
-      while (zoom > 0 && originalHeight*zoom > window.innerHeight) {
+      while (zoom > 0 && originalStuffHeight*zoom > window.innerHeight) {
         zoom -= 0.1;
       }
       while (zoom > 0 && originalWidth*zoom > window.innerWidth) {
