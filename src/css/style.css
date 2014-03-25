@@ -51,17 +51,11 @@ body {
   top: 0;
   left: 0; 
   right: 0; 
-  -webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -o-transition: all 1s ease;
   transition: all 1s ease;
   z-index:3;
   opacity: 0.9;
 }
 #logo {
-  -webkit-transition: all 1s ease;
-  -moz-transition: all 1s ease;
-  -o-transition: all 1s ease;
   transition: all 1s ease;
 }
 #tools_button {
@@ -115,6 +109,19 @@ body {
 }
 #ready_leap {
   display: none;
+}
+#waiting_leap {
+  animation: blinker 0.8s cubic-bezier(.3, 0, 1, 1) infinite alternate;  
+  -webkit-animation: blinker 0.8s cubic-bezier(.3, 0, 1, 1) infinite alternate;  
+}
+
+@keyframes blinker {  
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@-webkit-keyframes blinker {  
+  from { opacity: 1; }
+  to { opacity: 0; }
 }
 
 /* MENU contents - columns */
