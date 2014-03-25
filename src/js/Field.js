@@ -287,9 +287,14 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       setupBoard: function() {
         var that = this;
         
+        var boardTexture = THREE.ImageUtils.loadTexture("obj/dartboard.jpg");
+        var boardMaterial = new THREE.MeshBasicMaterial({map: boardTexture});
+        
         Utils.loadObj("obj/dartboard.obj", "obj/dartboard.obj.mtl", function (object) {
           object.position.set(0,Constants.CENTER_Y,-(Constants.MAX_SIZE.z));
           object.quaternion.set(0,1,0,0);
+          
+          object.children[2].material = boardMaterial;
           
           that.group.add( object );
           that.render();
