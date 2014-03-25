@@ -45,13 +45,12 @@ body {
 
 #tools {
   position: fixed;
-  margin: auto;
   width: 842px; /* 20 802 20 */
   border: 0;
   top: 0;
   left: 0; 
   right: 0; 
-  transition: all 1s ease;
+  transition: top 1s ease;
   z-index:3;
   opacity: 0.9;
 }
@@ -127,7 +126,7 @@ body {
 /* MENU contents - columns */
 
 .options, .gInstructions, .cInstructions {
-  width: 240px;
+  width: 28%;
   height: 15em;
   padding: 0 20px;
 }
@@ -160,8 +159,8 @@ body {
   border-radius: 5px;
 }
 #sendChat {
-  width: 32px;
-  height:32px;
+  width: 2em;
+  height:2em;
   vertical-align: middle;
   margin-left: -4px;
 }
