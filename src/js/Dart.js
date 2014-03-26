@@ -48,7 +48,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         return -size/2;
       },
       y: -30,
-      z: 30,
+      z: 30
   };
   var FONT_SIZE = 20;
   
@@ -58,7 +58,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   var CAMERA_OFFSET = {
       x: 0,
       y: 0,
-      z: 250,
+      z: 250
   };
   
   var hitSound = null;
@@ -199,7 +199,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
               curveSegments: 0,
               
               font: "droid sans",
-              weight: "bold",
+              weight: "bold"
             });
         text3d.computeBoundingBox();
 

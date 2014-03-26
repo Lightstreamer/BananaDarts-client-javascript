@@ -85,7 +85,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
     this.axis = {
         x: new Pos(MAX_3JS_POS["x"],SHIFT_3JS_POS["x"]),
         y: new Pos(MAX_3JS_POS["y"],SHIFT_3JS_POS["y"]),
-        z: new Pos(MAX_3JS_POS["z"],SHIFT_3JS_POS["z"]),
+        z: new Pos(MAX_3JS_POS["z"],SHIFT_3JS_POS["z"])
     };
    
     this.player = new Player("Sim"+(simCount++),this.client,game,true);
@@ -125,7 +125,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
         }
         
         
-      },
+      }
   };
   
   
