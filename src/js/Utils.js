@@ -18,6 +18,7 @@ define(function() {
   
   function setShadowOnObject(object) {
     object.castShadow = true;
+    object.receiveShadow = true;
     var children = object.getDescendants();
     for (var i = 0; i < children.length; i++) {
       setShadowOnObject(children[i]);
