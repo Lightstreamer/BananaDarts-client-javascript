@@ -50,7 +50,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       y: -30,
       z: 30
   };
-  var FONT_SIZE = 20;
+  var FONT_SIZE = 12;
   
   //assumes  NICK_OFFSET.y is < 0
   var SWITCH_NICK_POSITION = -(Constants.MAX_SIZE.y + NICK_OFFSET.y - FONT_SIZE);
