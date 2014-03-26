@@ -177,16 +177,16 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         
         
         var aboveLight = new THREE.DirectionalLight( 0xFFFFFF, 0.1 );
-        aboveLight.position.set(0,Constants.MAX_SIZE.y+1,0); //+1 or else when touching the ceiling the shadow is not shown
-        aboveLight.target.position.set(0,-Constants.MAX_SIZE.y,0);
+        aboveLight.position.set(Constants.MAX_SIZE.x/3,Constants.MAX_SIZE.y,Constants.MAX_SIZE.z); 
+        aboveLight.target.position.set(0,-Constants.MAX_SIZE.y,-Constants.MAX_SIZE.z);
         aboveLight.castShadow = true;
         //aboveLight.shadowCameraVisible = true;
-        aboveLight.shadowCameraLeft = -Constants.MAX_SIZE.z-Constants.FLOOR_OVERFLOW;
-        aboveLight.shadowCameraTop = -Constants.MAX_SIZE.x;
-        aboveLight.shadowCameraRight = Constants.MAX_SIZE.z;
-        aboveLight.shadowCameraBottom = Constants.MAX_SIZE.x;
+        aboveLight.shadowCameraLeft = -Constants.MAX_SIZE.x*2; 
+        aboveLight.shadowCameraTop = Constants.MAX_SIZE.z*2;
+        aboveLight.shadowCameraRight = Constants.MAX_SIZE.x;
+        aboveLight.shadowCameraBottom = -Constants.MAX_SIZE.z*2;
         aboveLight.shadowCameraNear = 0;
-        aboveLight.shadowCameraFar = Constants.MAX_SIZE.y*2+2; //+2 or else part of the floor might be out of reach 
+        aboveLight.shadowCameraFar = Constants.MAX_SIZE.y*4;
         aboveLight.shadowMapWidth = 4096;
         aboveLight.shadowMapHeight = 4096;
         aboveLight.shadowBias = -.001;
@@ -243,7 +243,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
                 
         var backWall = new THREE.Mesh(backWallGeometry,backWallMaterial);
         backWall.position.set(0,0,-Constants.MAX_SIZE.z);
-        backWall.receiveShadow = false;
+        backWall.receiveShadow = true;
         this.group.add(backWall);
         
         var leftWall = new THREE.Mesh(sideWallGeometry,leftWallMaterial);
@@ -267,18 +267,29 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         var that = this;
         
         var boardTexture = THREE.ImageUtils.loadTexture("obj/dartboard.jpg");
-        var boardMaterial = new THREE.MeshBasicMaterial({map: boardTexture});
+        var boardMaterial = new THREE.MeshLambertMaterial({map: boardTexture});
         
         Utils.loadObj("obj/dartboard.obj", "obj/dartboard.obj.mtl", function (object) {
           object.position.set(0,Constants.CENTER_Y,-(Constants.MAX_SIZE.z));
           object.quaternion.set(0,1,0,0);
-          
+         
           object.children[2].material = boardMaterial;
           
           that.group.add( object );
           that.render();
         });
-
+        
+        
+        //hack to show a shadow
+        var blackMaterial = new THREE.MeshLambertMaterial({color: "black", opacity: 0, transparent: true});
+        var boardGeometry = new THREE.CylinderGeometry(Constants.BOARD_DIAMETER/2,Constants.BOARD_DIAMETER/2,1,50,50,false);
+        var board = new THREE.Mesh(boardGeometry,blackMaterial);
+        board.position.set(0,Constants.CENTER_Y,-(Constants.MAX_SIZE.z)+Constants.BOARD_THICKNESS);
+        board.castShadow = true;
+        board.rotation.x = Math.PI/-2;
+        this.scene.add(board);
+        
+   
       },
       
 ///////////////////---> end initialization code
