@@ -10,6 +10,11 @@
         loggingLevel: 'WARNING',
     },
     
+    skipDirOptimize: true,
+    
+    normalizeDirDefines: "skip",
+    
+    optimizeCss: "standard.keepLines",
     
     //if using the non-namespaced version of the Lightstreamer library remove the "Lightstreamer/" prefix from LightstreamerClient, Subscription and StatusWidget module names
     paths: {
@@ -27,5 +32,7 @@
             name: "index",
             includeRequire: false
         }
-    ]
+    ],
+    
+     preserveLicenseComments: false
 })
