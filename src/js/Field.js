@@ -34,7 +34,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     this.controls = null;
     
     
-    this.webGLinUse = this.setupRenderers();
+    this.setupRenderers(); //may throw
+    
     this.setupHtml();
         
     this.setupRoom();
@@ -95,21 +96,14 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
        */
       setupRenderers: function() {
         this.cssRenderer = new THREE.CSS3DRenderer();
+        this.renderer = new THREE.WebGLRenderer(); //may throw exception 
         
-        var webGl = true;
-        try { 
-          this.setupWebGL();
-        } catch (e) { 
-          webGl = false;
-          this.setupCanvas();
-        }
         this.renderer.shadowMapEnabled = true;
         this.renderer.sortObjects = false;
         this.renderer.setClearColor( "black", 1 );
        
         //this.rendererStats  = new THREEx.RendererStats();
         //this.stats = new Stats();
-        return webGl;
       },
       
       setupHtml: function() {
@@ -131,8 +125,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
        * @private
        */
       setupCamera: function() {
-        var v = this.webGLinUse ? 0.1 : 1;
-        this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, v, 10000);
+        this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 10000);
         
         this.controls = new THREE.OrbitControls(this.camera, this.htmlEl);
         
@@ -203,20 +196,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         
         this.scene.add( aboveLight );
         
-      },
-      
-      /**
-       * @private
-       */
-      setupWebGL: function() {
-        this.renderer = new THREE.WebGLRenderer(); 
-      },
-      
-      /**
-       * @private
-       */
-      setupCanvas: function() {
-        this.renderer = new THREE.CanvasRenderer();
       },
       
       /**
@@ -303,10 +282,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       },
       
 ///////////////////---> end initialization code
-      
-      isWebGLinUse: function() {
-        return this.webGLinUse;
-      },
 
       render: function() {
         //cCall++;

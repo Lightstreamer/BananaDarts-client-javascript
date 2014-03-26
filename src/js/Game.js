@@ -35,13 +35,11 @@ define(["./Constants","./Utils","./Dart","./GameLoop"],
   Game.prototype = {
       
       showExtraInfo: function(show) {
-        var newV = this.field.isWebGLinUse() && show; 
-        
-        if (this.extraInfo != newV) {
+        if (this.extraInfo != show) {
           this.forEachPlayer(function(player) {
-            player.showNick(newV);
+            player.showNick(show);
           });
-          this.extraInfo = newV;
+          this.extraInfo = show;
         } 
       },
       
