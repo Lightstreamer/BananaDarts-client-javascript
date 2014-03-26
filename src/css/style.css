@@ -24,7 +24,7 @@ body {
 .button {
   cursor:pointer;
 }
-#whole {
+.whole {
   border: 0;
   position: absolute;
   bottom:0;
@@ -107,15 +107,14 @@ body {
 #tools h1, #tools h2 {
   text-align: center;
 }
-#ready_leap {
+#ready_leap, #waiting_leap, #not_compatible {
   display: none;
 }
-#waiting_leap {
+.blink {
   animation: blinker 0.8s cubic-bezier(.42, .01, 0, 1) infinite alternate;  
   -webkit-animation: blinker 0.8s cubic-bezier(.3, 0, 1, 1) infinite alternate;  
   transition-delay: 0.5s
 }
-
 @keyframes blinker {  
   from { opacity: 1; }
   to { opacity: 0; }

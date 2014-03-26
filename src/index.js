@@ -13,44 +13,18 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-
-
-require(["js/LeapMotion"],
-    function(LeapMotion) {
-  
-  $(document).ready(function() {
-    function hideLeapRequest(hide) {
-      if (hide) {
-        $("#waiting_leap").hide();
-        $("#ready_leap").show();
-      } else {
-        $("#waiting_leap").show();
-        $("#ready_leap").hide();
-      }
-    }
-    setTimeout(function() {
-      hideLeapRequest(LeapMotion.isReady());
-    },1000);
-    LeapMotion.addListener({
-      onReady: function(ready) {
-        hideLeapRequest(ready);
-      }
-    });
-  });
-});
-
 require(["js/Constants","js/Field","js/Game",
          "js/Dart","js/Player","js/Options","js/LeapMotion",
          "js/lsClient","js/Simulator","js/ConsoleSubscriptionListener",
          "js/Scoreboard","js/RoomSubscription",
          "js/ChatBoard","js/ChatSubscription",
-         "js/Menu"],
+         "js/Menu", "js/Status"],
     function(Constants,Field,Game,
         Dart,Player,Options,LeapMotion,
         lsClient,Simulator,ConsoleSubscriptionListener,
         Scoreboard,RoomSubscription,
         ChatBoard,ChatSubscription,
-        Menu) {
+        Menu,Status) {
   
   var options = new Options();
   
@@ -58,7 +32,14 @@ require(["js/Constants","js/Field","js/Game",
   
   
   //setup game
-  var field = new Field($("#theWorld")[0]);
+  var field = null;
+  try {
+    field = new Field($("#theWorld")[0]);
+  } catch(e) {
+    Status.changeStatus(Status.NOT_COMPATIBLE);
+    return;
+  }
+  
   var game = new Game(field);
   var scoreboard = new Scoreboard(field,"scoreboardTemplate",["td"],$("#scoreboard"));
   var chat = new ChatBoard(field,"chatTemplate",["span"],$("#chat"),$("#chatPlaceHolder"));
@@ -221,8 +202,9 @@ require(["js/Constants","js/Field","js/Game",
         doSend();
       }
     });
-  
-  
+    
+    
+    
     //slightly move camera to show dart
     field.moveCamera(Constants.INITIAL_CAMERA_POS_X, Constants.INITIAL_CAMERA_POS_Y, Constants.INITIAL_CAMERA_POS_Z);
     LeapMotion.addListener({
@@ -267,6 +249,21 @@ require(["js/Constants","js/Field","js/Game",
         }
       });
     }
+    
+    //setup message
+    THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
+      if (loaded == total) {
+        THREE.DefaultLoadingManager.onProgress = null;
+        LeapMotion.addListener({
+          onReady: function(ready) {
+            Status.changeStatus(ready ? Status.READY : Status.WAITING_LEAP);
+          }
+        });
+        Status.changeStatus(LeapMotion.isReady() ? Status.READY : Status.WAITING_LEAP);
+      }
+    };
+    
+    
   });
   //setup simulators
   var created = 0;
@@ -282,5 +279,6 @@ require(["js/Constants","js/Field","js/Game",
   
   
 });
+
 
   
