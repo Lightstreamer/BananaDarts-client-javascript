@@ -70,6 +70,16 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
     }  
   };
   
+  var fakeGame = {
+      getPlantedDelta: function() {
+        return Constants.PLANTED_DELAY+1;
+      },
+      
+      isPlayerFlying: function() {
+        return false;
+      }  
+  };
+  
   
   function rand(v) {
     return Math.round(Math.random()*v);
@@ -79,7 +89,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
     this.client = new LightstreamerClient(lsClient.connectionDetails.getServerAddress(),Constants.ADAPTER);
     this.client.connect();
     
-    this.game = game;
+    this.game = game || fakeGame;
     this.wait = 20;
     
     this.axis = {
@@ -88,7 +98,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
         z: new Pos(MAX_3JS_POS["z"],SHIFT_3JS_POS["z"])
     };
    
-    this.player = new Player("Sim"+(simCount++),this.client,game,true);
+    this.player = new Player("Sim"+(simCount++),this.client,this.game,true);
     this.player.enterRoom(Constants.ROOM);
    
     this.isChampion = isChampion;
