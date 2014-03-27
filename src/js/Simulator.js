@@ -21,15 +21,15 @@ define(["LightstreamerClient","./Constants","Executor","./Player"],
   var MESSAGES = ["Hi!","Hello","I'm a simulator","\\m/","Lightstreamer!","Wow! So Dart, Much Throw, Very Multiplayer"];
   
   var MAX_3JS_POS = {
-    x: Constants.MAX_SIZE["x"]*2,
-    y: Constants.MAX_SIZE["y"]*2,
+    x: Constants.ARM_LENGTH,
+    y: Constants.ARM_LENGTH,
     z: Constants.ARM_REACH
   };
   
   var SHIFT_3JS_POS = {
-     x: -Constants.MAX_SIZE["x"],
-     y: -Constants.MAX_SIZE["y"],
-     z: Constants.MAX_SIZE["z"] - Constants.ARM_REACH
+    x: -Constants.ARM_LENGTH/2,
+    y: -Constants.ARM_LENGTH/2 + Constants.TWENTY,
+    z: Constants.MAX_SIZE["z"] - Constants.ARM_REACH
   };
   
   var Pos = function(max,shift) {
@@ -124,7 +124,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player"],
           var move = rand(40);
           if (move == 5) {
             if (this.isChampion) {
-              this.player.release(Constants.ROOM,0,0,-2900);
+              this.player.release(Constants.ROOM,0,0,-3700);
             } else {
               var mulX = this.axis.x.real > 0 ? -1 : 1;
               this.player.release(Constants.ROOM,rand(1500)*mulX,rand(1000),-(rand(3000)+1000));
@@ -136,7 +136,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player"],
           
           } else {
             if (this.isChampion) {
-              this.player.move(Constants.ROOM,0,Constants.MAX_SIZE.y/2,Constants.MAX_SIZE.z);
+              this.player.move(Constants.ROOM,0,MAX_3JS_POS["y"]+SHIFT_3JS_POS["y"],Constants.MAX_SIZE.z);
             } else {
               this.player.move(Constants.ROOM,this.randomPos("x"),this.randomPos("y"),this.randomPos("z"));
             }
