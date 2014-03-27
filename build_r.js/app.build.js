@@ -31,6 +31,10 @@
         {
             name: "index",
             includeRequire: false
+        },
+        {
+          name: "simulators",
+          includeRequire: false
         }
     ],
     
