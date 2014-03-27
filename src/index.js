@@ -67,15 +67,12 @@ require(["js/Constants","js/Field","js/Game",
   
   
   $(document).ready(function(){
-    var firsClick = false;
-    
+
     Menu.setup();    
     
     $("#tools_button").click(function(e) {
       e.stopPropagation();
-      firsClick = true;
       Menu.toggle();
-      
     });
     $("#tools").click(function() {
       Menu.open();
@@ -88,11 +85,7 @@ require(["js/Constants","js/Field","js/Game",
     $("#theWorld").click(function() {
       Menu.close();
     });
-    setTimeout(function() {
-      if (!firsClick) {
-        Menu.close();
-      }
-    },5000);
+    
     $(window).resize(function(){
       Menu.setup();
     });
@@ -264,6 +257,11 @@ require(["js/Constants","js/Field","js/Game",
           }
         });
         Status.changeStatus(LeapMotion.isReady() ? Status.READY : Status.WAITING_LEAP);
+        setTimeout(function() {
+          if (!Menu.gotFirstCall()) {
+            Menu.close();
+          }
+        },3000);
       }
     };
     

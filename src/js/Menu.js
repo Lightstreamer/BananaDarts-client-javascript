@@ -31,6 +31,8 @@ define(function() {
   var originalLinkHeightRow = null;
   var firstSetup = true;
   
+  var firstAction = false;
+  
   var zoom = 1;
   $("#logo").css("height",originalLogoSize+"px");
   
@@ -77,6 +79,7 @@ define(function() {
       return isOpen;
     },
     open: function() {
+      firstAction = true;
       if (!isOpen) {
         $("#linksRow").show();
         $("#tools").css("top",topPosition);
@@ -86,6 +89,7 @@ define(function() {
       }
     },
     close: function() {
+      firstAction = true;
       if (isOpen) {
         $("#linksRow").hide();
         $("#tools").css("top",hideTop);
@@ -100,6 +104,10 @@ define(function() {
       } else {
         this.open();
       }
+    },
+    
+    gotFirstCall: function() {
+      return firstAction;
     }
   };
   
