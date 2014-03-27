@@ -14,8 +14,8 @@ Copyright 2014 Weswit s.r.l.
    limitations under the License.
 */
 define(["LightstreamerClient","./Constants","StatusWidget"],function(LightstreamerClient,Constants,StatusWidget) {
-  var protocolToUse = document.location.protocol != "file:" ? document.location.protocol : "http:";
-  var lsClient = new LightstreamerClient(protocolToUse+"//localhost:8080",Constants.ADAPTER);
+  
+  var lsClient = new LightstreamerClient(Constants.SERVER,Constants.ADAPTER);
   lsClient.addListener(new StatusWidget("left", "5px", false));
   lsClient.connect();
   return lsClient;

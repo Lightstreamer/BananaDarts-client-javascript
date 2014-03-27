@@ -28,11 +28,15 @@ define(["./Utils"],function(Utils) {
   var MOON_GRAVITY =  1.6249; //m/s^2
   var ACCELERATION_UNIT_MS_SQUARE = Utils.cmToUnit(MOON_GRAVITY/10000); //(9.81/1000000)*100 cm/ms^2;
   
+  var protocolToUse = document.location.protocol != "file:" ? document.location.protocol : "http:";
+  
+  
   return {
     OWN: "own",
     OTHER: "other",
  
     ADAPTER: "DART",
+    SERVER: protocolToUse+"//localhost:8080",
     LOG_UPDATES_ON_CONSOLE: false,
     CHEAT: false,
     

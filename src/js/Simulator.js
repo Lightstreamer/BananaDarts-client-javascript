@@ -13,8 +13,8 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
-    function(LightstreamerClient,Constants,Executor,Player,lsClient) {
+define(["LightstreamerClient","./Constants","Executor","./Player"],
+    function(LightstreamerClient,Constants,Executor,Player) {
   
   var simCount = 0;
   
@@ -86,7 +86,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
   }
   
   function Simulator(game,isChampion) {
-    this.client = new LightstreamerClient(lsClient.connectionDetails.getServerAddress(),Constants.ADAPTER);
+    this.client = new LightstreamerClient(Constants.SERVER,Constants.ADAPTER);
     this.client.connect();
     
     this.game = game || fakeGame;
