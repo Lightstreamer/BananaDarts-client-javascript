@@ -18,13 +18,13 @@ require(["js/Constants","js/Field","js/Game",
          "js/lsClient","js/Simulator","js/ConsoleSubscriptionListener",
          "js/Scoreboard","js/RoomSubscription",
          "js/ChatBoard","js/ChatSubscription",
-         "js/Menu", "js/Status"],
+         "js/Menu", "js/Status", "js/Utils"],
     function(Constants,Field,Game,
         Dart,Player,Options,LeapMotion,
         lsClient,Simulator,ConsoleSubscriptionListener,
         Scoreboard,RoomSubscription,
         ChatBoard,ChatSubscription,
-        Menu,Status) {
+        Menu,Status,Utils) {
   
   var options = new Options();
   
@@ -161,11 +161,15 @@ require(["js/Constants","js/Field","js/Game",
     });
     
     
-    if (typeof Audio != "undefined") {
+    var enableSoundEffect = Utils.loadSound("throw");
+    if (enableSoundEffect) {
       switchCheckedClass("#audioButton",options.getAudio());
       game.enableAudio(options.getAudio());
       $("#audioButton").click(function() {
         options.toggleAudio();
+        if(options.getAudio()) {
+          enableSoundEffect.play();
+        }
         switchCheckedClass("#audioButton",options.getAudio());
         game.enableAudio(options.getAudio()); 
       });
