@@ -61,16 +61,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       z: 250
   };
   
-  var hitSound = null;
-  var throwSound = null;
-  if (typeof Audio != "undefined") {
-    hitSound = new Audio("sound/hit.ogg"); // https://www.youtube.com/watch?v=Zt_L-J6xcN0
-    hitSound.load();
-    
-    throwSound = new Audio("sound/throw.ogg"); // http://soundbible.com/963-Arrow.html
-    throwSound.load();
-  }
-  
+  var hitSound = Utils.loadSound("hit"); // https://www.youtube.com/watch?v=Zt_L-J6xcN0
+  var throwSound = Utils.loadSound("throw"); // http://soundbible.com/963-Arrow.html
   
   
   //Dart obj is 13.598 units, we want it 96
@@ -266,10 +258,12 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.dinamics.z = vz;
         
         if (vz !== 0) {
+          this.doSound(throwSound);
+          
           this.timestamp = new Date().getTime();
           this.fixStartPosition();
           this.calculate();
-          this.doSound(throwSound);
+         
         } 
       },
       
@@ -277,7 +271,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       
       doSound: function(sound) {
         if (sound && this.audio) {
-          sound.cloneNode(true).play();
+          sound.play();
         }
       },
       
