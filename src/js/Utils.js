@@ -37,6 +37,22 @@ define(function() {
   
   var b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/=";
   
+  function getAudioType() {
+    if (typeof Audio != "undefined") {
+      var test = new Audio();
+      if (test.canPlayType) {
+        if (!test.canPlayType("audio/ogg")) {
+          if (!test.canPlayType("audio/mp3")) {
+            return false;
+          }
+          return "mp3";
+        }
+      }
+      return "ogg";
+    }
+    return false;
+  }
+  var audioType = getAudioType();
   
   return {
     
@@ -58,6 +74,22 @@ define(function() {
         //double unitms = cmToUnit(cmms); //from cm/ms to unit/ms
         
         return this.cmToUnit(mms/10000);
+    },
+    
+    loadSound: function(name) {
+      if (audioType === false) {
+        return null;
+      }
+      
+      var sound = new Audio("sound/"+name+"."+audioType); 
+      sound.load();  
+      
+      return {
+        play: function() {
+          sound.cloneNode(true).play();
+        }
+      };
+      
     },
     
     
