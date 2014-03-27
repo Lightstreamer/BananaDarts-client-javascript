@@ -75,7 +75,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
     return Math.round(Math.random()*v);
   }
   
-  function Simulator(game) {
+  function Simulator(game,isChampion) {
     this.client = new LightstreamerClient(lsClient.connectionDetails.getServerAddress(),Constants.ADAPTER);
     this.client.connect();
     
@@ -91,6 +91,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
     this.player = new Player("Sim"+(simCount++),this.client,game,true);
     this.player.enterRoom(Constants.ROOM);
    
+    this.isChampion = isChampion;
     
     Executor.addRepetitiveTask(this.event,50,this);
     
@@ -112,15 +113,24 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
         } else {
           var move = rand(40);
           if (move == 5) {
-            var mulX = this.axis.x.real > 0 ? -1 : 1;
-            this.player.release(Constants.ROOM,rand(1500)*mulX,rand(1000),-(rand(3000)+1000));
+            if (this.isChampion) {
+              this.player.release(Constants.ROOM,0,0,-2900);
+            } else {
+              var mulX = this.axis.x.real > 0 ? -1 : 1;
+              this.player.release(Constants.ROOM,rand(1500)*mulX,rand(1000),-(rand(3000)+1000));
+            }
+            
             this.wait = 50;
           } else if (move == 33) {
             this.player.sendChatMessage(Constants.ROOM,MESSAGES[rand(MESSAGES.length-1)]);
           
           } else {
-
-            this.player.move(Constants.ROOM,this.randomPos("x"),this.randomPos("y"),this.randomPos("z"));
+            if (this.isChampion) {
+              this.player.move(Constants.ROOM,0,Constants.MAX_SIZE.y/2,Constants.MAX_SIZE.z);
+            } else {
+              this.player.move(Constants.ROOM,this.randomPos("x"),this.randomPos("y"),this.randomPos("z"));
+            }
+              
           }
         }
         
