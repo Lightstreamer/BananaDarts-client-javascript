@@ -255,6 +255,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       setSpeed: function(vx,vy,vz) {
         this.dinamics.x = vx;
         this.dinamics.y = vy;
+        
+        var currZ = this.dinamics.z;
         this.dinamics.z = vz;
         
         if (vz !== 0) {
@@ -264,7 +266,9 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           this.fixStartPosition();
           this.calculate();
          
-        } 
+        } else if (currZ != 0) {
+          this.doSound(hitSound);
+        }
       },
       
       //Sound
@@ -317,12 +321,6 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       setPos: function(axis,value) {
         if (value ==  this.dart.position[axis]) {
           return;
-        }
-        
-        if (value <= -Constants.MAX_SIZE[axis]) {
-          this.doSound(hitSound);
-        } else if (axis != "z" && value >= Constants.MAX_SIZE[axis]) {
-          this.doSound(hitSound);
         }
         
         this.dart.position[axis] = value;
