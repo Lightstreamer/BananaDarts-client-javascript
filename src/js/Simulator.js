@@ -103,7 +103,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
    
     this.isChampion = isChampion;
     
-    Executor.addRepetitiveTask(this.event,50,this);
+    this.eventObj = Executor.addRepetitiveTask(this.event,50,this);
     
   }
   
@@ -143,8 +143,12 @@ define(["LightstreamerClient","./Constants","Executor","./Player","./lsClient"],
               
           }
         }
-        
-        
+      },
+      
+      dispose: function() {
+        this.client.disconnect();
+        Executor.stopRepetitiveTask(this.eventObj);
+        this.client.connectionSharing.enableSharing("ABORT","ABORT","ABORT");
       }
   };
   
