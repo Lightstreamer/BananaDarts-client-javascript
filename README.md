@@ -21,6 +21,17 @@ Each user controls a dart (the red one) that can be thrown toward the dartboard 
 The html application can be optionally built, to reduce the number and size of the files to be downloaded by the browser, using [r.js](http://requirejs.org/docs/optimization.html).
 A ready-made configuration file for the build process is available in the build_rjs folder of this project.
 
+The build is configured to use [Google Closure compiler](https://code.google.com/p/closure-compiler/) to minify the files. To run it as is you need to download 
+[rhino](https://developer.mozilla.org/en-US/docs/Rhino) js.jar file, compiler.jar from the closure compiler project and r.js from RequireJS. You also need a [Java Virtual 
+Machine](https://www.java.com/en/download/) installed on your system.
+
+Once ready, from the build_rjs folder, run
+```
+java -cp compiler.jar;js.jar org.mozilla.javascript.tools.shell.Main r.js -o app.build.js
+```
+
+As an alternative it is possible to customize the build file to use [UglifyJS](https://github.com/mishoo/UglifyJS2); in this case it can be built using [node.js](http://nodejs.org/) instead of using the JVM.
+
 # Deploy #
 
 Before you can run this demo some dependencies need to be solved:
