@@ -278,7 +278,7 @@ require(["js/Constants","js/Field","js/Game",
     }
     created++;
     console.log("Create new simulator " + created);
-    new Simulator(game);
+    new Simulator(game,created == 1);
   },100);
   
   
