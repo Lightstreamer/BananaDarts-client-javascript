@@ -14,7 +14,7 @@ Copyright 2014 Weswit s.r.l.
    limitations under the License.
 */
 define(function() {
-  var loader = new THREE.OBJMTLLoader();
+  var loader = null;
   
   function setShadowOnObject(object) {
     object.castShadow = true;
@@ -57,7 +57,9 @@ define(function() {
   return {
     
     loadObj: function(obj,mtl,cb) {
-      
+      if (!loader) {
+        loader = new THREE.OBJMTLLoader();
+      }
       loader.load(obj, mtl, function (object) {
         setShadowOnObject(object);
         cb(object);
