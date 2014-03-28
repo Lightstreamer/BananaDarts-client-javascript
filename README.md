@@ -1,8 +1,8 @@
 # Lightstreamer - Multiplayer Darts for Leap Motion - HTML (LeapJS, Three.js) Client #
 <!-- START DESCRIPTION lightstreamer-example-darts-leapmotion-client-javascript -->
 
-Multiplayer, [Leap Motion](https://www.leapmotion.com/) controlled, Dart game running in the browser and using 
-[Lightstreamer](http://www.lightstreamer.com) for it real-time communication needs. 
+Multiplayer, [Leap Motion](https://www.leapmotion.com/) controlled, dart game running in the browser and using 
+[Lightstreamer](http://www.lightstreamer.com) for its real-time communication needs. 
 
 [![screenshot](screenshot1.png)](http://demos.lightstreamer.com/http://demos.lightstreamer.com/DartsLeapMotion//)<br>
 [![screenshot](screenshot2.png)](http://demos.lightstreamer.com/http://demos.lightstreamer.com/DartsLeapMotion//)<br>
