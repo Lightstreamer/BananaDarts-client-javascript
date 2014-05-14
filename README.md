@@ -1,5 +1,5 @@
-# Lightstreamer - Multiplayer Darts for Leap Motion - HTML (LeapJS, Three.js) Client #
-<!-- START DESCRIPTION lightstreamer-example-darts-leapmotion-client-javascript -->
+# Lightstreamer - Multiplayer Darts - HTML (LeapJS, Three.js) Client #
+<!-- START DESCRIPTION bananadarts-client-javascript -->
 
 Multiplayer, [Leap Motion](https://www.leapmotion.com/) controlled, dart game running in the browser and using 
 [Lightstreamer](http://www.lightstreamer.com) for its real-time communication needs. 
@@ -14,7 +14,7 @@ This application uses the *JavaScript Client API for Lightstreamer* to handle th
 
 Each user controls a dart (the red one) that can be thrown toward the dartboard in order to score points while seeing how other players are faring (the green darts)
 
-<!-- END DESCRIPTION lightstreamer-example-darts-leapmotion-client-javascript -->
+<!-- END DESCRIPTION bananadarts-client-javascript -->
 
 # Build #
 
@@ -51,14 +51,14 @@ SERVER: protocolToUse+"//push.lightstreamer.com",
 ```
 and change it accordingly.
 
-Note that the [DART](https://github.com/Weswit/Lightstreamer-example-Darts-LeapMotion-adapter-java) adapters have to be deployed in your local Lightstreamer server instance.
+Note that the [DART](https://github.com/Weswit/BananaDarts-LeapMotion-adapter-java) adapters have to be deployed in your local Lightstreamer server instance.
 
 # See Also #
 
 ## Lightstreamer Adapter Needed by This Demo Client ##
 <!-- START RELATED_ENTRIES -->
 
-* [Lightstreamer - Multiplayer Darts for Leap Motion - Java Adapter](https://github.com/Weswit/Lightstreamer-example-Darts-LeapMotion-adapter-java)
+* [Lightstreamer - Multiplayer Darts - Java Adapter](https://github.com/Weswit/BananaDarts-adapter-java)
 
 <!-- END RELATED_ENTRIES -->
 
