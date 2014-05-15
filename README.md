@@ -4,10 +4,10 @@
 Multiplayer, [Leap Motion](https://www.leapmotion.com/) controlled, dart game running in the browser and using 
 [Lightstreamer](http://www.lightstreamer.com) for its real-time communication needs. 
 
-[![screenshot](screenshot1.png)](http://demos.lightstreamer.com/DartsLeapMotion/)<br>
-[![screenshot](screenshot2.png)](http://demos.lightstreamer.com/DartsLeapMotion/)<br>
-[![screenshot](screenshot3.png)](http://demos.lightstreamer.com/DartsLeapMotion/)<br>
-An online demonstration is hosted on our servers at: [http://demos.lightstreamer.com/DartsLeapMotion/](http://demos.lightstreamer.com/DartsLeapMotion/)<br>
+[![screenshot](screenshot1.png)](http://demos.lightstreamer.com/BananaDarts/)<br>
+[![screenshot](screenshot2.png)](http://demos.lightstreamer.com/BananaDarts/)<br>
+[![screenshot](screenshot3.png)](http://demos.lightstreamer.com/BananaDarts/)<br>
+An online demonstration is hosted on our servers at: [http://demos.lightstreamer.com/BananaDarts/](http://demos.lightstreamer.com/BananaDarts/)<br>
 
 This application uses the *JavaScript Client API for Lightstreamer* to handle the communications with Lightstreamer Server, *leapjs* to read the users' hand movement through the Leap Motion Controller and
 *three.js* to display the users' darts on the browser.
@@ -51,7 +51,7 @@ SERVER: protocolToUse+"//push.lightstreamer.com",
 ```
 and change it accordingly.
 
-Note that the [DART](https://github.com/Weswit/BananaDarts-LeapMotion-adapter-java) adapters have to be deployed in your local Lightstreamer server instance.
+Note that the [DART](https://github.com/Weswit/BananaDarts-adapter-java) adapters have to be deployed in your local Lightstreamer server instance.
 
 # See Also #
 
