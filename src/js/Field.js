@@ -127,7 +127,21 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       setupCamera: function() {
         this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 10000);
         
-        this.controls = new THREE.OrbitControls(this.camera, this.htmlEl);
+        var controls = new THREE.OrbitControls(this.camera, this.htmlEl);
+        this.controls = controls;
+        
+        this.controls.enabled = false;
+        $(window).keyup(function(e) { 
+          if (e.which == 17) {
+            controls.enabled = false;
+          }
+        }).keydown(function(e) { 
+          if (e.which == 17) {
+            controls.enabled = true;
+          }
+        }).focus(function() {
+          controls.enabled = false;
+        });
         
         var that = this;
         this.controls.addEventListener('change', function() {
