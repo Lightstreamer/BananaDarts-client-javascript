@@ -67,7 +67,7 @@ define(["./LeapMotion","./Mouse","./Constants"], function(LeapMotion,Mouse,Const
           var deltaX = posX - this.mouseClickX;
           var deltaY = posY - this.mouseClickY;
           
-          this.player.release(Constants.ROOM,deltaX*10,chargingTime*5,-deltaY*10);
+          this.player.release(Constants.ROOM,deltaX*Constants.SPEED_MULTIPLIERS["x"],chargingTime*Constants.SPEED_MULTIPLIERS["y"],-deltaY*Constants.SPEED_MULTIPLIERS["z"]);
           
           //reset
           this.mouseClickTime = null;

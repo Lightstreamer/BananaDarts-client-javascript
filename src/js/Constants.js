@@ -75,10 +75,19 @@ define(["./Utils"],function(Utils) {
     
     PLANTED_DELAY: 1000,
     
+    //LEAP FACTORS
     SPEED_FACTOR: 2,
     USE_PEAK_SPEED: false,
     USE_LAST_SPEED: true,
     HISTORY_WEIGHT: 0.5,
+    
+    //MOUSE FACTORS
+    SPEED_MULTIPLIERS: {
+      x: 10,
+      y: 5,
+      z: 10
+    },
+    
     MIN_SPEED: -200,
     
     
