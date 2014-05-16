@@ -233,24 +233,31 @@ body {
   z-index: 1;
 }
 
-/* Scoreboard */
+/* Blackboards */
 
-#scoreboard {
+#scoreboard, #chat {
   display: none;
-  padding: 15px 25px 10px 50px; 
+  padding: 60px; 
   border: 0;
-  width: 805px; 
-  height: 500px;
+  width: 752px; 
+  height: 405px;
   color:white;
-  background-image:url(../images/score.jpg);
   background-size: contain;
   font-family: 'Cabin Sketch';
+  font-size: 30px;
   
   user-select: none;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
+
+}
+
+/* Scoreboard */
+
+#scoreboard {
+  background-image:url(../images/score.jpg);
 }
 #scoreboard table {
   table-layout:fixed;
@@ -297,31 +304,20 @@ th {
 
 #chatHeader {
   font-weight: bold;
-  font-size:26px;
+  font-size:30px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid white;
 }
 #chat {
-  display: none;
-  padding: 60px 10px 10px 45px; 
-  border: 0;
-  width: 815px; 
-  height: 304px;
-  color:white;
-  background-image:url(../images/chat.jpg);
-  background-size: contain;
-  font-size: 23px;
-  
-  user-select: none;
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
+ background-image:url(../images/chat.jpg);
 }
 #chatTemplate {
   overflow: hidden;
 }
 #chat [data-field=nick] {
-  font-size: 16px;
-  background-color: #222;
+  font-size: 23px;
+  background-color: yellow;
+  color: black;
   font-weight: bold;
   padding: 0 7px;
   border-radius: 8px;
