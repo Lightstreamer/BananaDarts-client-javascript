@@ -32,6 +32,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     this.cssRenderer = null;
     this.camera = null;
     this.controls = null;
+    this.orbitBlocked = true;
+    this.orbitEnabled = true;
     
     
     this.setupRenderers(); //may throw
@@ -127,21 +129,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       setupCamera: function() {
         this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 10000);
         
-        var controls = new THREE.OrbitControls(this.camera, this.htmlEl);
-        this.controls = controls;
-        
-        this.controls.enabled = false;
-        $(window).keyup(function(e) { 
-          if (e.which == 17) {
-            controls.enabled = false;
-          }
-        }).keydown(function(e) { 
-          if (e.which == 17) {
-            controls.enabled = true;
-          }
-        }).focus(function() {
-          controls.enabled = false;
-        });
+        this.controls = new THREE.OrbitControls(this.camera, this.htmlEl);
+        this.applyOrbitSettings();
         
         var that = this;
         this.controls.addEventListener('change', function() {
@@ -368,7 +357,17 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       },
       
       enableOrbit: function(enabled) {
-        this.controls.enabled = enabled;
+        this.orbitEnabled = enabled;
+        this.applyOrbitSettings();
+      },
+      
+      blockOrbit: function(blocked) {
+        this.orbitBlocked = blocked;
+        this.applyOrbitSettings();
+      },
+      
+      applyOrbitSettings: function() {
+        this.controls.enabled = !this.orbitBlocked && this.orbitEnabled;
       },
       
       addObject: function(obj) {

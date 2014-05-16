@@ -127,6 +127,21 @@ require(["js/Constants","js/Field","js/Game",
       field.resetCamera();
     });
     
+    $(window).keyup(function(e) { 
+      if (e.which == 17) {
+        field.blockOrbit(true);
+        controls.enableMouse(options.getMouse());
+      }
+    }).keydown(function(e) { 
+      if (e.which == 17) {
+        field.blockOrbit(false);
+        controls.enableMouse(false);
+      }
+    }).focus(function() {
+      field.blockOrbit(true);
+      controls.enableMouse(options.getMouse());
+    });
+    
     //TODO we did reset the camera on the first Leap movement, what now?
     /*
     LeapMotion.addListener({
