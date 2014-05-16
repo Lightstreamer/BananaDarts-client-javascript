@@ -57,7 +57,7 @@ define(["./LeapMotion","./Mouse","./Constants"], function(LeapMotion,Mouse,Const
           
         } else if (!this.mouseClickTime) {
           //just chillin'
-          this.player.move(Constants.ROOM,x,y,fixedZ);
+          this.player.move(Constants.ROOM,posX,posY,fixedZ);
         } else {
           //throw it!
         }
