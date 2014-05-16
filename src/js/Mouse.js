@@ -16,10 +16,28 @@ Copyright 2014 Weswit s.r.l.
 define(["Inheritance","EventDispatcher","./Constants"],
     function(Inheritance,EventDispatcher,Constants) {
   
+  var MAX = {
+      x: Constants.ARM_LENGTH/2,
+      y: Constants.ARM_LENGTH/2+Constants.TWENTY,
+  };
+  var MIN = {
+      x: -Constants.ARM_LENGTH/2,
+      y: -Constants.ARM_LENGTH/2+Constants.TWENTY,
+  };
+  
   
   var Mouse = function() {
     this.initDispatcher();
     
+    this.isDown = false;
+    this.norm = {
+        x: 0,
+        y: 0
+    };
+    this.prev = {
+        x: 0,
+        y: 0
+    };
     
     this.setupListeners();
     
@@ -29,18 +47,42 @@ define(["Inheritance","EventDispatcher","./Constants"],
   Mouse.prototype = {
     setupListeners: function() {
       var that = this;
-      $(document).mousemove(function(event ) {
-
+      $(document).mousemove(function(event) {
+        that.mousePosChange(event.pageX,event.pageY);
       }).mousedown(function(event) {
-
+        that.mouseClickChange(true);
       }).mouseup(function(event) {
-
+        that.mouseClickChange(false);
       });
       
+    },
+    
+    mouseClickChange: function(isDown) {
+      this.isDown = isDown;
+      this.dispatchEvent("onMouseChange",[this.isDown,this.norm["x"],this.norm["y"]]);
+
+    },
+    
+    mousePosChange: function(newX,newY) {
+      this.calcNormalizedPos("x",-newX);
+      this.calcNormalizedPos("y",newY);
+      this.dispatchEvent("onMouseChange",[this.isDown,this.norm["x"],this.norm["y"]]);
+    },
+    
+    calcNormalizedPos: function(axis, val) {
+      var delta = this.prev[axis] - val;
+      this.prev[axis] = val;
+      this.norm[axis] += delta;
+      
+      if (this.norm[axis] > MAX[axis]) {
+        this.norm[axis] = MAX[axis];
+      } else if (this.norm[axis] < MIN[axis]) {
+        this.norm[axis] = MIN[axis];
+      }
+      
+      
     }
-      
-      
-      //TODO fire this onMouseChange: function(holdingClick,posX,posY)
+   
   };
   
   Inheritance(Mouse,EventDispatcher,true,true);
