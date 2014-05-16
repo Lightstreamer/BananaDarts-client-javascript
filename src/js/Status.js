@@ -4,8 +4,7 @@ define(function() {
     
     LOADING: "#loading",
     status: "#loading",
-    WAITING_LEAP: "#waiting_leap",
-    READY: "#ready_leap",
+    READY: "#ready",
     NOT_COMPATIBLE: "#not_compatible",
     
     

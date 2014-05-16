@@ -14,13 +14,13 @@ Copyright 2014 Weswit s.r.l.
    limitations under the License.
 */
 require(["js/Constants","js/Field","js/Game",
-         "js/Dart","js/Player","js/Options","js/LeapMotion",
+         "js/Dart","js/Player","js/Options","js/Controls",
          "js/lsClient","js/Simulator","js/ConsoleSubscriptionListener",
          "js/Scoreboard","js/RoomSubscription",
          "js/ChatBoard","js/ChatSubscription",
          "js/Menu", "js/Status", "js/Utils"],
     function(Constants,Field,Game,
-        Dart,Player,Options,LeapMotion,
+        Dart,Player,Options,Controls,
         lsClient,Simulator,ConsoleSubscriptionListener,
         Scoreboard,RoomSubscription,
         ChatBoard,ChatSubscription,
@@ -44,6 +44,7 @@ require(["js/Constants","js/Field","js/Game",
   var scoreboard = new Scoreboard(field,"scoreboardTemplate",["td"],$("#scoreboard"));
   var chat = new ChatBoard(field,"chatTemplate",["span"],$("#chat"),$("#chatPlaceHolder"));
   var player = new Player(userNick,lsClient,game);
+  var controls = new Controls(player);
   
   //setup chat subscription
   var chatSubscription = new ChatSubscription(Constants.ROOM);
@@ -118,11 +119,23 @@ require(["js/Constants","js/Field","js/Game",
       }
     });
     
+    //slightly move camera to show dart
+    field.moveCamera(Constants.INITIAL_CAMERA_POS_X, Constants.INITIAL_CAMERA_POS_Y, Constants.INITIAL_CAMERA_POS_Z);
+    
     //setup camera controls
     $("#resetCamera").click(function(){
       field.resetCamera();
     });
     
+    //TODO we did reset the camera on the first Leap movement, what now?
+    /*
+    LeapMotion.addListener({
+      onFistMove: function() {
+        field.resetCamera();
+        LeapMotion.removeListener(this);
+      }
+    });
+    */
     
     var x = new Image();
     x.src = "images/checkhover.png";//preload
@@ -135,6 +148,22 @@ require(["js/Constants","js/Field","js/Game",
         $(el).removeClass("checked");
       }
     }
+    
+    switchCheckedClass("#leapSwitch",options.getLeap());
+    controls.enableLeap(options.getLeap()); 
+    $("#leapSwitch").click(function() {
+      options.toggleLeap();
+      switchCheckedClass("#leapSwitch",options.getLeap());
+      controls.enableLeap(options.getLeap()); 
+    });
+    
+    switchCheckedClass("#mouseSwitch",options.getMouse());
+    controls.enableMouse(options.getMouse()); 
+    $("#mouseSwitch").click(function() {
+      options.toggleMouse();
+      switchCheckedClass("#mouseSwitch",options.getMouse());
+      controls.enableMouse(options.getMouse()); 
+    });
     
     switchCheckedClass("#autoCameraButton",options.getAutoCamera());
     game.enableCameraHandling(options.getAutoCamera()); 
@@ -200,29 +229,6 @@ require(["js/Constants","js/Field","js/Game",
       }
     });
     
-    
-    
-    //slightly move camera to show dart
-    field.moveCamera(Constants.INITIAL_CAMERA_POS_X, Constants.INITIAL_CAMERA_POS_Y, Constants.INITIAL_CAMERA_POS_Z);
-    LeapMotion.addListener({
-      onFistMove: function() {
-        field.resetCamera();
-        LeapMotion.removeListener(this);
-      }
-    });
-  
-    //bind leap motion and game
-    LeapMotion.addListener({
-      onFistMove: function(x,y,z,sx,sy,sz) {
-        if (z <= Constants.MAX_SIZE.z-Constants.ARM_REACH+Constants.GO_LINE) {
-          player.release(Constants.ROOM,sx,sy,sz);
-        } else {
-          player.move(Constants.ROOM,x,y,z);
-        }
-      }
-    });
-    
-    //enter/exit room based on leap motion status
     function doEnter() {
       player.enterRoom(Constants.ROOM);
       $("#chatMessage").prop('disabled', false);
@@ -233,30 +239,16 @@ require(["js/Constants","js/Field","js/Game",
       $("#chatMessage").prop('disabled', true);
       $("#nick").prop('disabled', true);
     }
-    if (LeapMotion.isReady()) {
-      doEnter();
-    } else {
-      LeapMotion.addListener({
-        onReady: function(ready) {
-          if (ready) {
-            doEnter();
-          } else {
-            doExit();
-          }
-        }
-      });
-    }
+    //Let us enter the game room 
+    doEnter();
     
+        
     //setup message
     THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
       if (loaded == total) {
         THREE.DefaultLoadingManager.onProgress = null;
-        LeapMotion.addListener({
-          onReady: function(ready) {
-            Status.changeStatus(ready ? Status.READY : Status.WAITING_LEAP);
-          }
-        });
-        Status.changeStatus(LeapMotion.isReady() ? Status.READY : Status.WAITING_LEAP);
+        Status.changeStatus(Status.READY);
+        
         setTimeout(function() {
           if (!Menu.gotFirstCall()) {
             Menu.close();
@@ -264,7 +256,6 @@ require(["js/Constants","js/Field","js/Game",
         },3000);
       }
     };
-    
     
   });
   //setup simulators

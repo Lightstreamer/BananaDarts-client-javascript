@@ -20,7 +20,9 @@ define(["./Constants"],function(Constants) {
   var optionsList = [
                      "nick",
                      "autoCamera",
-                     "showNicks"
+                     "showNicks",
+                     "mouse",
+                     "leap"
                      ];
   
   var Options = function() {
@@ -28,6 +30,8 @@ define(["./Constants"],function(Constants) {
     this.nick = "Player"+Math.round(Math.random()*10000);
     this.autoCamera = true;
     this.showNicks = true;
+    this.leap = false;
+    this.mouse = true;
     this.audio = typeof Audio != "undefined";
     this.load();
     
@@ -93,6 +97,28 @@ define(["./Constants"],function(Constants) {
       },
       toggleAudio: function() {
         this.setAudio(!this.audio);
+      },
+      
+      setLeap: function(enable) {
+        this.leap = enable;
+        this.save("leap");
+      },
+      getLeap: function() {
+        return this.leap;
+      },
+      toggleLeap: function() {
+        this.setLeap(!this.leap);
+      },
+      
+      setMouse: function(mouse) {
+        this.mouse = mouse;
+        this.save("mouse");
+      },
+      getMouse: function() {
+        return this.mouse;
+      },
+      toggleMouse: function() {
+        this.setMouse(!this.mouse);
       },
       
       save: function(what) {

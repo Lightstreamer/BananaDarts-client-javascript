@@ -112,7 +112,7 @@ body {
 #tools h1, #tools h2 {
   text-align: center;
 }
-#ready_leap, #waiting_leap, #not_compatible {
+#ready, #not_compatible {
   display: none;
 }
 .blink {
@@ -133,7 +133,7 @@ body {
 
 .options, .gInstructions, .cInstructions {
   width: 28%;
-  height: 15em;
+  height: 18em;
   padding: 0 20px;
 }
 .gInstructions, .cInstructions {
