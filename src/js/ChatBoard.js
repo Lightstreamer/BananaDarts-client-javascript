@@ -35,10 +35,13 @@ define(["DynaGrid","./Constants","Inheritance"],
     
     //get its size and center it in the top right corner
     var rect = element.getBoundingClientRect();
-    var z = -Constants.MAX_SIZE.z+rect.width/2;
-    var y = Constants.MAX_SIZE.y-rect.height/2;
-    cssObject.position.set(-Constants.MAX_SIZE.x+10,y,z); //stay away a bit from the wall or you'll get a strange flickering effect (makes sense @ 0 distance)
-    cssObject.rotation.y = Math.PI / 2;
+    
+    var z = -Constants.MAX_SIZE.z+10;
+    var x = -Constants.MAX_SIZE.x+rect.width/2 + 50;
+    var y = -Constants.MAX_SIZE.y+rect.height/2 + 80;
+    cssObject.position.set(x,y,z);
+    
+    
     field.addCSSObject(cssObject);
    
   };
