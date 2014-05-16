@@ -20,7 +20,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   
   var materials = {};
   materials[Constants.OWN] = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
-  materials[Constants.OTHER] = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+  materials[Constants.OTHER] = new THREE.MeshBasicMaterial( { color: 0x006b00 } );
   
   var mtls = {};
   mtls[Constants.OWN] = "obj/dart.obj.mtl";
@@ -59,6 +59,11 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       x: 0,
       y: 0,
       z: 250
+  };
+  
+  var MAX_CAMERA_POS = {
+      x: 10,
+      y: 10
   };
   
   var hitSound = Utils.loadSound("hit"); // https://www.youtube.com/watch?v=Zt_L-J6xcN0
@@ -311,6 +316,17 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         var px = x+CAMERA_OFFSET.x;
         var py = y+CAMERA_OFFSET.y;
         var pz = z+CAMERA_OFFSET.z;
+        
+        if (px > MAX_CAMERA_POS["x"]) {
+          px = MAX_CAMERA_POS["x"];
+        } else if (px < -MAX_CAMERA_POS["x"]) {
+          px = -MAX_CAMERA_POS["x"];
+        }
+        if (py > MAX_CAMERA_POS["y"]) {
+          py = MAX_CAMERA_POS["y"];
+        } else if (py < -MAX_CAMERA_POS["y"]) {
+          py = -MAX_CAMERA_POS["y"];
+        }
         
         this.field.moveCameraToward(px,py,pz);
         this.field.pointCamera(x,y,z);
