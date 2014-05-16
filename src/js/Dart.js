@@ -236,6 +236,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       attachCamera: function(attach) {
         this.camera = attach;
         this.field.enableOrbit(!attach);
+        this.field.hideMenu(attach);
       },
       
       //Rotation
@@ -420,6 +421,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           this.calculateRotation(x,y,z,tNow);
         } else if(this.camera) {
           this.field.enableOrbit(true);
+          this.field.hideMenu(false);
         }
         
       },

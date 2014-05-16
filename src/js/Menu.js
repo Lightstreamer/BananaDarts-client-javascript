@@ -108,6 +108,17 @@ define(function() {
     
     gotFirstCall: function() {
       return firstAction;
+    },
+    
+    hide: function(hide) {
+      if (hide) {
+        $(".github").hide();
+        $("#tools").hide();
+      } else {
+        $(".github").show();
+        $("#tools").show();
+      }
+      
     }
   };
   
