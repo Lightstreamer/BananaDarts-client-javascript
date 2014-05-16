@@ -237,13 +237,14 @@ body {
 
 #scoreboard {
   display: none;
-  padding: 15px 10px 10px 60px; //5+5
+  padding: 15px 25px 10px 50px; 
   border: 0;
   width: 805px; 
   height: 500px;
   color:white;
   background-image:url(../images/score.jpg);
   background-size: contain;
+  font-family: 'Cabin Sketch';
   
   user-select: none;
   -moz-user-select: -moz-none;
@@ -257,7 +258,7 @@ body {
   width: 855px;
 }
 #scoreboard tbody {
-  font-size: 25px;
+  font-size: 30px;
 }
 #scoreboard td {
   overflow: hidden;  
@@ -278,11 +279,11 @@ body {
   padding-right: 25px;
 }
 th {
-  font-size: 25px;
+  font-size: 30px;
   border-bottom: 1px solid white;
 }
 .scoreCol, .throwsCol, .totCol {
-  width: 100px;
+  width: 150px;
 }
 [data-field=lastScore], [data-field=numThrows], [data-field=totalScore] {
   text-align: center;
