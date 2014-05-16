@@ -53,6 +53,9 @@ define(["./LeapMotion","./Mouse","./Constants"], function(LeapMotion,Mouse,Const
         if (holdingClick) {
           if (!this.mouseClickTime) {
             //just clicked
+            this.mouseClickTime = new Date().getTime();
+            this.mouseClickX = posX;
+            this.mouseClickY = posY;
           } //else is charging
           
         } else if (!this.mouseClickTime) {
@@ -60,6 +63,16 @@ define(["./LeapMotion","./Mouse","./Constants"], function(LeapMotion,Mouse,Const
           this.player.move(Constants.ROOM,posX,posY,fixedZ);
         } else {
           //throw it!
+          var chargingTime =  new Date().getTime() - this.mouseClickTime;
+          var deltaX = posX - this.mouseClickX;
+          var deltaY = posY - this.mouseClickY;
+          
+          this.player.release(Constants.ROOM,deltaX*10,chargingTime*5,-deltaY*10);
+          
+          //reset
+          this.mouseClickTime = null;
+          this.mouseClickX = null;
+          this.mouseClickY = null;
         }
         
         
