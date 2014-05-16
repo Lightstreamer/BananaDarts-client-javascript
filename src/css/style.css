@@ -59,6 +59,12 @@ body {
   transition: top 1s ease;
   z-index:3;
   opacity: 0.9;
+  
+  user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 #logo {
   transition: all 1s ease;
@@ -238,6 +244,12 @@ body {
   color:white;
   background-image:url(../images/score.jpg);
   background-size: contain;
+  
+  user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 #scoreboard table {
   table-layout:fixed;
@@ -296,6 +308,12 @@ th {
   background-image:url(../images/chat.jpg);
   background-size: contain;
   font-size: 23px;
+  
+  user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
 }
 #chatTemplate {
   overflow: hidden;
