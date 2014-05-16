@@ -36,7 +36,7 @@ define(["./Utils"],function(Utils) {
     OTHER: "other",
  
     ADAPTER: "DART",
-    SERVER: protocolToUse+"//push.lightstreamer.com",
+    SERVER: protocolToUse+"//localhost:8080",
     LOG_UPDATES_ON_CONSOLE: false,
     CHEAT: false,
     
