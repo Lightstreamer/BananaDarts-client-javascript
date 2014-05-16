@@ -15,7 +15,14 @@ Copyright 2014 Weswit s.r.l.
 */
 define(["./Constants"],function(Constants) {
 
-  var CAN_SAVE = typeof localStorage != "undefined" && localStorage !== null && localStorage.getItem && localStorage.setItem;
+  var CAN_SAVE = false;
+  try {
+    if (typeof localStorage != "undefined" && localStorage !== null && localStorage.getItem && localStorage.setItem) {
+      CAN_SAVE = true;
+    }
+  } catch(e) {
+    //may end in exception if localStorage exists but was disabled through browser options
+  }
   
   var optionsList = [
                      "nick",
