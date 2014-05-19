@@ -137,14 +137,16 @@ body {
   to { opacity: 0; }
 }
 
-/* MENU contents - columns */
+/* MENU contents - clicks & forms */
 
-.options, .gInstructions, .cInstructions {
-  width: 100%;
+#accordion div {
+  transition: height 1s ease;
 }
 
+#accordion h3 {
+  margin: 2px;
+}
 
-/* MENU contents - clicks & forms */
 
 #tools_stuff a {
   color: #f9dc0b;
@@ -191,12 +193,16 @@ body {
 }
 #linksRow div {
   padding: 0 20px;
-  font-size: 15px;
+  float: right;
 }
 #linksRow img {
   height: 15px;
   vertical-align: middle;
   margin-top: -1px;
+}
+#linksRow {
+  font-size: 10px;
+  padding-top: 10px;
 }
 
 

@@ -28,8 +28,75 @@ define(function() {
   var logoWidth = null;
   var logoHeight = null;
   var fontSize = null;
+  var miniFontSize = null;
   var inputHeight  = null;
   var zoom = 1;
+  
+  var accordion = null;
+  
+  
+  var Accordion = function(heads,elements) {
+    this.heights = {};
+    for (var i=0; i<heads.length; i++) {
+      this.setup(heads[i],elements[i]);
+      this.heights[elements[i]] = $(elements[i]).outerHeight();
+      this.doClose(elements[i]);
+      
+    }
+    this.doOpen(elements[0]);
+    
+  };
+  
+  Accordion.prototype = {
+      
+    setup: function(head,name) {
+      var that = this;
+      $(head).click(function() {
+        that.click(name);
+      });
+    },
+      
+    click: function(name) {
+      if (this.openEl == name) {
+        this.close(name);
+      } else {
+        this.open(name);
+      }
+    },
+      
+    open: function(name) {
+      if (this.openEl == name) {
+        return;
+      }
+      this.doClose(this.openEl);
+      this.doOpen(name);
+    },
+    
+    close: function(name) {
+      if (this.openEl != name) {
+        return;
+      }
+      this.doClose(this.openEl);
+    },
+    
+    doClose: function(name) {
+      if (!name) {
+        return;
+      }
+      $(name).css("height","0");
+      this.openEl = null;
+    },
+    
+    doOpen: function(name) {
+      if (!name) {
+        return;
+      }
+      this.openEl = name;
+      $(name).css("height",14+this.heights[name]*zoom);
+    }
+      
+      
+  };
   
   return {
     
@@ -39,8 +106,13 @@ define(function() {
         logoWidth = $("#logo").outerWidth();
         logoHeight = $("#logo").outerHeight();
         fontSize = $("#accordion").css("font-size").replace("px","");
+        miniFontSize = $("#linksRow").css("font-size").replace("px","");
         inputHeight = $(".inputDiv").outerHeight();
         $("#logo, #tools, .github").css("opacity",OPACITY_WHILE_OPEN);
+        
+        accordion = new Accordion(["#optionsHead","#playInstuctionsHead","#cameraInstuctionsHead"],
+            ["#options","#playInstuctions","#cameraInstuctions"]);
+        
         firstSetup = false;
       }
       
@@ -58,6 +130,14 @@ define(function() {
       $(".inputDiv").css("height",inputHeight*zoom);
       $("#nick, #chatMessage").css("font-size",fontSize*zoom);
       
+      if (zoom >= 0.6) {
+        $("#linksRow").css("font-size",miniFontSize*zoom);
+        $("#linksRow").show();
+      } else {
+        $("#linksRow").hide();
+      }
+      
+      accordion.doOpen(accordion.openEl);
       
       if (!isOpen) {
         isOpen = true;

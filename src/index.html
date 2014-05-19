@@ -58,21 +58,25 @@
         
         <div id="tools_stuff">
           <img class="button" src="images/arrow.png" id="tools_button">
-	        <div class="row">
-	          <h2 id="not_compatible" class="blink">&gt; Your browser does not seem to support WebGL  &lt;</h2>
+          <div class="row">
+            <h2 id="not_compatible" class="blink">&gt; Your browser does not seem to support WebGL  &lt;</h2>
             <h2 id="loading" class="blink">&gt; Loading &lt;</h2>
             <h2 id="ready">&gt; Let's play! &lt;</h2>
-	        </div>
-	        
-	        <div id="accordion" class="row">
-		        <div class="row options">
-	            <div class="inputDiv">
+          </div>
+          
+          <div id="accordion" class="row">
+          
+            <div class="row">
+              <div class="inputDiv">
                 <span class="label">Name:</span> <input id="nick" type="text" disabled />
               </div>
               <div class="inputDiv">
                 <span class="label">Shout:</span> <input id="chatMessage" type="text" disabled /><img id="sendChat" src="images/send.png" class="button"/>
               </div>
-              
+            </div>
+      
+            <div id="optionsHead" class="button"><h3>Options</h3></div>            
+            <div id="options" class="row">
               <div id="buttons">
                 <div id="autoCameraButton" class="button checked">
                   Automatic camera handling
@@ -101,13 +105,15 @@
                 </div>
               </div>
 	          </div>
-	          <div class="row gInstructions">
-              <h3>How to play</h3>
+	          
+	          <div id="playInstuctionsHead" class="button"><h3>How to play</h3></div>            
+	          <div id="playInstuctions" class="row">
               <p>Make a fist over the Leap Motion device, then move it forward to throw the dart (no need to open your hand).</p>
               <p>Try to aim at the target. Move your hand faster to increase dart speed.</p>
             </div>
-            <div class="row cInstructions">
-              <h3>How to move camera</h3>
+            
+            <div id="cameraInstuctionsHead" class="button"><h3>How to move camera</h3></div>
+            <div id="cameraInstuctions" class="row">
               Using your mouse:<br/>
 	            <ul>
 	              <li>Left click and move to rotate</li>
