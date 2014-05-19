@@ -29,10 +29,6 @@ define(["./LeapMotion","./Mouse","./Constants"], function(LeapMotion,Mouse,Const
     this.mouseClickTime = null;
     
     
-    this.leapSwitch = leapSwitch;
-    this.mouseSwitch = mouseSwitch;
-    
-    
   };
   
   Controls.prototype = {
