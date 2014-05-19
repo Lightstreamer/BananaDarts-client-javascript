@@ -75,6 +75,10 @@ require(["js/Constants","js/Field","js/Game",
       e.stopPropagation();
       Menu.toggle();
     });
+    $("#logo").click(function(e) {
+      e.stopPropagation();
+      Menu.open();
+    });
     $("#tools").click(function() {
       Menu.open();
     });
@@ -86,6 +90,7 @@ require(["js/Constants","js/Field","js/Game",
     $("#theWorld").click(function() {
       Menu.close();
     });
+    
     
     $(window).resize(function(){
       Menu.setup();

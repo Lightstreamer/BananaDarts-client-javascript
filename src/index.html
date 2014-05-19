@@ -51,18 +51,22 @@
     <div class="whole">
       <a href="https://github.com/Weswit/BananaDarts-client-javascript" target="_blank"><img class="github" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
      
+      
+      <img id="logo" src="images/logo.png" />
+      
       <div id="tools">
+        
         <div id="tools_stuff">
-          <div class="row title">
-            <h1>Multiplayer Darts Game</h1>
-            <h2 id="not_compatible" class="blink">&gt; Your browser does not seem to support WebGL  &lt;</h2>
+          <img class="button" src="images/arrow.png" id="tools_button">
+	        <div class="row">
+	          <h2 id="not_compatible" class="blink">&gt; Your browser does not seem to support WebGL  &lt;</h2>
             <h2 id="loading" class="blink">&gt; Loading &lt;</h2>
             <h2 id="ready">&gt; Let's play! &lt;</h2>
-          </div>
-          
-          <div class="row"> 
-            <div class="col options">
-              <div class="inputDiv">
+	        </div>
+	        
+	        <div id="accordion" class="row">
+		        <div class="row options">
+	            <div class="inputDiv">
                 <span class="label">Name:</span> <input id="nick" type="text" disabled />
               </div>
               <div class="inputDiv">
@@ -96,40 +100,32 @@
                   <span>Leap Motion Controls</span>
                 </div>
               </div>
-            </div>
-            
-            <div class="col gInstructions">
+	          </div>
+	          <div class="row gInstructions">
               <h3>How to play</h3>
               <p>Make a fist over the Leap Motion device, then move it forward to throw the dart (no need to open your hand).</p>
               <p>Try to aim at the target. Move your hand faster to increase dart speed.</p>
             </div>
-            
-            <div class="col cInstructions">
+            <div class="row cInstructions">
               <h3>How to move camera</h3>
               Using your mouse:<br/>
-              <ul>
-              <li>Left click and move to rotate</li>
-              <li>Right click and move to pan</li>
-              <li>Scroll wheel to zoom</li>
+	            <ul>
+	              <li>Left click and move to rotate</li>
+	              <li>Right click and move to pan</li>
+	              <li>Scroll wheel to zoom</li>
               </ul>
             </div>
+	        </div>
+	        
+	        <div class="row" id="linksRow">
+            <div class="row"><img src="images/github.png"> <a href="https://github.com/Weswit/BananaDarts-client-javascript" target="_blank">Source code on GitHub</a></div>
+            <div class="row">Contact: <a href="mailto:support@lightstreamer.com" target="_blank">support@lightstreamer.com</a></div>          
           </div>
-          
-          <div id="logoRow">
-            <img id="logo" src="images/logo.png" />
-          </div>
-          
-          <div class="row" id="linksRow">
-            <div class="col"><img src="images/github.png"> <a href="https://github.com/Weswit/BananaDarts-client-javascript" target="_blank">Source code on GitHub</a></div>
-            <div class="col right">Contact: <a href="mailto:support@lightstreamer.com" target="_blank">support@lightstreamer.com</a></div>          
-          </div>
-          
-        </div>  
-        <img class="button" src="images/up.png" id="tools_button">
-         
-         
+	        
+        </div>
+        
       </div>
-      
+     
       <div id="theWorld"></div>
     </div>
     

@@ -44,6 +44,7 @@ body {
   left: 0; 
   border: 0; 
   z-index: 4;
+  transition: all 1s ease;
 }
 
 /* MENU */
@@ -51,15 +52,14 @@ body {
 #tools {
   position: fixed;
   margin: auto;
-  width: 842px; /* 20 802 20 */
+  width: 500px; 
+  bottom: 0;
   border: 0;
   top: 0;
-  left: 0; 
   right: 0; 
-  transition: top 1s ease;
+  transition: all 1s ease;
   z-index:3;
   opacity: 0.9;
-  
   user-select: none;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
@@ -68,13 +68,20 @@ body {
 }
 #logo {
   transition: all 1s ease;
+  margin: auto;
+  top: 0; 
+  right: 0; 
+  position: absolute; 
+  border: 0;
+  z-index: 5;
 }
 #tools_button {
   position: relative;
-  top: -20px;
-  left: 410px; /* 852/2 - 32/2 */
+  top: 36px;
+  left: -36px;  /* -container padding - half its size*/
   height: 32px;
   width:32px;
+  transition: all 1s ease;
 }
 
 .row, .col { 
@@ -90,30 +97,25 @@ body {
   bottom: 0; 
   float:left;
 }
-.right {
-  float: right;
-}
 
 /* MENU contents */
 
 #tools_stuff {
   background-color: #0083cb;
   color: #f9dc0b;
-  border-radius: 0 0 10px 10px;
-  padding: 10px 0 20px 0;
+  border-radius: 10px 0 0 10px;
+  padding: 228px 20px 20px 20px;
 }
 
 /* MENU contents - header */
 
-.title {
-  width: 100%;
-}
-#tools h1 {
+#tools h1 { /*unused*/
   font-size: 40px;
   margin-top: 15px;
 }
 #tools h2 {
   font-weight: normal;
+  margin-top:0;
 }
 #tools h1, #tools h2 {
   text-align: center;
@@ -138,13 +140,9 @@ body {
 /* MENU contents - columns */
 
 .options, .gInstructions, .cInstructions {
-  width: 28%;
-  height: 18em;
-  padding: 0 20px;
+  width: 100%;
 }
-.gInstructions, .cInstructions {
-  border-left: 1px solid #f9dc0b;
-}
+
 
 /* MENU contents - clicks & forms */
 
@@ -190,14 +188,6 @@ body {
 #tools ul {
   padding-left: 20px;
   margin-top: 7px;
-}
-#logoRow {
-  padding-top: 30px;
-  text-align: center;
-  margin: auto;
-}
-#logo {
-  margin: auto;
 }
 #linksRow div {
   padding: 0 20px;
