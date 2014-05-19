@@ -41,7 +41,7 @@ body {
 .github {
   position: absolute; 
   top: 0; 
-  right: 0; 
+  left: 0; 
   border: 0; 
   z-index: 4;
 }
