@@ -29,7 +29,7 @@ require(["js/Constants","js/Field","js/Game",
   var options = new Options();
   
   var userNick = options.getNick();
-  
+
   
   //setup game
   var field = null;
@@ -65,10 +65,7 @@ require(["js/Constants","js/Field","js/Game",
   
   //bind to UI
   
-  
-  
   $(document).ready(function(){
-
     Menu.setup();    
     
     $("#tools_button").click(function(e) {
@@ -95,6 +92,7 @@ require(["js/Constants","js/Field","js/Game",
     $(window).resize(function(){
       Menu.setup();
     });
+    
     
     //paging handling
     var current = 1;
@@ -169,20 +167,16 @@ require(["js/Constants","js/Field","js/Game",
       }
     }
     
-    switchCheckedClass("#leapSwitch",options.getLeap());
-    controls.enableLeap(options.getLeap()); 
-    $("#leapSwitch").click(function() {
-      options.toggleLeap();
-      switchCheckedClass("#leapSwitch",options.getLeap());
-      controls.enableLeap(options.getLeap()); 
-    });
     
-    switchCheckedClass("#mouseSwitch",options.getMouse());
-    controls.enableMouse(options.getMouse()); 
-    $("#mouseSwitch").click(function() {
-      options.toggleMouse();
-      switchCheckedClass("#mouseSwitch",options.getMouse());
-      controls.enableMouse(options.getMouse()); 
+    var isLeap = options.getLeap();
+    controls.enableLeap(isLeap);
+    controls.enableMouse(!isLeap);
+    $("#controls").prop("checked",isLeap);
+    $("#controls").change(function() {
+      options.setLeap(this.checked);
+      controls.enableLeap(this.checked);
+      options.setMouse(!this.checked);
+      controls.enableMouse(!this.checked);
     });
     
     switchCheckedClass("#autoCameraButton",options.getAutoCamera());

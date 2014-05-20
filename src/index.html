@@ -58,23 +58,33 @@
         
         <div id="tools_stuff">
           <img class="button" src="images/arrow.png" id="tools_button">
+          
           <div class="row">
             <h2 id="not_compatible" class="blink">&gt; Your browser does not seem to support WebGL  &lt;</h2>
             <h2 id="loading" class="blink">&gt; Loading &lt;</h2>
             <h2 id="ready">&gt; Let's play! &lt;</h2>
           </div>
           
-          <div id="accordion" class="row">
+          <div id="chose_controls" class="row">
+            <div class="row">Choose controls</div>
+            <label class="switch row">
+              <input id="controls" type="checkbox" class="switch-input" />
+              <span class="switch-label" data-on="Leap Motion" data-off="Mouse"></span>
+              <span class="switch-handle"></span>
+            </label>
+          </div>
           
-            <div class="row">
-              <div class="inputDiv">
+          <div class="row inputDiv">
+              <div>
                 <span class="label">Name:</span> <input id="nick" type="text" disabled />
               </div>
-              <div class="inputDiv">
+              <div>
                 <span class="label">Shout:</span> <input id="chatMessage" type="text" disabled /><img id="sendChat" src="images/send.png" class="button"/>
               </div>
             </div>
-      
+          
+          <div id="accordion" class="row">
+          
             <div id="optionsHead" class="button"><h3>Options</h3></div>            
             <div id="options" class="row">
               <div id="buttons">
@@ -96,18 +106,11 @@
                   <span>Reset score</span>
                 </div>
                 
-                <div id="mouseSwitch" class="button">
-                  <span>Mouse Controls</span>
-                </div>
-                
-                <div id="leapSwitch" class="button">
-                  <span>Leap Motion Controls</span>
-                </div>
               </div>
-	          </div>
-	          
-	          <div id="playInstuctionsHead" class="button"><h3>How to play</h3></div>            
-	          <div id="playInstuctions" class="row">
+            </div>
+            
+            <div id="playInstuctionsHead" class="button"><h3>How to play</h3></div>            
+            <div id="playInstuctions" class="row">
               <p>Make a fist over the Leap Motion device, then move it forward to throw the dart (no need to open your hand).</p>
               <p>Try to aim at the target. Move your hand faster to increase dart speed.</p>
             </div>
@@ -115,15 +118,15 @@
             <div id="cameraInstuctionsHead" class="button"><h3>How to move camera</h3></div>
             <div id="cameraInstuctions" class="row">
               Using your mouse:<br/>
-	            <ul>
-	              <li>Left click and move to rotate</li>
-	              <li>Right click and move to pan</li>
-	              <li>Scroll wheel to zoom</li>
+              <ul>
+                <li>Left click and move to rotate</li>
+                <li>Right click and move to pan</li>
+                <li>Scroll wheel to zoom</li>
               </ul>
             </div>
-	        </div>
-	        
-	        <div class="row" id="linksRow">
+          </div>
+          
+          <div class="row" id="linksRow">
             <div class="row"><img src="images/github.png"> <a href="https://github.com/Weswit/BananaDarts-client-javascript" target="_blank">Source code on GitHub</a></div>
             <div class="row">Contact: <a href="mailto:support@lightstreamer.com" target="_blank">support@lightstreamer.com</a></div>          
           </div>
@@ -178,7 +181,7 @@
     <div id="chat">
       <div id="chatHeader">Chat:</div>
       <div id="chatPlaceHolder">Your shouts will appear here!</div>
-      <div id="chatTemplate" data-source="lightstreamer">
+      <div id="chatTemplate" data-source="lightstreamer" class="chatTemplate">
         <span data-source="lightstreamer" data-field="nick">-</span> <span data-source="lightstreamer" data-field="message">-</span>
       </div>
     </div>
