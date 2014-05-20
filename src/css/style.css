@@ -75,6 +75,9 @@ body {
   border: 0;
   z-index: 5;
 }
+#logo:hover {
+  opacity: 0.9 !important;
+}
 #tools_button {
   position: relative;
   top: 36px;
