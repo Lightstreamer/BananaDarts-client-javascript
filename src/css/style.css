@@ -170,14 +170,17 @@ body {
   border-radius: 8px;
 }
 .inputDiv {
-  margin-top: 6px;
+  text-align: center;
 }
 .inputDiv input {
   background-color: #f6e994;
   color: #0083cb;
   border-radius: 5px;
+  font-size: 12px;
+  width: 40%;
 }
 #sendChat {
+  position: absolute;
   width: 2em;
   height:2em;
   vertical-align: middle;
@@ -211,8 +214,14 @@ body {
   font-size: 10px;
   padding-top: 10px;
 }
-.leapInstructions, #playInstructions, #cameraInstructions  {
+.leapInstructions  {
   display: none;
+}
+#playInstuctions, #cameraInstuctions {
+  height: 0
+}
+#options {
+  height: 160px;
 }
 
 /* 3D */
