@@ -27,8 +27,10 @@ define(function() {
   
   var logoWidth = null;
   var logoHeight = null;
+  var fullHeight = null;
   var fontSize = null;
   var miniFontSize = null;
+  var maxiFontSize = null;
   var inputHeight  = null;
   var zoom = 1;
   
@@ -105,8 +107,12 @@ define(function() {
         $("#tools").css("margin",0);
         logoWidth = $("#logo").outerWidth();
         logoHeight = $("#logo").outerHeight();
-        fontSize = $("#accordion").css("font-size").replace("px","");
+        fullHeight = $("#tools_stuff").outerHeight();
+        
+        fontSize = $("#tools").css("font-size").replace("px","");
         miniFontSize = $("#linksRow").css("font-size").replace("px","");
+        maxiFontSize = $("h2").css("font-size").replace("px","");
+        
         inputHeight = $(".inputDiv").outerHeight();
         $("#logo, #tools, .github").css("opacity",OPACITY_WHILE_OPEN);
         
@@ -120,15 +126,22 @@ define(function() {
       while (zoom > 0 && logoWidth*zoom > window.innerWidth/2) {
         zoom -= 0.1;
       }
+      while (zoom > 0 && fullHeight*zoom > window.innerHeight) {
+        zoom -= 0.1;
+      }
             
       $("#tools, #logo").css("width",logoWidth*zoom);
       $("#logo").css("height",logoHeight*zoom);
       $("#tools_stuff").css("padding-top",logoHeight*zoom);
       
-      $("#accordion").css("font-size",fontSize*zoom);
+      $("#tools").css("font-size",fontSize*zoom);
       
       $(".inputDiv").css("height",inputHeight*zoom);
       $("#nick, #chatMessage").css("font-size",fontSize*zoom);
+      
+      $("h2").css("font-size",maxiFontSize*zoom);
+      
+      $("#chose_controls").css("transform","scale("+zoom+","+zoom+")");
       
       if (zoom >= 0.6) {
         $("#linksRow").css("font-size",miniFontSize*zoom);
