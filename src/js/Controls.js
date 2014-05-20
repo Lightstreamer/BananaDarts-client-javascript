@@ -36,7 +36,11 @@ define(["./LeapMotion","./Mouse","./Constants"], function(LeapMotion,Mouse,Const
       //MOUSE
       
       enableMouse: function(enable) {
+        if (this.mouseEnabled == enable) {
+          return;
+        }
         this.mouseEnabled = enable;
+        this.resetMouse();
       },
       
       //Mouse listener
@@ -66,12 +70,16 @@ define(["./LeapMotion","./Mouse","./Constants"], function(LeapMotion,Mouse,Const
           this.player.release(Constants.ROOM,deltaX*Constants.SPEED_MULTIPLIERS["x"],chargingTime*Constants.SPEED_MULTIPLIERS["y"],-deltaY*Constants.SPEED_MULTIPLIERS["z"]);
           
           //reset
-          this.mouseClickTime = null;
-          this.mouseClickX = null;
-          this.mouseClickY = null;
+          this.resetMouse();
         }
         
         
+      },
+      
+      resetMouse: function() {
+        this.mouseClickTime = null;
+        this.mouseClickX = null;
+        this.mouseClickY = null;
       },
       
       
