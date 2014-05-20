@@ -74,7 +74,7 @@ require(["js/Constants","js/Field","js/Game",
     });
     $("#logo").click(function(e) {
       e.stopPropagation();
-      Menu.open();
+      Menu.toggle();
     });
     $("#tools").click(function() {
       Menu.open();
