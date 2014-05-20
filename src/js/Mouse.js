@@ -53,6 +53,8 @@ define(["Inheritance","EventDispatcher","./Constants"],
         that.mouseClickChange(true);
       }).mouseup(function(event) {
         that.mouseClickChange(false);
+      }).mouseout(function(event) {
+        that.mouseClickChange(false);
       });
       
     },
