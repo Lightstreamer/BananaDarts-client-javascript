@@ -16,7 +16,7 @@ Copyright 2014 Weswit s.r.l.
 define(function() {
   
   var VISIBLE_PIXELS_WHILE_CLOSED = 10;
-  var LOGO_ZOOM_WHILE_CLOSED = 0.25;
+  var LOGO_ZOOM_WHILE_CLOSED = 0.5;
   var OPACITY_WHILE_CLOSED = 0.6;
   var OPACITY_WHILE_OPEN = 0.9;
 
