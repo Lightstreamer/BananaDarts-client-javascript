@@ -19,6 +19,8 @@ define(function() {
   var LOGO_ZOOM_WHILE_CLOSED = 0.5;
   var OPACITY_WHILE_CLOSED = 0.6;
   var OPACITY_WHILE_OPEN = 0.9;
+  
+  var ACCORDION_HEIGHT = 160;
 
   var isOpen = true;
   
@@ -38,10 +40,8 @@ define(function() {
   
   
   var Accordion = function(heads,elements) {
-    this.heights = {};
     for (var i=0; i<heads.length; i++) {
       this.setup(heads[i],elements[i]);
-      this.heights[elements[i]] = $(elements[i]).outerHeight();
       this.doClose(elements[i]);
       
     }
@@ -94,7 +94,7 @@ define(function() {
         return;
       }
       this.openEl = name;
-      $(name).css("height",14+this.heights[name]*zoom);
+      $(name).css("height",ACCORDION_HEIGHT*zoom);
     }
       
       

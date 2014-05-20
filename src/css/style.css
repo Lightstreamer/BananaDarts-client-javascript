@@ -211,7 +211,9 @@ body {
   font-size: 10px;
   padding-top: 10px;
 }
-
+.leapInstructions, #playInstructions, #cameraInstructions  {
+  display: none;
+}
 
 /* 3D */
 

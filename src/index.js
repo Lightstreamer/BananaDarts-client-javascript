@@ -167,16 +167,25 @@ require(["js/Constants","js/Field","js/Game",
       }
     }
     
+    function swicthControlType(isLeap) {
+      if (isLeap) {
+        $(".leapInstruction").show();
+        $(".mouseInstruction").hide();
+      } else {
+        $(".leapInstruction").hide();
+        $(".mouseInstruction").show();
+      }
+      options.setLeap(isLeap);
+      controls.enableLeap(isLeap);
+      options.setMouse(!isLeap);
+      controls.enableMouse(!isLeap);
+    }
     
-    var isLeap = options.getLeap();
-    controls.enableLeap(isLeap);
-    controls.enableMouse(!isLeap);
-    $("#controls").prop("checked",isLeap);
+    
+    swicthControlType(options.getLeap());
+    $("#controls").prop("checked",options.getLeap());
     $("#controls").change(function() {
-      options.setLeap(this.checked);
-      controls.enableLeap(this.checked);
-      options.setMouse(!this.checked);
-      controls.enableMouse(!this.checked);
+      swicthControlType(this.checked);
     });
     
     switchCheckedClass("#autoCameraButton",options.getAutoCamera());
