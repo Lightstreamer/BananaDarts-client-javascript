@@ -47,13 +47,15 @@ define(["Inheritance","EventDispatcher","./Constants"],
   Mouse.prototype = {
     setupListeners: function() {
       var that = this;
-      $(window).mousemove(function(event) {
+      $("#theWorld").mousemove(function(event) {
         that.mousePosChange(event.pageX,event.pageY);
       }).mousedown(function(event) {
         that.mouseClickChange(true);
       }).mouseup(function(event) {
         that.mouseClickChange(false);
       }).mouseout(function(event) {
+        that.mouseClickChange(false);
+      }).mouseenter(function(event) {
         that.mouseClickChange(false);
       });
       
@@ -62,7 +64,6 @@ define(["Inheritance","EventDispatcher","./Constants"],
     mouseClickChange: function(isDown) {
       this.isDown = isDown;
       this.dispatchEvent("onMouseChange",[this.isDown,this.norm["x"],this.norm["y"]]);
-
     },
     
     mousePosChange: function(newX,newY) {
