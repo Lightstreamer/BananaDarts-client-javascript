@@ -311,8 +311,9 @@ th {
 #chat {
  background-image:url(../images/chat.jpg);
 }
-chatTemplate {
+.chatTemplate {
   overflow: hidden;
+  white-space: nowrap;
 }
 #chat [data-field=nick] {
   font-size: 23px;
