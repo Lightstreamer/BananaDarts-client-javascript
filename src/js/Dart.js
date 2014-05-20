@@ -114,9 +114,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           this.createDart();
         }
         
-        
         this.reset();
-        
+    
         this.field.addObject(this.dart);
       },
       
@@ -500,7 +499,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       },
       
       reset: function() {
-        this.setPosition(0,Constants.INITIAL_CAMERA_POS_Y,Constants.MAX_SIZE.z);
+        var randX = Math.round(Math.random()*Constants.ARM_LENGTH)-Constants.ARM_LENGTH/2;
+        var randY = Math.round(Math.random()*Constants.ARM_LENGTH)+Constants.TWENTY-Constants.ARM_LENGTH/2;
+        
+        this.setPosition(randX,randY,Constants.MAX_SIZE.z);
         this.setRotation(Math.PI/2,0,0);
         this.planted = false;
         this.plantedTime = null;
