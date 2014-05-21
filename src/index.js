@@ -118,9 +118,6 @@ require(["js/Constants","js/Field","js/Game",
       }
     });
     
-    //slightly move camera to show dart
-    field.moveCamera(Constants.INITIAL_CAMERA_POS_X, Constants.INITIAL_CAMERA_POS_Y, Constants.INITIAL_CAMERA_POS_Z);
-    
     //setup camera controls
     $("#resetCamera").click(function(){
       field.resetCamera();
@@ -141,15 +138,6 @@ require(["js/Constants","js/Field","js/Game",
       controls.enableMouse(options.getMouse());
     });
     
-    //TODO we did reset the camera on the first Leap movement, what now?
-    /*
-    LeapMotion.addListener({
-      onFistMove: function() {
-        field.resetCamera();
-        LeapMotion.removeListener(this);
-      }
-    });
-    */
     
     var x = new Image();
     x.src = "images/checkhover.png";//preload
