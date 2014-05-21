@@ -32,7 +32,7 @@ require(["js/Constants","js/Field","js/Game",
   
   //all required js loaded
   addPerc(20);
-  var loading = new FloatingMenu($("#loading"),true,null,null,11);
+  var loading = new FloatingMenu($("#loading"),true,null,null,15);
   THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
     var perc = (50/total)*loaded + 50;
     showPerc(perc);
@@ -46,12 +46,8 @@ require(["js/Constants","js/Field","js/Game",
   };
   
   
-  
-  
   var options = new Options();
   var userNick = options.getNick();
-  
-  
   
   //setup game
   var field = null;

@@ -217,12 +217,13 @@ th {
   transition: all 1s ease;
   opacity: 0.8;
   display: none;
+  border-radius: 8px;
 }
 
 /* Instructions */
 
 #instructionsMenu {
-	
+
 }
 
 #instructionsMenu a {
@@ -281,6 +282,27 @@ th {
 #chose_controls {
   text-align: center;
 }
+
+/* Status */
+
+#statusMenu {
+  text-align: center;
+  border-radius: 8px;
+}
+.blink {
+  animation: blinker 0.8s cubic-bezier(.42, .01, 0, 1) infinite alternate;  
+  -webkit-animation: blinker 0.8s cubic-bezier(.3, 0, 1, 1) infinite alternate;  
+  transition-delay: 0.5s
+}
+@keyframes blinker {  
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@-webkit-keyframes blinker {  
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
 
 /* Switch - MIT License - http://www.cssflow.com/snippets/simple-toggle-switch/demo */
 
