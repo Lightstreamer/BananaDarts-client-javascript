@@ -90,6 +90,11 @@ define(["./Utils"],function(Utils) {
     
     MIN_SPEED: -200,
     
+    FLOATING_Z_INDEX: {
+      MAX: 12,
+      MIDDLE: 11,
+      STANDARD: 10
+    },
     
     ROOM: "dart",
     

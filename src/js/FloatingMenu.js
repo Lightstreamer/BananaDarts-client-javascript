@@ -13,8 +13,8 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["Inheritance","EventDispatcher"],
-    function(Inheritance,EventDispatcher) {
+define(["Inheritance","EventDispatcher","./Constants"],
+    function(Inheritance,EventDispatcher,Constants) {
   
   var FloatingMenu = function(element,isOpen,closedPosition,openPosition,zIndex) {
     this.initDispatcher();
@@ -29,7 +29,7 @@ define(["Inheritance","EventDispatcher"],
     this.closedPosition = closedPosition;
     this.openPosition = openPosition;
     
-    this.zIndex = zIndex || 10;
+    this.zIndex = zIndex || Constants.FLOATING_Z_INDEX.STANDARD;
     
     this.setup(isOpen);
   };

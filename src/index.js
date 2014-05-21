@@ -32,7 +32,7 @@ require(["js/Constants","js/Field","js/Game",
   
   //all required js loaded
   addPerc(20);
-  var loading = new FloatingMenu($("#loading"),true,null,null,15);
+  var loading = new FloatingMenu($("#loading"),true,null,null,Constants.FLOATING_Z_INDEX.MAX);
   THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
     var perc = (50/total)*loaded + 50;
     showPerc(perc);
@@ -84,7 +84,7 @@ require(["js/Constants","js/Field","js/Game",
   //bind to UI
   
   
-  var communicateMenu = new FloatingMenu($("#communicateMenu"),true,$("#communicateButton").offset(),{left:window.innerWidth-500,top:300},11);
+  var communicateMenu = new FloatingMenu($("#communicateMenu"),true,$("#communicateButton").offset(),{left:window.innerWidth-500,top:300},Constants.FLOATING_Z_INDEX.MIDDLE);
   $("#communicateButton").click(function() {
     communicateMenu.toggle();
   });
