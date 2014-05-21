@@ -24,10 +24,11 @@ define(["Inheritance","EventDispatcher"],
     this.originalWidth = 0;
     this.element = element;
     
-    this.setup(isOpen);
     this.currentlyOpen = isOpen;
    
     this.closedElement = closedElement;
+    
+    this.setup(isOpen);
   };
   
   
@@ -103,10 +104,8 @@ define(["Inheritance","EventDispatcher"],
     open: function() {
       this.element.css("height",this.originalHeight*this.zoom);
       this.element.css("width",this.originalWidth*this.zoom);
-      if (this.closedElement) {
-      
-        this.centerElement();
-      }
+     
+      this.centerElement();
       
       if (!this.currentlyOpen) {
         this.currentlyOpen = true;
