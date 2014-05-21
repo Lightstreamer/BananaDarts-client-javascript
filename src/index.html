@@ -49,101 +49,15 @@
     
   
     <div class="whole">
-      <a href="https://github.com/Weswit/BananaDarts-client-javascript" target="_blank"><img class="github" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
-     
-      
-      <img id="logo" src="images/logo.png" class="button"/>
-      
-      <div id="tools">
-        
-        <div id="tools_stuff">
-          <img class="button" src="images/arrow.png" id="tools_button">
-          
-          <div class="row">
-            <h2 id="not_compatible" class="blink">&gt; Your browser does not seem to support WebGL  &lt;</h2>
-            <h2 id="loading" class="blink">&gt; Loading &lt;</h2>
-            <h2 id="ready">&gt; Let's play! &lt;</h2>
-          </div>
-          
-          <div id="chose_controls" class="row">
-            <div class="row">Choose controls</div>
-            <label class="switch row">
-              <input id="controls" type="checkbox" class="switch-input" />
-              <span class="switch-label" data-on="Leap Motion" data-off="Mouse"></span>
-              <span class="switch-handle"></span>
-            </label>
-          </div>
-          
-          <div class="row inputDiv">
-              <div>
-                <span class="label">Name:</span> <input id="nick" type="text" disabled />
-              </div>
-              <div>
-                <span class="label">Shout:</span> <input id="chatMessage" type="text" disabled /><img id="sendChat" src="images/send.png" class="button"/>
-              </div>
-            </div>
-          
-          <div id="accordion" class="row">
-          
-            <div id="optionsHead" class="button"><h3>Options</h3></div>            
-            <div id="options" class="row">
-              <div id="buttons">
-                <div id="autoCameraButton" class="button checked">
-                  Automatic camera handling
-                </div>
-                <div id="showNicksButton" class="button checked">
-                  Show names on darts
-                </div>
-                <div id="audioButton" class="button checked">
-                  Audio
-                </div>
-                
-                <div id="resetCamera" class="button">
-                  <span>Reset camera</span>
-                </div>
-                
-                <div id="resetScore" class="button">
-                  <span>Reset score</span>
-                </div>
-                
-              </div>
-            </div>
-            
-            <div id="playInstuctionsHead" class="button"><h3>How to play</h3></div>            
-            <div id="playInstuctions" class="row">
-              <div class="leapInstruction">
-	              <p>Make a fist over the Leap Motion device, then move it forward to throw the dart (no need to open your hand).</p>
-	              <p>Try to aim at the target. Move your hand faster to increase dart speed.</p>
-	            </div>
-	            <div class="mouseInstruction">
-	             <p>Click and hold your mouse button, then move it forward and release the button to throw the dart.</p>
-	             <p>Try to aim at the target. Move the mouse  faster to increase dart speed.</p>
-	            </div>
-            </div>
-            
-            <div id="cameraInstuctionsHead" class="button"><h3>How to move camera</h3></div>
-            <div id="cameraInstuctions" class="row">
-              Press and hold the ctrl key on your keyboard, then using your mouse:<br/>
-              <ul>
-                <li>Left click and move to rotate</li>
-                <li>Right click and move to pan</li>
-                <li>Scroll wheel to zoom</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div class="row" id="linksRow">
-            <div class="row"><img src="images/github.png"> <a href="https://github.com/Weswit/BananaDarts-client-javascript" target="_blank">Source code on GitHub</a></div>
-            <div class="row">Contact: <a href="mailto:support@lightstreamer.com" target="_blank">support@lightstreamer.com</a></div>          
-          </div>
-	        
-        </div>
-        
-      </div>
-     
+      <a href="https://github.com/Weswit/BananaDarts-client-javascript" target="_blank"><img id="github" class="hideWhileFlying semitransparent" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+      <img id="logo" src="images/logo.png" class="hideWhileFlying semitransparent"/>
+      <img id="instructionsButton" class="hideWhileFlying button semitransparent" src="images/info.png"/>
+      <img id="optionsButton" class="hideWhileFlying button semitransparent" src="images/gear.png" />
       <div id="theWorld"></div>
     </div>
     
+    
+    <!-- SCOREBOARD -->
 
     <div id="scoreboard">
       <table>
@@ -184,11 +98,84 @@
       </table>
     </div>
     
+     <!-- CHAT -->
+    
     <div id="chat">
       <div id="chatHeader">Chat:</div>
       <div id="chatPlaceHolder">Your shouts will appear here!</div>
       <div id="chatTemplate" data-source="lightstreamer" class="chatTemplate">
         <span data-source="lightstreamer" data-field="nick">-</span> <span data-source="lightstreamer" data-field="message">-</span>
+      </div>
+    </div>
+    
+    <!-- INSTRUCTIONS -->
+    
+    
+    <div id="instructionsMenu" class="floatingMenu">
+      <div class="row">
+        <h3>How to play</h3>
+        <div class="leapInstruction">
+          <p>Make a fist over the Leap Motion device, then move it forward to throw the dart (no need to open your hand).</p>
+          <p>Try to aim at the target. Move your hand faster to increase dart speed.</p>
+        </div>
+        <div class="mouseInstruction">
+         <p>Click and hold your mouse button, then move it forward and release the button to throw the dart.</p>
+         <p>Try to aim at the target. Move the mouse  faster to increase dart speed.</p>
+        </div>
+      </div>
+        
+      <h3>How to move camera</h3>
+      <div class="row">
+        Press and hold the ctrl key on your keyboard, then using your mouse:<br/>
+        <ul>
+          <li>Left click and move to rotate</li>
+          <li>Right click and move to pan</li>
+          <li>Scroll wheel to zoom</li>
+        </ul>
+      </div>
+      
+      <div class="row" id="linksRow">
+        <div class="row"><img src="images/github.png"> <a href="https://github.com/Weswit/BananaDarts-client-javascript" target="_blank">Source code on GitHub</a></div>
+        <div class="row">Contact: <a href="mailto:support@lightstreamer.com" target="_blank">support@lightstreamer.com</a></div>          
+      </div>
+    </div>
+    
+    
+    <!-- OPTIONS -->
+    
+    
+    <div id="optionsMenu" class="floatingMenu">
+      <div id="chose_controls" class="row">
+        <div class="row">Choose controls</div>
+        <label class="switch row">
+          <input id="controls" type="checkbox" class="switch-input" />
+          <span class="switch-label" data-on="Leap Motion" data-off="Mouse"></span>
+          <span class="switch-handle"></span>
+        </label>
+      </div>
+    
+      <div class="row"><h3>Options</h3></div>            
+      <div id="options" class="row">
+	      <div id="buttons">
+	        <div id="autoCameraButton" class="button checked">
+	          Automatic camera handling
+	        </div>
+	        <div id="showNicksButton" class="button checked">
+	          Show names on darts
+	        </div>
+	        <div id="audioButton" class="button checked">
+	          Audio
+	        </div>
+	        
+	        <div id="resetCamera" class="button">
+	          <span>Reset camera</span>
+	        </div>
+	        
+	        <div id="resetScore" class="button">
+	          <span>Reset score</span>
+	        </div>
+	        
+	      </div>
       </div>
     </div>
     

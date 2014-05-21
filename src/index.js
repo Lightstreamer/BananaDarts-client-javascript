@@ -18,13 +18,13 @@ require(["js/Constants","js/Field","js/Game",
          "js/lsClient","js/Simulator","js/ConsoleSubscriptionListener",
          "js/Scoreboard","js/RoomSubscription",
          "js/ChatBoard","js/ChatSubscription",
-         "js/Menu", "js/Status", "js/Utils"],
+         "js/FloatingMenu","js/Status", "js/Utils"],
     function(Constants,Field,Game,
         Dart,Player,Options,Controls,
         lsClient,Simulator,ConsoleSubscriptionListener,
         Scoreboard,RoomSubscription,
         ChatBoard,ChatSubscription,
-        Menu,Status,Utils) {
+        FloatingMenu,Status,Utils) {
   
   var options = new Options();
   
@@ -66,31 +66,27 @@ require(["js/Constants","js/Field","js/Game",
   //bind to UI
   
   $(document).ready(function(){
-    Menu.setup();    
     
-    $("#tools_button").click(function(e) {
-      e.stopPropagation();
-      Menu.toggle();
-    });
-    $("#logo").click(function(e) {
-      e.stopPropagation();
-      Menu.toggle();
-    });
-    $("#tools").click(function() {
-      Menu.open();
-    });
-    $(document).keyup(function(e) {
-      if (e.keyCode == 27) {
-        Menu.close();
-      }   
-    });
-    $("#theWorld").click(function() {
-      Menu.close();
+    var instructionsMenu = new FloatingMenu($("#instructionsMenu"),true,$("#instructionsButton"));
+    var optionsMenu = new FloatingMenu($("#optionsMenu"),false,$("#optionsButton"));
+    
+    instructionsMenu.addListener({
+      onOpen: function() {
+        optionsMenu.close();
+      }
     });
     
+    optionsMenu.addListener({
+      onOpen: function() {
+        instructionsMenu.close();
+      }
+    });
     
-    $(window).resize(function(){
-      Menu.setup();
+    $("#instructionsButton").click(function() {
+      instructionsMenu.toggle();
+    });
+    $("#optionsButton").click(function() {
+      optionsMenu.toggle();
     });
     
     
@@ -107,9 +103,9 @@ require(["js/Constants","js/Field","js/Game",
       scoreboard.goToPage(current);
     }
     $(document).keypress(function(e) {
-      if (Menu.isOpen()) {
+      /*if (Menu.isOpen()) { TODO any menu must have the same effect
         return;
-      }
+      }*/
       
       if (e.which == 100 || e.which == 68) {
         changePage(current+1);
@@ -227,11 +223,7 @@ require(["js/Constants","js/Field","js/Game",
     $("#nick").val(userNick).keyup(function() {
       options.setNick($(this).val());
       player.changeNick(options.getNick());
-    }).keypress(function(e) {
-      if(e.which == 13) {
-        Menu.close();
-      }
-    });;
+    });
     
     //reset score
     $("#resetScore").click(function() {
@@ -271,12 +263,6 @@ require(["js/Constants","js/Field","js/Game",
       if (loaded == total) {
         THREE.DefaultLoadingManager.onProgress = null;
         Status.changeStatus(Status.READY);
-        
-        setTimeout(function() {
-          if (!Menu.gotFirstCall()) {
-            Menu.close();
-          }
-        },3000);
       }
     };
     

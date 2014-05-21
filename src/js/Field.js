@@ -13,7 +13,7 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["./Constants","./Utils","./Menu"],function(Constants,Utils,Menu) {
+define(["./Constants","./Utils"],function(Constants,Utils) {
   
   
   var SEE_THROUGH_MATERIAL = new THREE.MeshBasicMaterial({color: "black",  blending: THREE.NoBlending, opacity:0});
@@ -400,7 +400,11 @@ define(["./Constants","./Utils","./Menu"],function(Constants,Utils,Menu) {
       },
       
       hideMenu: function(hide) {
-        Menu.hide(hide)
+        if (hide) {
+          $(".hideWhileFlying").hide();
+        } else {
+          $(".hideWhileFlying").show();
+        }
       }
   };
   

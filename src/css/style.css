@@ -21,6 +21,19 @@ body {
   margin: 0;
   overflow: hidden;
 }
+.row, .col { 
+  overflow: hidden; 
+  position: relative; 
+}
+.row { 
+  left: 0; 
+  right: 0; 
+}
+.col { 
+  top: 0; 
+  bottom: 0; 
+  float:left;
+}
 .button {
   cursor:pointer;
   -moz-user-select: -moz-none;
@@ -38,190 +51,16 @@ body {
   right: 0;
   overflow: hidden;
 }
-.github {
-  position: absolute; 
-  top: 0; 
-  left: 0; 
-  border: 0; 
-  z-index: 4;
-  transition: all 1s ease;
-}
-
-/* MENU */
-
-#tools {
-  position: fixed;
+.semitransparent {
+  transition: all 0.5s ease;
+  opacity: 0.5;
   margin: auto;
-  width: 500px; 
-  bottom: 0;
-  border: 0;
-  top: 0;
-  right: 0; 
-  transition: all 1s ease;
-  z-index:3;
-  opacity: 0.9;
-  user-select: none;
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-}
-#logo {
-  transition: all 1s ease;
-  margin: auto;
-  top: 0; 
-  right: 0; 
-  position: absolute; 
   border: 0;
   z-index: 5;
+  opacity: 0.5;
 }
-#logo:hover {
-  opacity: 0.9 !important;
-}
-#tools_button {
-  position: relative;
-  top: 36px;
-  left: -36px;  /* -container padding - half its size*/
-  height: 32px;
-  width:32px;
-  transition: all 1s ease;
-}
-
-.row, .col { 
-  overflow: hidden; 
-  position: relative; 
-}
-.row { 
-  left: 0; 
-  right: 0; 
-}
-.col { 
-  top: 0; 
-  bottom: 0; 
-  float:left;
-}
-
-/* MENU contents */
-
-#tools_stuff {
-  background-color: #0083cb;
-  color: #f9dc0b;
-  border-radius: 10px 0 0 10px;
-  padding: 228px 20px 20px 20px;
-}
-
-/* MENU contents - header */
-
-#tools h1 { /*unused*/
-  font-size: 40px;
-  margin-top: 15px;
-}
-#tools h2 {
-  font-weight: normal;
-  
-  margin-top:0;
-}
-#tools h1, #tools h2 {
-  text-align: center;
-}
-#ready, #not_compatible {
-  display: none;
-}
-.blink {
-  animation: blinker 0.8s cubic-bezier(.42, .01, 0, 1) infinite alternate;  
-  -webkit-animation: blinker 0.8s cubic-bezier(.3, 0, 1, 1) infinite alternate;  
-  transition-delay: 0.5s
-}
-@keyframes blinker {  
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-@-webkit-keyframes blinker {  
-  from { opacity: 1; }
-  to { opacity: 0; }
-}
-
-/* MENU contents - clicks & forms */
-
-#chose_controls {
-  text-align: center;
-}
-
-#accordion div {
-  transition: height 1s ease;
-}
-
-#accordion h3 {
-  margin: 2px;
-}
-
-
-#tools_stuff a {
-  color: #f9dc0b;
-  padding:1px;
-}
-#buttons .button {
-  margin-top: 2px;
-  padding-top:2px;
-}
-#buttons .button:hover, #tools_stuff a:hover {
-  background-color: #f9dc0b;
-  color: #0083cb;
-  border-radius: 8px;
-}
-.inputDiv {
-  text-align: center;
-}
-.inputDiv input {
-  background-color: #f6e994;
-  color: #0083cb;
-  border-radius: 5px;
-  font-size: 12px;
-  width: 40%;
-}
-#sendChat {
-  position: absolute;
-  width: 2em;
-  height:2em;
-  vertical-align: middle;
-  margin-left: -4px;
-}
-.checked {
-  background-image: url(../images/check.png);
-  background-position: center right;
-  background-repeat: no-repeat;
-}
-.checked:hover {
-  background-image: url(../images/checkhover.png);
-}
-
-/* MENU contents - writings */
-
-#tools ul {
-  padding-left: 20px;
-  margin-top: 7px;
-}
-#linksRow div {
-  padding: 0 20px;
-  float: right;
-}
-#linksRow img {
-  height: 15px;
-  vertical-align: middle;
-  margin-top: -1px;
-}
-#linksRow {
-  font-size: 10px;
-  padding-top: 10px;
-}
-.leapInstructions  {
-  display: none;
-}
-#playInstuctions, #cameraInstuctions {
-  height: 0
-}
-#options {
-  height: 160px;
+.semitransparent:hover {
+  opacity: 0.9;
 }
 
 /* 3D */
@@ -339,6 +178,108 @@ th {
 }
 #chatPlaceHolder {
   color: #ccc;
+}
+
+/* FloatingMenu */
+
+#github {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+}
+#logo {
+  top: 0; 
+  right: 0; 
+  position: absolute; 
+}
+#instructionsButton, #optionsButton, #instructionsMenu, #optionsMenu  {
+  right: 15px; 
+  position: absolute; 
+}
+#instructionsButton, #instructionsMenu {
+  top: 230px;
+}
+#optionsButton, #optionsMenu {
+  top: 288px;
+}
+
+.floatingMenu {
+  transition: all 1s ease;
+  opacity: 0.8;
+  display: none;
+  background-color: #0083cb;
+  color: #f9dc0b;
+  overflow: hidden;
+  white-space: nowrap;
+  
+  user-select: none;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+}
+
+/* Instructions */
+
+#instructionsMenu {
+	
+}
+
+#instructionsMenu a {
+  color: #f9dc0b;
+  padding:1px;
+}
+
+#instructionsMenu a:hover {
+  background-color: #f9dc0b;
+  color: #0083cb;
+  border-radius: 8px;
+}
+
+.leapInstructions  {
+  display: none;
+}
+
+#linksRow {
+  font-size: 10px;
+  padding-top: 10px;
+}
+#linksRow div {
+  padding: 0 20px;
+  float: right;
+}
+#linksRow img {
+  height: 15px;
+  vertical-align: middle;
+  margin-top: -1px;
+}
+
+
+/* Options */
+
+#optionsMenu {
+
+}
+
+.checked {
+  background-image: url(../images/check.png);
+  background-position: center right;
+  background-repeat: no-repeat;
+}
+.checked:hover {
+  background-image: url(../images/checkhover.png);
+}
+#optionsMenu .button {
+  margin-top: 2px;
+  padding-top:2px;
+}
+#optionsMenu .button:hover {
+  background-color: #f9dc0b;
+  color: #0083cb;
+  border-radius: 8px;
+}
+#chose_controls {
+  text-align: center;
 }
 
 /* Switch - MIT License - http://www.cssflow.com/snippets/simple-toggle-switch/demo */
