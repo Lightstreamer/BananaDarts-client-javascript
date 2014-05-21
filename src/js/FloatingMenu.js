@@ -34,23 +34,31 @@ define(["Inheritance","EventDispatcher"],
   FloatingMenu.prototype = {
     
     setup: function(startOpen) {
+      var that = this;
+      
       this.element.css("z-index",0);
       this.element.css("position","absolute");
       this.element.css("overflow","hidden");
-      this.element.css("left",0);
-      this.element.css("top",0);
+      
       this.element.show();
       
       this.originalHeight = this.element.outerHeight();
       this.originalWidth = this.element.outerWidth();
       
-      this.onResize();
       if (!startOpen) {
         this.close();
-      } 
+      } else {
+        this.open();
+      }
+      
+      this.onResize();
       this.element.css("z-index",10);
       
-      var that = this;
+      this.element.on("transitionend",function() {
+        if (that.isOpen()) {
+          that.element.css("overflow","auto");
+        } 
+      });
       $(window).resize(function() {
         that.onResize();
       });
@@ -71,8 +79,11 @@ define(["Inheritance","EventDispatcher"],
         this.zoom -= 0.1;
       }
       
-      this.centerElement();
-      this.element.css("transform","scale("+this.zoom+","+this.zoom+")");
+      if (this.currentlyOpen) {
+        this.open();
+      } else {
+        this.close();
+      }
          
     },
     
@@ -90,26 +101,35 @@ define(["Inheritance","EventDispatcher"],
     },
     
     open: function() {
-      this.element.css("height",this.originalHeight);
-      this.element.css("width",this.originalWidth);
+      this.element.css("height",this.originalHeight*this.zoom);
+      this.element.css("width",this.originalWidth*this.zoom);
       if (this.closedElement) {
+      
         this.centerElement();
       }
       
-      this.currentlyOpen = true;
-      this.dispatchEvent("onOpen");
-      
+      if (!this.currentlyOpen) {
+        this.currentlyOpen = true;
+        this.dispatchEvent("onOpen");
+      }
     },
     
     close: function() {
+      this.element.css("overflow","hidden");
       this.element.css("height",0);
       this.element.css("width",0);
+      
+      
       if (this.closedElement) {
         var offset = this.closedElement.offset();
         this.moveElement(offset.left,offset.top);
       }
-      this.currentlyOpen = false;
-      this.dispatchEvent("onClose");
+      
+      if (this.currentlyOpen) {
+        this.currentlyOpen = false;
+        this.dispatchEvent("onClose");
+      }
+      
     },
     
     toggle: function() {
