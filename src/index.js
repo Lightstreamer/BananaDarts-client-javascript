@@ -13,6 +13,10 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
+
+//all <script> js loaded
+addPerc(20);
+
 require(["js/Constants","js/Field","js/Game",
          "js/Dart","js/Player","js/Options","js/Controls",
          "js/lsClient","js/Simulator","js/ConsoleSubscriptionListener",
@@ -26,10 +30,28 @@ require(["js/Constants","js/Field","js/Game",
         ChatBoard,ChatSubscription,
         FloatingMenu,Status,Utils) {
   
-  var options = new Options();
+  //all required js loaded
+  addPerc(20);
+  var loading = new FloatingMenu($("#loading"),true,null,null,11);
+  THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
+    var perc = (50/total)*loaded + 50;
+    showPerc(perc);
+    
+    if (loaded == total) {
+      THREE.DefaultLoadingManager.onProgress = null;
+      setTimeout(function() {
+        loading.close();
+      },1000);
+    }
+  };
   
+  
+  
+  
+  var options = new Options();
   var userNick = options.getNick();
-
+  
+  
   
   //setup game
   var field = null;
@@ -65,213 +87,185 @@ require(["js/Constants","js/Field","js/Game",
   
   //bind to UI
   
-  function showPerc(perc) {
-    perc = Math.floor(perc);
-    if (perc != 100) {
-      $("#loaded").css("background-image","linear-gradient(to left, #f9dc0b "+(100-perc)+"%, #0023cb "+perc+"%)");
-    } else {
-      $("#loaded").css("background-image","linear-gradient(to left, #f9dc0b 0, #0023cb 0)");
-    }
-    $("#loaded").text(perc+"%");
-  }
   
-  $(document).ready(function(){
-    
-    showPerc(10);
-    
-    var loading = new FloatingMenu($("#loading"),true,null,null,11);
-    THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
-      var perc = (90/total)*loaded + 10;
-      showPerc(perc);
-      
-      if (loaded == total) {
-        THREE.DefaultLoadingManager.onProgress = null;
-        setTimeout(function() {
-          loading.close();
-        },1000);
-      }
-    };
-    
-    var instructionsMenu = new FloatingMenu($("#instructionsMenu"),true,$("#instructionsButton").offset());
-    var optionsMenu = new FloatingMenu($("#optionsMenu"),false,$("#optionsButton").offset());
-    
-    instructionsMenu.addListener({
-      onOpen: function() {
-        optionsMenu.close();
-      }
-    });
-    
-    optionsMenu.addListener({
-      onOpen: function() {
-        instructionsMenu.close();
-      }
-    });
-    
-    $("#instructionsButton").click(function() {
-      instructionsMenu.toggle();
-    });
-    $("#optionsButton").click(function() {
-      optionsMenu.toggle();
-    });
-    
-    
-    //paging handling
-    var current = 1;
-    function changePage(goTo) {
-      current = goTo;
-      var max = scoreboard.getCurrentPages();
-      if (current > max) {
-        current = max;
-      } else if (current < 1) {
-        current = 1;
-      }
-      scoreboard.goToPage(current);
+  var instructionsMenu = new FloatingMenu($("#instructionsMenu"),true,$("#instructionsButton").offset());
+  var optionsMenu = new FloatingMenu($("#optionsMenu"),false,$("#optionsButton").offset());
+  
+  instructionsMenu.addListener({
+    onOpen: function() {
+      optionsMenu.close();
     }
-    $(document).keypress(function(e) {
-      /*if (Menu.isOpen()) { TODO any menu must have the same effect
-        return;
-      }*/
-      
-      if (e.which == 100 || e.which == 68) {
-        changePage(current+1);
-      } else if(e.which == 115 || e.which == 83) {
-        changePage(current-1);
-      } else if (e.which == 116 || e.which == 84) {
-        scoreboard.sortByTot();
-      } else if (e.which == 108 || e.which == 76) {
-        scoreboard.sortByLast();
-      }
-    });
-    
-    //setup camera controls
-    $("#resetCamera").click(function(){
-      field.resetCamera();
-    });
-    
-    $(window).keyup(function(e) { 
-      if (e.which == 17) {
-        field.blockOrbit(true);
-        controls.enableMouse(options.getMouse());
-      }
-    }).keydown(function(e) { 
-      if (e.which == 17) {
-        field.blockOrbit(false);
-        controls.enableMouse(false);
-      }
-    }).focus(function() {
-      field.blockOrbit(true);
-      controls.enableMouse(options.getMouse());
-    });
-    
-    
-    var x = new Image();
-    x.src = "images/checkhover.png";//preload
-    x = null;
-    
-    function switchCheckedClass(el,flag) {
-      if (flag) {
-        $(el).addClass("checked");
-      } else {
-        $(el).removeClass("checked");
-      }
-    }
-    
-    function swicthControlType(isLeap) {
-      if (isLeap) {
-        $(".leapInstruction").show();
-        $(".mouseInstruction").hide();
-      } else {
-        $(".leapInstruction").hide();
-        $(".mouseInstruction").show();
-      }
-      options.setLeap(isLeap);
-      controls.enableLeap(isLeap);
-      options.setMouse(!isLeap);
-      controls.enableMouse(!isLeap);
-    }
-    
-    
-    swicthControlType(options.getLeap());
-    $("#controls").prop("checked",options.getLeap());
-    $("#controls").change(function() {
-      swicthControlType(this.checked);
-    });
-    
-    switchCheckedClass("#autoCameraButton",options.getAutoCamera());
-    game.enableCameraHandling(options.getAutoCamera()); 
-    $("#autoCameraButton").click(function() {
-      options.toggleAutoCamera();
-      switchCheckedClass("#autoCameraButton",options.getAutoCamera());
-      game.enableCameraHandling(options.getAutoCamera()); 
-    });
-   
-    //setup nicks on darts on/off
-    switchCheckedClass("#showNicksButton",options.getShowNicks());
-    game.showExtraInfo(options.getShowNicks()); 
-    $("#showNicksButton").click(function() {
-      options.toggleShowNicks();
-      switchCheckedClass("#showNicksButton",options.getShowNicks());
-      game.showExtraInfo(options.getShowNicks()); 
-    });
-    
-    
-    var enableSoundEffect = Utils.loadSound("throw");
-    if (enableSoundEffect) {
-      switchCheckedClass("#audioButton",options.getAudio());
-      game.enableAudio(options.getAudio());
-      $("#audioButton").click(function() {
-        options.toggleAudio();
-        if(options.getAudio()) {
-          enableSoundEffect.play();
-        }
-        switchCheckedClass("#audioButton",options.getAudio());
-        game.enableAudio(options.getAudio()); 
-      });
-    } else {
-      $("#audioButton").hide();
-    }
-    
-    
-    //setup nick input
-    $("#nick").val(userNick).keyup(function() {
-      options.setNick($(this).val());
-      player.changeNick(options.getNick());
-    });
-    
-    //reset score
-    $("#resetScore").click(function() {
-      player.resetScore(Constants.ROOM);
-    });
-    
-    //send chat messages
-    function doSend() {
-      player.sendChatMessage(Constants.ROOM,$("#chatMessage").val());
-      $("#chatMessage").val("");
-    }
-    $("#sendChat").click(function(){
-      doSend();
-    });
-    $("#chatMessage").keypress(function(e) {
-      if(e.which == 13) {
-        doSend();
-      }
-    });
-    
-    function doEnter() {
-      player.enterRoom(Constants.ROOM);
-      $("#chatMessage").prop('disabled', false);
-      $("#nick").prop('disabled', false);
-    }
-    function doExit() {
-      player.exitRoom(Constants.ROOM);
-      $("#chatMessage").prop('disabled', true);
-      $("#nick").prop('disabled', true);
-    }
-    //Let us enter the game room 
-    doEnter();
-    
   });
   
+  optionsMenu.addListener({
+    onOpen: function() {
+      instructionsMenu.close();
+    }
+  });
+  
+  $("#instructionsButton").click(function() {
+    instructionsMenu.toggle();
+  });
+  $("#optionsButton").click(function() {
+    optionsMenu.toggle();
+  });
+  
+  
+  //paging handling
+  var current = 1;
+  function changePage(goTo) {
+    current = goTo;
+    var max = scoreboard.getCurrentPages();
+    if (current > max) {
+      current = max;
+    } else if (current < 1) {
+      current = 1;
+    }
+    scoreboard.goToPage(current);
+  }
+  $(document).keypress(function(e) {
+    /*if (Menu.isOpen()) { TODO any menu must have the same effect
+      return;
+    }*/
+    
+    if (e.which == 100 || e.which == 68) {
+      changePage(current+1);
+    } else if(e.which == 115 || e.which == 83) {
+      changePage(current-1);
+    } else if (e.which == 116 || e.which == 84) {
+      scoreboard.sortByTot();
+    } else if (e.which == 108 || e.which == 76) {
+      scoreboard.sortByLast();
+    }
+  });
+  
+  //setup camera controls
+  $("#resetCamera").click(function(){
+    field.resetCamera();
+  });
+  
+  $(window).keyup(function(e) { 
+    if (e.which == 17) {
+      field.blockOrbit(true);
+      controls.enableMouse(options.getMouse());
+    }
+  }).keydown(function(e) { 
+    if (e.which == 17) {
+      field.blockOrbit(false);
+      controls.enableMouse(false);
+    }
+  }).focus(function() {
+    field.blockOrbit(true);
+    controls.enableMouse(options.getMouse());
+  });
+  
+  
+  var x = new Image();
+  x.src = "images/checkhover.png";//preload
+  x = null;
+  
+  function switchCheckedClass(el,flag) {
+    if (flag) {
+      $(el).addClass("checked");
+    } else {
+      $(el).removeClass("checked");
+    }
+  }
+  
+  function swicthControlType(isLeap) {
+    if (isLeap) {
+      $(".leapInstruction").show();
+      $(".mouseInstruction").hide();
+    } else {
+      $(".leapInstruction").hide();
+      $(".mouseInstruction").show();
+    }
+    options.setLeap(isLeap);
+    controls.enableLeap(isLeap);
+    options.setMouse(!isLeap);
+    controls.enableMouse(!isLeap);
+  }
+  
+  
+  swicthControlType(options.getLeap());
+  $("#controls").prop("checked",options.getLeap());
+  $("#controls").change(function() {
+    swicthControlType(this.checked);
+  });
+  
+  switchCheckedClass("#autoCameraButton",options.getAutoCamera());
+  game.enableCameraHandling(options.getAutoCamera()); 
+  $("#autoCameraButton").click(function() {
+    options.toggleAutoCamera();
+    switchCheckedClass("#autoCameraButton",options.getAutoCamera());
+    game.enableCameraHandling(options.getAutoCamera()); 
+  });
+ 
+  //setup nicks on darts on/off
+  switchCheckedClass("#showNicksButton",options.getShowNicks());
+  game.showExtraInfo(options.getShowNicks()); 
+  $("#showNicksButton").click(function() {
+    options.toggleShowNicks();
+    switchCheckedClass("#showNicksButton",options.getShowNicks());
+    game.showExtraInfo(options.getShowNicks()); 
+  });
+  
+  
+  var enableSoundEffect = Utils.loadSound("throw");
+  if (enableSoundEffect) {
+    switchCheckedClass("#audioButton",options.getAudio());
+    game.enableAudio(options.getAudio());
+    $("#audioButton").click(function() {
+      options.toggleAudio();
+      if(options.getAudio()) {
+        enableSoundEffect.play();
+      }
+      switchCheckedClass("#audioButton",options.getAudio());
+      game.enableAudio(options.getAudio()); 
+    });
+  } else {
+    $("#audioButton").hide();
+  }
+  
+  
+  //setup nick input
+  $("#nick").val(userNick).keyup(function() {
+    options.setNick($(this).val());
+    player.changeNick(options.getNick());
+  });
+  
+  //reset score
+  $("#resetScore").click(function() {
+    player.resetScore(Constants.ROOM);
+  });
+  
+  //send chat messages
+  function doSend() {
+    player.sendChatMessage(Constants.ROOM,$("#chatMessage").val());
+    $("#chatMessage").val("");
+  }
+  $("#sendChat").click(function(){
+    doSend();
+  });
+  $("#chatMessage").keypress(function(e) {
+    if(e.which == 13) {
+      doSend();
+    }
+  });
+  
+  function doEnter() {
+    player.enterRoom(Constants.ROOM);
+    $("#chatMessage").prop('disabled', false);
+    $("#nick").prop('disabled', false);
+  }
+  function doExit() {
+    player.exitRoom(Constants.ROOM);
+    $("#chatMessage").prop('disabled', true);
+    $("#nick").prop('disabled', true);
+  }
+  //Let us enter the game room 
+  doEnter();
+    
   
   
   //setup simulators

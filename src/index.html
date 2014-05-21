@@ -25,25 +25,9 @@
   
     <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:bold&v1' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js"></script>
+    
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script src="http://js.leapmotion.com/0.3.0-beta2/leap.js"></script>
     
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r61/three.min.js"></script> <!--  upgrading to 66 breaks the css panels -->
-    <script src="js/CSS3DRenderer.js"></script> <!--  https://github.com/mrdoob/three.js/blob/master/examples/js/renderers/CSS3DRenderer.js -->
-    <script src="js/droid_sans_bold.typeface.js"></script> <!--  https://github.com/mrdoob/three.js/blob/master/examples/fonts/droid/droid_sans_bold.typeface.js  -->
-    <script src="js/MTLLoader.js"></script> <!--  https://github.com/mrdoob/three.js/blob/master/examples/js/loaders/MTLLoader.js -->
-    <script src="js/OBJMTLLoader.js"></script> <!-- https://github.com/mrdoob/three.js/blob/master/examples/js/loaders/OBJMTLLoader.js -->
-    <script src="js/OrbitControls.js"></script> <!-- https://github.com/mrdoob/three.js/blob/master/examples/js/controls/OrbitControls.js -->
-    
-    <script src="http://demos.lightstreamer.com/commons/lightstreamer.js"></script>
-    
-    <!-- link rel="stylesheet" type="text/css" href="css/stats.css" /-->
-    <!-- script src="js/threex.rendererstats.js"></script -->
-    <!-- script src="js/stats.min.js"></script -->
-    
-    <script src="index.js"></script>
   </head>
   <body>
   
@@ -72,6 +56,25 @@
         color: #0083cb;
       }
     </style>
+    <script>
+      var mPerc = 0;
+      function addPerc(perc) {
+        mPerc+=perc;
+        showPerc(mPerc);
+      }
+      function showPerc(perc) {
+        perc = Math.floor(perc);
+        if (perc != 100) {
+          $("#loaded").css("background-image","linear-gradient(to left, #f9dc0b "+(100-perc)+"%, #0023cb "+perc+"%)");
+        } else {
+          $("#loaded").css("background-image","linear-gradient(to left, #f9dc0b 0, #0023cb 0)");
+        }
+        $("#loaded").text(perc+"%");
+      }
+      $(document).ready(function(){
+        addPerc(10);
+      });
+    </script>
     <div id="loading" class="floatingMenu">
       <div class="row">
         <img src="images/logo.png">
@@ -192,29 +195,45 @@
     
       <div class="row"><h3>Options</h3></div>            
       <div id="options" class="row">
-	      <div id="buttons">
-	        <div id="autoCameraButton" class="button checked">
-	          Automatic camera handling
-	        </div>
-	        <div id="showNicksButton" class="button checked">
-	          Show names on darts
-	        </div>
-	        <div id="audioButton" class="button checked">
-	          Audio
-	        </div>
-	        
-	        <div id="resetCamera" class="button">
-	          <span>Reset camera</span>
-	        </div>
-	        
-	        <div id="resetScore" class="button">
-	          <span>Reset score</span>
-	        </div>
-	        
-	      </div>
+        <div id="buttons">
+          <div id="autoCameraButton" class="button checked">
+            Automatic camera handling
+          </div>
+          <div id="showNicksButton" class="button checked">
+            Show names on darts
+          </div>
+          <div id="audioButton" class="button checked">
+            Audio
+          </div>
+          
+          <div id="resetCamera" class="button">
+            <span>Reset camera</span>
+          </div>
+          
+          <div id="resetScore" class="button">
+            <span>Reset score</span>
+          </div>
+          
+        </div>
       </div>
     </div>
     
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js"></script>
+    <script src="http://js.leapmotion.com/0.3.0-beta2/leap.js"></script>
     
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r61/three.min.js"></script> <!--  upgrading to 66 breaks the css panels -->
+    <script src="js/CSS3DRenderer.js"></script> <!--  https://github.com/mrdoob/three.js/blob/master/examples/js/renderers/CSS3DRenderer.js -->
+    <script src="js/droid_sans_bold.typeface.js"></script> <!--  https://github.com/mrdoob/three.js/blob/master/examples/fonts/droid/droid_sans_bold.typeface.js  -->
+    <script src="js/MTLLoader.js"></script> <!--  https://github.com/mrdoob/three.js/blob/master/examples/js/loaders/MTLLoader.js -->
+    <script src="js/OBJMTLLoader.js"></script> <!-- https://github.com/mrdoob/three.js/blob/master/examples/js/loaders/OBJMTLLoader.js -->
+    <script src="js/OrbitControls.js"></script> <!-- https://github.com/mrdoob/three.js/blob/master/examples/js/controls/OrbitControls.js -->
+    
+    <script src="http://demos.lightstreamer.com/commons/lightstreamer.js"></script>
+    
+    <!-- link rel="stylesheet" type="text/css" href="css/stats.css" /-->
+    <!-- script src="js/threex.rendererstats.js"></script -->
+    <!-- script src="js/stats.min.js"></script -->
+    
+    <script src="index.js"></script>
   </body>
 </html>
