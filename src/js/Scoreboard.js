@@ -42,7 +42,7 @@ define(["DynaGrid","./Constants","Inheritance"],
     var rect = element.getBoundingClientRect();
     var z = -Constants.MAX_SIZE.z+10;
     var x = -Constants.MAX_SIZE.x+rect.width/2 + 50;
-    var y = Constants.MAX_SIZE.y-rect.height/2 - 80;
+    var y = Constants.MAX_SIZE.y-rect.height/2 - 380;
     cssObject.position.set(x,y,z); //stay away a bit from the wall or you'll get a strange flickering effect (makes sense @ 0 distance)
 
     field.addCSSObject(cssObject);
