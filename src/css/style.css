@@ -57,7 +57,7 @@ body {
 .semitransparent {
   transition: all 0.5s ease;
   opacity: 0.5;
-  z-index: 5;
+  z-index: 9;
 }
 .semitransparent:hover {
   opacity: 1 !important;
@@ -341,6 +341,18 @@ th {
   to { opacity: 0; }
 }
 
+/* Grey */
+#grey {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  opacity: 0.9;
+  background-color: grey;
+  display: none;
+  transition: all 0.5s ease;
+}
 
 /* Switch - MIT License - http://www.cssflow.com/snippets/simple-toggle-switch/demo */
 

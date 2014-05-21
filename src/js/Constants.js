@@ -93,7 +93,8 @@ define(["./Utils"],function(Utils) {
     FLOATING_Z_INDEX: {
       MAX: 12,
       MIDDLE: 11,
-      STANDARD: 10
+      STANDARD: 10,
+      MIN: 8
     },
     
     ROOM: "dart",

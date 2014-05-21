@@ -18,6 +18,7 @@ define(["Inheritance","EventDispatcher","./Constants"],
   
   var FloatingMenu = function(element,isOpen,closedPosition,openPosition,zIndex) {
     this.initDispatcher();
+    this.useSynchEvents(true);
     
     this.zoom = 1;
     this.originalHeight = 0;

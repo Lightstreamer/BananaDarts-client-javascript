@@ -91,17 +91,25 @@ require(["js/Constants","js/Field","js/Game",
   
   var instructionsMenu = new FloatingMenu($("#instructionsMenu"),true,$("#instructionsButton").offset());
   var optionsMenu = new FloatingMenu($("#optionsMenu"),false,$("#optionsButton").offset());
-  
+  var grey = new FloatingMenu($("#grey"),true,null,null,Constants.FLOATING_Z_INDEX.MIN);
   
   instructionsMenu.addListener({
     onOpen: function() {
       optionsMenu.close();
+      grey.open();
+    },
+    onClose: function() {
+      grey.close();
     }
   });
   
   optionsMenu.addListener({
     onOpen: function() {
       instructionsMenu.close();
+      grey.open();
+    },
+    onClose: function() {
+      grey.close();
     }
   });
   
