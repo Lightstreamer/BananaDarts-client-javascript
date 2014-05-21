@@ -34,6 +34,9 @@ body {
   bottom: 0; 
   float:left;
 }
+.centered {
+  text-align: center;
+}
 .button {
   cursor:pointer;
   -moz-user-select: -moz-none;
@@ -187,17 +190,30 @@ th {
 #logo {
   top: 0; 
   right: 0; 
-  position: absolute; 
-}
-#instructionsButton, #optionsButton, #instructionsMenu, #optionsMenu  {
-  right: 15px; 
+  width: 250px;
+  height: 114px;
   position: absolute; 
 }
 #instructionsButton, #instructionsMenu {
-  top: 230px;
+  top: 116px; /* 114 + 2 */
 }
 #optionsButton, #optionsMenu {
-  top: 288px;
+  top: 174px; /* 116 + 48 + 10 */
+}
+#communicateMenu, #communicateButton {
+  top: 232px; /* 174 + 48 + 10 */
+}
+
+#instructionsButton, #optionsButton, #communicateButton, #instructionsMenu, #optionsMenu,  #communicateMenu {
+  right: 15px; 
+  position: absolute; 
+}
+
+#instructionsMenu, #optionsMenu {
+  transition: all 1s ease;
+  opacity: 0.8;
+  display: none;
+  border-radius: 8px;
 }
 
 .floatingMenu {
@@ -213,11 +229,36 @@ th {
   -ms-user-select: none;
 }
 
-#instructionsMenu, #optionsMenu {
+
+
+/* Communicate */
+
+#communicateMenu {
   transition: all 1s ease;
   opacity: 0.8;
-  display: none;
   border-radius: 8px;
+}
+
+#communicateMenu:hover {
+  opacity: 1;
+}
+
+.inputDiv {
+  text-align: center;
+}
+.inputDiv input {
+  background-color: #f6e994;
+  color: #0083cb;
+  border-radius: 5px;
+  font-size: 12px;
+  width: 40%;
+}
+#sendChat {
+  position: absolute;
+  width: 2em;
+  height:2em;
+  vertical-align: middle;
+  margin-left: -4px;
 }
 
 /* Instructions */
@@ -278,9 +319,6 @@ th {
   background-color: #f9dc0b;
   color: #0083cb;
   border-radius: 8px;
-}
-#chose_controls {
-  text-align: center;
 }
 
 /* Status */

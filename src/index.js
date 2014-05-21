@@ -84,8 +84,14 @@ require(["js/Constants","js/Field","js/Game",
   //bind to UI
   
   
+  var communicateMenu = new FloatingMenu($("#communicateMenu"),true,$("#communicateButton").offset(),{left:window.innerWidth-500,top:300},11);
+  $("#communicateButton").click(function() {
+    communicateMenu.toggle();
+  });
+  
   var instructionsMenu = new FloatingMenu($("#instructionsMenu"),true,$("#instructionsButton").offset());
   var optionsMenu = new FloatingMenu($("#optionsMenu"),false,$("#optionsButton").offset());
+  
   
   instructionsMenu.addListener({
     onOpen: function() {
@@ -184,9 +190,10 @@ require(["js/Constants","js/Field","js/Game",
   
   
   swicthControlType(options.getLeap());
-  $("#controls").prop("checked",options.getLeap());
-  $("#controls").change(function() {
+  $(".switch-input").prop("checked",options.getLeap());
+  $(".switch-input").change(function() {
     swicthControlType(this.checked);
+    $(".switch-input").prop("checked",this.checked);
   });
   
   switchCheckedClass("#autoCameraButton",options.getAutoCamera());

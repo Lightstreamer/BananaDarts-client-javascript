@@ -92,6 +92,7 @@
       <img id="logo" src="images/logo.png" class="hideWhileFlying semitransparent"/>
       <img id="instructionsButton" class="hideWhileFlying button semitransparent" src="images/info.png"/>
       <img id="optionsButton" class="hideWhileFlying button semitransparent" src="images/gear.png" />
+      <img id="communicateButton" class="hideWhileFlying button semitransparent" src="images/communicate.png"/>
       <div id="theWorld"></div>
     </div>
     
@@ -146,7 +147,17 @@
       </div>
     </div>
     
-    
+    <!-- FORM -->
+    <div id="communicateMenu" class="floatingMenu hideWhileFlying">
+      <div class="row inputDiv">
+        <div>
+          <span class="label">Name:</span> <input id="nick" type="text" disabled />
+        </div>
+        <div>
+          <span class="label">Shout:</span> <input id="chatMessage" type="text" disabled /><img id="sendChat" src="images/send.png" class="button"/>
+        </div>
+      </div>
+    </div>
     
     <!-- CHAT -->
     
@@ -162,6 +173,15 @@
     
     
     <div id="instructionsMenu" class="floatingMenu">
+     <div class="row centered">
+        <div class="row">Choose controls</div>
+        <label class="switch row">
+          <input type="checkbox" class="switch-input" />
+          <span class="switch-label" data-on="Leap Motion" data-off="Mouse"></span>
+          <span class="switch-handle"></span>
+        </label>
+      </div>
+      
       <div class="row">
         <h3>How to play</h3>
         <div class="leapInstruction">
@@ -195,10 +215,10 @@
     
     
     <div id="optionsMenu" class="floatingMenu">
-      <div id="chose_controls" class="row">
+      <div class="row centered">
         <div class="row">Choose controls</div>
         <label class="switch row">
-          <input id="controls" type="checkbox" class="switch-input" />
+          <input type="checkbox" class="switch-input" />
           <span class="switch-label" data-on="Leap Motion" data-off="Mouse"></span>
           <span class="switch-handle"></span>
         </label>
