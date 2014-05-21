@@ -16,7 +16,7 @@ Copyright 2014 Weswit s.r.l.
 define(["Inheritance","EventDispatcher"],
     function(Inheritance,EventDispatcher) {
   
-  var FloatingMenu = function(element,isOpen,closedElement) {
+  var FloatingMenu = function(element,isOpen,closedPosition,openPosition,zIndex) {
     this.initDispatcher();
     
     this.zoom = 1;
@@ -26,7 +26,10 @@ define(["Inheritance","EventDispatcher"],
     
     this.currentlyOpen = isOpen;
    
-    this.closedElement = closedElement;
+    this.closedPosition = closedPosition;
+    this.openPosition = openPosition;
+    
+    this.zIndex = zIndex || 10;
     
     this.setup(isOpen);
   };
@@ -53,12 +56,12 @@ define(["Inheritance","EventDispatcher"],
       }
       
       this.onResize();
-      this.element.css("z-index",10);
+      this.element.css("z-index",this.zIndex);
       
       this.element.on("transitionend",function() {
         if (that.isOpen()) {
           that.element.css("overflow","auto");
-        } 
+        }
       });
       $(window).resize(function() {
         that.onResize();
@@ -105,7 +108,11 @@ define(["Inheritance","EventDispatcher"],
       this.element.css("height",this.originalHeight*this.zoom);
       this.element.css("width",this.originalWidth*this.zoom);
      
-      this.centerElement();
+      if (this.openPosition) {
+        this.moveElement(this.openPosition.left, this.openPosition.top);
+      } else {
+        this.centerElement();
+      }
       
       if (!this.currentlyOpen) {
         this.currentlyOpen = true;
@@ -119,9 +126,8 @@ define(["Inheritance","EventDispatcher"],
       this.element.css("width",0);
       
       
-      if (this.closedElement) {
-        var offset = this.closedElement.offset();
-        this.moveElement(offset.left,offset.top);
+      if (this.closedPosition) {
+        this.moveElement(this.closedPosition.left, this.closedPosition.top);
       }
       
       if (this.currentlyOpen) {

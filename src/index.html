@@ -46,8 +46,44 @@
     <script src="index.js"></script>
   </head>
   <body>
-    
   
+    <!-- LOADING -->
+    <style>
+      #loading {
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        opacity: 0.9;
+        z-index: 11;
+        background-color: #0083cb;
+        color: #f9dc0b;
+      }
+      #loading div {
+        text-align: center;
+        margin-top: 10px;
+      }
+      #loaded {
+        width: 200px;
+        margin: auto;
+        border-radius: 8px;
+        background-image: linear-gradient(to left, #f9dc0b 100%, red 0);
+        color: #0083cb;
+      }
+    </style>
+    <div id="loading" class="floatingMenu">
+      <div class="row">
+        <img src="images/logo.png">
+      </div>
+      <div class="row">
+        Loading
+        <div id="loaded">0%</div>
+      </div>
+    </div>  
+    
+    <!-- STANDARD -->
+    
     <div class="whole">
       <a href="https://github.com/Weswit/BananaDarts-client-javascript" target="_blank"><img id="github" class="hideWhileFlying semitransparent" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
       <img id="logo" src="images/logo.png" class="hideWhileFlying semitransparent"/>

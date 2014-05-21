@@ -65,10 +65,35 @@ require(["js/Constants","js/Field","js/Game",
   
   //bind to UI
   
+  function showPerc(perc) {
+    perc = Math.floor(perc);
+    if (perc != 100) {
+      $("#loaded").css("background-image","linear-gradient(to left, #f9dc0b "+(100-perc)+"%, #0023cb "+perc+"%)");
+    } else {
+      $("#loaded").css("background-image","linear-gradient(to left, #f9dc0b 0, #0023cb 0)");
+    }
+    $("#loaded").text(perc+"%");
+  }
+  
   $(document).ready(function(){
     
-    var instructionsMenu = new FloatingMenu($("#instructionsMenu"),true,$("#instructionsButton"));
-    var optionsMenu = new FloatingMenu($("#optionsMenu"),false,$("#optionsButton"));
+    showPerc(10);
+    
+    var loading = new FloatingMenu($("#loading"),true,null,null,11);
+    THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
+      var perc = (90/total)*loaded + 10;
+      showPerc(perc);
+      
+      if (loaded == total) {
+        THREE.DefaultLoadingManager.onProgress = null;
+        setTimeout(function() {
+          loading.close();
+        },1000);
+      }
+    };
+    
+    var instructionsMenu = new FloatingMenu($("#instructionsMenu"),true,$("#instructionsButton").offset());
+    var optionsMenu = new FloatingMenu($("#optionsMenu"),false,$("#optionsButton").offset());
     
     instructionsMenu.addListener({
       onOpen: function() {
@@ -245,16 +270,10 @@ require(["js/Constants","js/Field","js/Game",
     //Let us enter the game room 
     doEnter();
     
-        
-    //setup message
-    THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
-      if (loaded == total) {
-        THREE.DefaultLoadingManager.onProgress = null;
-        Status.changeStatus(Status.READY);
-      }
-    };
-    
   });
+  
+  
+  
   //setup simulators
   var created = 0;
   var creator = setInterval(function() {
