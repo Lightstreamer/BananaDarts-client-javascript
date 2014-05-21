@@ -96,22 +96,32 @@ require(["js/Constants","js/Field","js/Game",
   instructionsMenu.addListener({
     onOpen: function() {
       optionsMenu.close();
-      grey.open();
-    },
-    onClose: function() {
-      grey.close();
     }
   });
   
   optionsMenu.addListener({
     onOpen: function() {
       instructionsMenu.close();
-      grey.open();
-    },
-    onClose: function() {
-      grey.close();
     }
   });
+  
+  var menusListener = {
+      onOpen: function() {
+        grey.open();
+        controls.enableMouse(false);
+        controls.enableLeap(false);
+      },
+      
+      onClose: function() {
+        grey.close();
+        controls.enableMouse(options.getMouse());
+        controls.enableLeap(options.getLeap());
+      }
+  };
+  
+  instructionsMenu.addListener(menusListener);
+  optionsMenu.addListener(menusListener);
+  
   
   $("#instructionsButton").click(function() {
     instructionsMenu.toggle();
