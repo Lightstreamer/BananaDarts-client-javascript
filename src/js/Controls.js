@@ -13,7 +13,8 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["./LeapMotion","./Mouse","./Constants"], function(LeapMotion,Mouse,Constants) {
+define(["./LeapMotion","./Mouse","./Constants","./Status"], 
+    function(LeapMotion,Mouse,Constants,Status) {
 
   var fixedZ = Constants.MAX_SIZE.z-Constants.ARM_REACH/2+Constants.GO_LINE;
   
@@ -22,6 +23,8 @@ define(["./LeapMotion","./Mouse","./Constants"], function(LeapMotion,Mouse,Const
     
     this.leapEnabled = false;
     LeapMotion.addListener(this);
+    this.leapReady = LeapMotion.isReady();
+    
     
     this.mouseEnabled = false;
     Mouse.addListener(this);
@@ -106,15 +109,15 @@ define(["./LeapMotion","./Mouse","./Constants"], function(LeapMotion,Mouse,Const
       
       enableLeap: function(enable) {
         this.leapEnabled = enable;
+        Status.changeStatus(this.leapReady || !enable ? Status.OK : Status.WAIT_LEAP);
       },
       
       //LeapMotion listener
       
       onReady: function(ready) {
-        if (ready) {
-          //TODO ?
-        } else {
-          //TODO ?
+        this.leapReady = ready;
+        if (this.leapEnabled) {
+          Status.changeStatus(ready ? Status.OK : Status.WAIT_LEAP);
         }
       },
       

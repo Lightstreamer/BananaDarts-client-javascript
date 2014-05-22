@@ -18,6 +18,11 @@ define(["./FloatingMenu","./Constants"],
         floatingWin.open();
       }
       
+      if (this.status == this.NOT_COMPATIBLE) {
+        //don't move from there
+        return;
+      }
+      
       $(this.status).hide();
       $(next).show();
       this.status = next;
