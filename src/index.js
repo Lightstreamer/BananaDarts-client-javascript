@@ -101,7 +101,7 @@ require(["js/Constants","js/Field","js/Game",
   });
   
   var instructionsMenu = new FloatingMenu($("#instructionsMenu"),{
-    startOpen: true,
+    startOpen: options.getInstructionsOpen(),
     closedPosition: $("#instructionsButton"),
     effect: FloatingMenu.WIDTH_HEIGHT_EFFECT,
     button: $("#instructionsButton")
@@ -114,25 +114,20 @@ require(["js/Constants","js/Field","js/Game",
   });
       
   var grey = new FloatingMenu($("#grey"),{
-    startOpen: true,
+    startOpen: options.getInstructionsOpen(),
     openPosition: {right: 0, bottom: 0, left: 0, top: 0},
     zIndex: Constants.FLOATING_Z_INDEX.MIN,
     effect: FloatingMenu.OPACITY_EFFECT,
     openOpacity: 0.7
   });
   
-
-  loading.addListener({
-    onClose: function() {
-      communicateMenu.open();
-      instructionsMenu.open();
-    }
-  });
-
-  
   instructionsMenu.addListener({
     onOpen: function() {
       optionsMenu.close();
+      options.setInstructionsOpen(true);
+    },
+    onClose: function() {
+      options.setInstructionsOpen(false);
     }
   });
   
@@ -164,6 +159,16 @@ require(["js/Constants","js/Field","js/Game",
   });
   $("#optionsClose").click(function() {
     optionsMenu.close();
+  });
+  $("#grey").click(function(){
+    instructionsMenu.close();
+    optionsMenu.close();
+  });
+  $(document).keyup(function(e) {
+    if (e.keyCode == 27) {
+      instructionsMenu.close();
+      optionsMenu.close();
+    }   
   });
   
   

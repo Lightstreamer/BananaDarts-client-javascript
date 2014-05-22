@@ -29,7 +29,8 @@ define(["./Constants"],function(Constants) {
                      "autoCamera",
                      "showNicks",
                      "mouse",
-                     "leap"
+                     "leap",
+                     "instructionsOpen"
                      ];
   
   var Options = function() {
@@ -40,6 +41,7 @@ define(["./Constants"],function(Constants) {
     this.leap = false;
     this.mouse = true;
     this.audio = typeof Audio != "undefined";
+    this.instructionsOpen = true;
     this.load();
     
   };
@@ -127,6 +129,15 @@ define(["./Constants"],function(Constants) {
       toggleMouse: function() {
         this.setMouse(!this.mouse);
       },
+      
+      setInstructionsOpen: function(instructionsOpen) {
+        this.instructionsOpen = instructionsOpen;
+        this.save("instructionsOpen");
+      },
+      getInstructionsOpen: function() {
+        return this.instructionsOpen;
+      },
+      
       
       save: function(what) {
         if (CAN_SAVE) {
