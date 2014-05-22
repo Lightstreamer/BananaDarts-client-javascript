@@ -19,8 +19,8 @@ define(["Inheritance","EventDispatcher","./Constants"],
   /*
   {
     startOpen: true|false,
-    closedPosition: {left: Number, top: Number},
-    openPosition: {left: Number, top: Number},
+    closedPosition: {left: Number, top: Number} | jQuery,
+    openPosition: {left: Number, top: Number} | jQuery,
     zIndex: Number,
     effect: Constant,
     button: jQuery,
@@ -133,7 +133,11 @@ define(["Inheritance","EventDispatcher","./Constants"],
     },
     
     moveElementByObj: function(obj) {
-      this.moveElement(obj.left,obj.top,obj.right,obj.bottom);
+      if (obj.offset) {
+        this.moveElementByObj(obj.offset());
+      } else {
+        this.moveElement(obj.left,obj.top,obj.right,obj.bottom);
+      }
     },
     
     open: function() {
