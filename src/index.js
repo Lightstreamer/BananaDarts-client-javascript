@@ -31,8 +31,12 @@ require(["js/Constants","js/Field","js/Game",
         FloatingMenu,Status,Utils) {
   
   //all required js loaded
-  addPerc(20);
-  var loading = new FloatingMenu($("#loading"),true,null,null,Constants.FLOATING_Z_INDEX.MAX);
+  addPerc(18);
+  var loading = new FloatingMenu($("#loading"),{
+    startOpen: true,
+    zIndex: Constants.FLOATING_Z_INDEX.MAX,
+  });
+
   THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
     var perc = (50/total)*loaded + 50;
     showPerc(perc);
@@ -83,15 +87,46 @@ require(["js/Constants","js/Field","js/Game",
   
   //bind to UI
   
+  var cmButtonOffset = $("#communicateButton").offset();
+  var cmLeft = cmButtonOffset.left - $("#communicateMenu").outerWidth() - 10;
   
-  var communicateMenu = new FloatingMenu($("#communicateMenu"),true,$("#communicateButton").offset(),{left:window.innerWidth-500,top:300},Constants.FLOATING_Z_INDEX.MIDDLE);
-  $("#communicateButton").click(function() {
-    communicateMenu.toggle();
+  var communicateMenu = new FloatingMenu($("#communicateMenu"),{
+    startOpen: true,
+    closedPosition: cmButtonOffset,
+    openPosition: {left: cmLeft, top: cmButtonOffset.top} ,
+    zIndex: Constants.FLOATING_Z_INDEX.MIDDLE,
+    effect: FloatingMenu.WIDTH_EFFECT,
+    button: $("#communicateButton")
   });
   
-  var instructionsMenu = new FloatingMenu($("#instructionsMenu"),true,$("#instructionsButton").offset());
-  var optionsMenu = new FloatingMenu($("#optionsMenu"),false,$("#optionsButton").offset());
-  var grey = new FloatingMenu($("#grey"),true,null,null,Constants.FLOATING_Z_INDEX.MIN);
+  var instructionsMenu = new FloatingMenu($("#instructionsMenu"),{
+    startOpen: true,
+    closedPosition: $("#instructionsButton").offset(),
+    effect: FloatingMenu.WIDTH_HEIGHT_EFFECT,
+    button: $("#instructionsButton")
+  });
+  
+  var optionsMenu = new FloatingMenu($("#optionsMenu"),{
+    closedPosition: $("#optionsButton").offset(),
+    effect: FloatingMenu.WIDTH_HEIGHT_EFFECT,
+    button: $("#optionsButton")
+  });
+      
+  var grey = new FloatingMenu($("#grey"),{
+    startOpen: true,
+    zIndex: Constants.FLOATING_Z_INDEX.MIN,
+    effect: FloatingMenu.OPACITY_EFFECT,
+    openOpacity: 0.7,
+  });
+  
+
+  loading.addListener({
+    onClose: function() {
+      communicateMenu.open();
+      instructionsMenu.open();
+    }
+  });
+
   
   instructionsMenu.addListener({
     onOpen: function() {
@@ -105,6 +140,8 @@ require(["js/Constants","js/Field","js/Game",
     }
   });
   
+  
+  controls.disable("menu");
   var menusListener = {
       onOpen: function() {
         grey.open();
@@ -120,13 +157,6 @@ require(["js/Constants","js/Field","js/Game",
   instructionsMenu.addListener(menusListener);
   optionsMenu.addListener(menusListener);
   
-  
-  $("#instructionsButton").click(function() {
-    instructionsMenu.toggle();
-  });
-  $("#optionsButton").click(function() {
-    optionsMenu.toggle();
-  });
   
   
   //paging handling
@@ -299,6 +329,8 @@ require(["js/Constants","js/Field","js/Game",
     new Simulator(game,created == 1);
   },100);
   
+  
+  addPerc(2);
   
 });
 

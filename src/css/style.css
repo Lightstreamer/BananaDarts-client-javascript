@@ -201,7 +201,7 @@ th {
   top: 174px; /* 116 + 48 + 10 */
 }
 #communicateMenu, #communicateButton {
-  top: 232px; /* 174 + 48 + 10 */
+  bottom: 25px; 
 }
 
 #instructionsButton, #optionsButton, #communicateButton, #instructionsMenu, #optionsMenu,  #communicateMenu {
@@ -351,7 +351,7 @@ th {
   opacity: 0.9;
   background-color: grey;
   display: none;
-  
+  transition: all 1s ease;
 }
 
 /* Switch - MIT License - http://www.cssflow.com/snippets/simple-toggle-switch/demo */

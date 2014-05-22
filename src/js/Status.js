@@ -1,7 +1,9 @@
 define(["./FloatingMenu","./Constants"],
     function(FloatingMenu,Constants) {
 
-  var floatingWin = new FloatingMenu($("#statusMenu"),false,null,null,Constants.FLOATING_Z_INDEX.MAX);
+  var floatingWin = new FloatingMenu($("#statusMenu"),{
+    zIndex: Constants.FLOATING_Z_INDEX.MAX
+  });
   
   
   var Status = {

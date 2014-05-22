@@ -16,24 +16,43 @@ Copyright 2014 Weswit s.r.l.
 define(["Inheritance","EventDispatcher","./Constants"],
     function(Inheritance,EventDispatcher,Constants) {
   
-  var FloatingMenu = function(element,isOpen,closedPosition,openPosition,zIndex) {
+  /*
+  {
+    startOpen: true|false,
+    closedPosition: {left: Number, top: Number},
+    openPosition: {left: Number, top: Number},
+    zIndex: Number,
+    effect: Constant,
+    button: jQuery,
+    openOpacity: Number
+  }
+  */
+  
+  var FloatingMenu = function(element,conf) {
     this.initDispatcher();
     this.useSynchEvents(true);
+    
+    this.element = element;
+    
+    this.currentlyOpen = conf.startOpen || false;
+    this.effect = conf.effect || FloatingMenu.NO_EFFECT;
+    this.closedPosition = conf.closedPosition || null;
+    this.openPosition = conf.openPosition || null;
+    this.zIndex = conf.zIndex || Constants.FLOATING_Z_INDEX.STANDARD;
+    this.button = conf.button || null;
+    this.openOpacity = conf.openOpacity || 0.9;
     
     this.zoom = 1;
     this.originalHeight = 0;
     this.originalWidth = 0;
-    this.element = element;
     
-    this.currentlyOpen = isOpen;
-   
-    this.closedPosition = closedPosition;
-    this.openPosition = openPosition;
-    
-    this.zIndex = zIndex || Constants.FLOATING_Z_INDEX.STANDARD;
-    
-    this.setup(isOpen);
+    this.setup(this.currentlyOpen);
   };
+  
+  FloatingMenu.WIDTH_HEIGHT_EFFECT = 1;
+  FloatingMenu.OPACITY_EFFECT = 2;
+  FloatingMenu.WIDTH_EFFECT = 3;
+  FloatingMenu.NO_EFFECT = 4;
   
   
   FloatingMenu.prototype = {
@@ -67,6 +86,12 @@ define(["Inheritance","EventDispatcher","./Constants"],
       $(window).resize(function() {
         that.onResize();
       });
+      
+      if (this.button) {
+        this.button.click(function() {
+          that.toggle();
+        });
+      }
       
     },
       
@@ -106,9 +131,17 @@ define(["Inheritance","EventDispatcher","./Constants"],
     },
     
     open: function() {
-      this.element.css("height",this.originalHeight*this.zoom);
-      this.element.css("width",this.originalWidth*this.zoom);
-     
+      if (this.effect == FloatingMenu.WIDTH_HEIGHT_EFFECT) {
+        this.element.css("height",this.originalHeight*this.zoom);
+        this.element.css("width",this.originalWidth*this.zoom);
+      } else if (this.effect == FloatingMenu.WIDTH_EFFECT) {
+        this.element.css("width",this.originalWidth*this.zoom);
+      } else if (this.effect == FloatingMenu.OPACITY_EFFECT) {
+        this.element.css("opacity",this.openOpacity);
+      } else {
+        this.element.css("display","block");
+      }
+      
       if (this.openPosition) {
         this.moveElement(this.openPosition.left, this.openPosition.top);
       } else {
@@ -123,9 +156,17 @@ define(["Inheritance","EventDispatcher","./Constants"],
     
     close: function() {
       this.element.css("overflow","hidden");
-      this.element.css("height",0);
-      this.element.css("width",0);
       
+      if (this.effect == FloatingMenu.WIDTH_HEIGHT_EFFECT) {
+        this.element.css("height",0);
+        this.element.css("width",0);
+      } else if (this.effect == FloatingMenu.WIDTH_EFFECT) {
+        this.element.css("width",0);
+      } else if (this.effect == FloatingMenu.OPACITY_EFFECT) {
+        this.element.css("opacity",0);
+      } else {
+        this.element.css("display","none");
+      }
       
       if (this.closedPosition) {
         this.moveElement(this.closedPosition.left, this.closedPosition.top);
