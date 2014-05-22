@@ -47,7 +47,7 @@ define(["Inheritance","EventDispatcher","./Constants"],
   Mouse.prototype = {
     setupListeners: function() {
       var that = this;
-      $("#theWorld").mousemove(function(event) {
+      $(window).mousemove(function(event) {
         that.mousePosChange(event.pageX,event.pageY);
       }).mousedown(function(event) {
         that.mouseClickChange(true);
