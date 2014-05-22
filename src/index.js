@@ -35,6 +35,7 @@ require(["js/Constants","js/Field","js/Game",
   var loading = new FloatingMenu($("#loading"),{
     startOpen: true,
     zIndex: Constants.FLOATING_Z_INDEX.MAX,
+    openPosition: {right: 0, bottom: 0, left: 0, top: 0}
   });
 
   THREE.DefaultLoadingManager.onProgress = function ( item, loaded, total ) {
@@ -56,7 +57,7 @@ require(["js/Constants","js/Field","js/Game",
   //setup game
   var field = null;
   try {
-    field = new Field($("#theWorld")[0]);
+    field = new Field($("#theWorld")[0],$(".hideWhileFlying"));
   } catch(e) {
     Status.changeStatus(Status.NOT_COMPATIBLE);
     return;
@@ -87,13 +88,13 @@ require(["js/Constants","js/Field","js/Game",
   
   //bind to UI
   
-  var cmButtonOffset = $("#communicateButton").offset();
-  var cmLeft = cmButtonOffset.left - $("#communicateMenu").outerWidth() - 10;
+  var cmBottom = $("#communicateButton").css("bottom").replace("px","") - $("#communicateMenu").outerHeight()/4;
+  var cmRight = $("#communicateButton").outerWidth() + 20;
   
   var communicateMenu = new FloatingMenu($("#communicateMenu"),{
     startOpen: true,
-    closedPosition: cmButtonOffset,
-    openPosition: {left: cmLeft, top: cmButtonOffset.top} ,
+    closedPosition: {right: cmRight, bottom: cmBottom},
+    openPosition: {right: cmRight, bottom: cmBottom} ,
     zIndex: Constants.FLOATING_Z_INDEX.MIDDLE,
     effect: FloatingMenu.WIDTH_EFFECT,
     button: $("#communicateButton")
@@ -101,22 +102,23 @@ require(["js/Constants","js/Field","js/Game",
   
   var instructionsMenu = new FloatingMenu($("#instructionsMenu"),{
     startOpen: true,
-    closedPosition: $("#instructionsButton").offset(),
+    closedPosition: $("#instructionsButton"),
     effect: FloatingMenu.WIDTH_HEIGHT_EFFECT,
     button: $("#instructionsButton")
   });
   
   var optionsMenu = new FloatingMenu($("#optionsMenu"),{
-    closedPosition: $("#optionsButton").offset(),
+    closedPosition: $("#optionsButton"),
     effect: FloatingMenu.WIDTH_HEIGHT_EFFECT,
     button: $("#optionsButton")
   });
       
   var grey = new FloatingMenu($("#grey"),{
     startOpen: true,
+    openPosition: {right: 0, bottom: 0, left: 0, top: 0},
     zIndex: Constants.FLOATING_Z_INDEX.MIN,
     effect: FloatingMenu.OPACITY_EFFECT,
-    openOpacity: 0.7,
+    openOpacity: 0.7
   });
   
 
