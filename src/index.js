@@ -108,14 +108,12 @@ require(["js/Constants","js/Field","js/Game",
   var menusListener = {
       onOpen: function() {
         grey.open();
-        controls.enableMouse(false);
-        controls.enableLeap(false);
+        controls.disable("menu");
       },
       
       onClose: function() {
         grey.close();
-        controls.enableMouse(options.getMouse());
-        controls.enableLeap(options.getLeap());
+        controls.enable("menu");
       }
   };
   
@@ -165,18 +163,18 @@ require(["js/Constants","js/Field","js/Game",
   });
   
   $(window).keyup(function(e) { 
-    if (e.which == 17) {
+    if (e.which == Constants.CAMERA_KEY) { 
       field.blockOrbit(true);
-      controls.enableMouse(options.getMouse());
+      controls.enable("camera");
     }
   }).keydown(function(e) { 
-    if (e.which == 17) {
+    if (e.which == Constants.CAMERA_KEY) {
       field.blockOrbit(false);
-      controls.enableMouse(false);
+      controls.disable("camera");
     }
   }).focus(function() {
     field.blockOrbit(true);
-    controls.enableMouse(options.getMouse());
+    controls.enable("camera");
   });
   
   

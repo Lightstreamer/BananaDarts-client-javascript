@@ -26,12 +26,29 @@ define(["./LeapMotion","./Mouse","./Constants"], function(LeapMotion,Mouse,Const
     this.mouseEnabled = false;
     Mouse.addListener(this);
     
+    this.disableKeys = {};
+    this.allDisabled = 0;
+    
     this.mouseClickTime = null;
     
     
   };
   
   Controls.prototype = {
+      
+      disable: function(key) {
+        if (!this.disableKeys[key]) {
+          this.disableKeys[key] = true;
+          this.allDisabled++;
+        }
+      },
+      
+      enable: function(key) {
+        if (this.disableKeys[key]) {
+          delete(this.disableKeys[key]);
+          this.allDisabled--;
+        }
+      },
       
       //MOUSE
       
@@ -46,7 +63,7 @@ define(["./LeapMotion","./Mouse","./Constants"], function(LeapMotion,Mouse,Const
       //Mouse listener
       
       onMouseChange: function(holdingClick,posX,posY) {
-        if (!this.mouseEnabled) {
+        if (!this.mouseEnabled || this.allDisabled > 0) {
           return;
         }
         
@@ -102,7 +119,7 @@ define(["./LeapMotion","./Mouse","./Constants"], function(LeapMotion,Mouse,Const
       },
       
       onFistMove: function(x,y,z,sx,sy,sz) {
-        if (!this.leapEnabled) {
+        if (!this.leapEnabled || this.allDisabled > 0) {
           return;
         }
         if (z <= Constants.MAX_SIZE.z-Constants.ARM_REACH+Constants.GO_LINE) {

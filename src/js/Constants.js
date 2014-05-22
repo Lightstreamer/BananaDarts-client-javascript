@@ -63,6 +63,7 @@ define(["./Utils"],function(Utils) {
     INITIAL_CAMERA_POS_Z: (Utils.cmToUnit(280)+SIZE_Z/2),
     INITIAL_CAMERA_POS_X: Utils.cmToUnit(40),
     MAX_MOVE_CAMERA_STEP: 60,
+    CAMERA_KEY: 17,
     
     LEAP_PADDING: {
       x: 10,
@@ -91,10 +92,13 @@ define(["./Utils"],function(Utils) {
     MIN_SPEED: -200,
     
     FLOATING_Z_INDEX: {
-      MAX: 12,
-      MIDDLE: 11,
+      //renderer is 1
+      //world is 2
+      MIN: 8,
+      //icons are 9
       STANDARD: 10,
-      MIN: 8
+      MIDDLE: 11,
+      MAX: 12
     },
     
     ROOM: "dart",
