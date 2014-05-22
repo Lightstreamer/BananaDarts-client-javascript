@@ -209,15 +209,18 @@ require(["js/Constants","js/Field","js/Game",
   $(window).keyup(function(e) { 
     if (e.which == Constants.CAMERA_KEY) { 
       field.blockOrbit(true);
+      $("#grey").show();
       controls.enable("camera");
     }
   }).keydown(function(e) { 
     if (e.which == Constants.CAMERA_KEY) {
       field.blockOrbit(false);
+      $("#grey").hide();
       controls.disable("camera");
     }
   }).focus(function() {
     field.blockOrbit(true);
+    $("#grey").show();
     controls.enable("camera");
   });
   

@@ -358,13 +358,17 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       },
       
       enableOrbit: function(enabled) {
-        this.orbitEnabled = enabled;
-        this.applyOrbitSettings();
+        if (enabled != this.orbitEnabled) {
+          this.orbitEnabled = enabled;
+          this.applyOrbitSettings();
+        }
       },
       
       blockOrbit: function(blocked) {
-        this.orbitBlocked = blocked;
-        this.applyOrbitSettings();
+        if (blocked != this.orbitBlocked) {
+          this.orbitBlocked = blocked;
+          this.applyOrbitSettings();
+        }
       },
       
       applyOrbitSettings: function() {
