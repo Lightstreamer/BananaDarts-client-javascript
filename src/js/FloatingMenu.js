@@ -75,7 +75,7 @@ define(["Inheritance","EventDispatcher","./Constants"],
         this.open();
       }
       
-      this.onResize();
+        this.onResize();
       this.element.css("z-index",this.zIndex);
       
       this.element.on("transitionend",function() {
@@ -87,7 +87,7 @@ define(["Inheritance","EventDispatcher","./Constants"],
         that.onResize();
       });
       
-      if (this.button) {
+            if (this.button) {
         this.button.click(function() {
           that.toggle();
         });
@@ -125,9 +125,15 @@ define(["Inheritance","EventDispatcher","./Constants"],
       
     },
     
-    moveElement: function(left,top) {
-      this.element.css("left",left);
-      this.element.css("top",top);
+    moveElement: function(left,top,right,bottom) {
+      this.element.css("left",left||"");
+      this.element.css("top",top||"");
+      this.element.css("right",right||"");
+      this.element.css("bottom",bottom||"");
+    },
+    
+    moveElementByObj: function(obj) {
+      this.moveElement(obj.left,obj.top,obj.right,obj.bottom);
     },
     
     open: function() {
@@ -143,7 +149,7 @@ define(["Inheritance","EventDispatcher","./Constants"],
       }
       
       if (this.openPosition) {
-        this.moveElement(this.openPosition.left, this.openPosition.top);
+        this.moveElementByObj(this.openPosition);
       } else {
         this.centerElement();
       }
@@ -169,7 +175,7 @@ define(["Inheritance","EventDispatcher","./Constants"],
       }
       
       if (this.closedPosition) {
-        this.moveElement(this.closedPosition.left, this.closedPosition.top);
+        this.moveElementByObj(this.closedPosition);
       }
       
       if (this.currentlyOpen) {
