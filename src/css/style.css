@@ -229,7 +229,9 @@ th {
   -ms-user-select: none;
 }
 
-
+.close {
+  float: right;
+}
 
 /* Communicate */
 
@@ -311,11 +313,11 @@ th {
 .checked:hover {
   background-image: url(../images/checkhover.png);
 }
-#optionsMenu .button {
+#options .button {
   margin-top: 2px;
   padding-top:2px;
 }
-#optionsMenu .button:hover {
+#options .button:hover {
   background-color: #f9dc0b;
   color: #0083cb;
   border-radius: 8px;

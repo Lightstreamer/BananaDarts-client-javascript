@@ -157,6 +157,12 @@ require(["js/Constants","js/Field","js/Game",
   instructionsMenu.addListener(menusListener);
   optionsMenu.addListener(menusListener);
   
+  $("#instructionsClose").click(function() {
+    instructionsMenu.close();
+  });
+  $("#optionsClose").click(function() {
+    optionsMenu.close();
+  });
   
   
   //paging handling
