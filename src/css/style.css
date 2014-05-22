@@ -20,6 +20,11 @@ body {
   font-family: 'helvetica neue', Helvetica, Arial;
   margin: 0;
   overflow: hidden;
+  -moz-user-select: -moz-none;
+  -khtml-user-select: none;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 .row, .col { 
   overflow: hidden; 
@@ -39,11 +44,6 @@ body {
 }
 .button {
   cursor:pointer;
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-  user-select: none;
 }
 .whole {
   border: 0;
@@ -98,13 +98,6 @@ body {
   background-size: contain;
   font-family: 'Cabin Sketch';
   font-size: 30px;
-  
-  user-select: none;
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
-
 }
 
 /* Scoreboard */
@@ -221,12 +214,6 @@ th {
   color: #f9dc0b;
   overflow: hidden;
   white-space: nowrap;
-  
-  user-select: none;
-  -moz-user-select: -moz-none;
-  -khtml-user-select: none;
-  -webkit-user-select: none;
-  -ms-user-select: none;
 }
 
 .close {
