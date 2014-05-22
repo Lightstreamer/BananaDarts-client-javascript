@@ -52,6 +52,8 @@ define(["./Utils"],function(Utils) {
     BOARD_DIAMETER: 200,
     BOARD_THICKNESS: 10,
     
+    BLACK_BOARD_THICKNESS: 15,
+    
     MAX_SIZE: {
      x:SIZE_X/2,
      y:SIZE_Y/2,

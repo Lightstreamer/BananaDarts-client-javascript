@@ -36,13 +36,27 @@ define(["DynaGrid","./Constants","Inheritance"],
     //get its size and center it in the top right corner
     var rect = element.getBoundingClientRect();
     
-    var z = -Constants.MAX_SIZE.z+10;
+    var z = -Constants.MAX_SIZE.z+Constants.BLACK_BOARD_THICKNESS;
     var x = Constants.MAX_SIZE.x-rect.width/2 - 50;
     var y = Constants.MAX_SIZE.y-rect.height/2 - 380;
     cssObject.position.set(x,y,z);
     
-    
     field.addCSSObject(cssObject);
+    
+    
+    
+    var blackBoardGeometry = new THREE.CubeGeometry(rect.width,rect.height,Constants.BLACK_BOARD_THICKNESS);
+    
+    /*var blackBoardMaterial = new THREE.MeshLambertMaterial({color: "#341f0b"});
+    var blackBoard = new THREE.Mesh(blackBoardGeometry,blackBoardMaterial);
+    blackBoard.position.set(x,y,-Constants.MAX_SIZE.z+Constants.BLACK_BOARD_THICKNESS/2);
+    field.addObject(blackBoard);*/
+    
+    var blackBoardMaterialTransparent = new THREE.MeshLambertMaterial({color: "#341f0b", opacity: 0, transparent: true});
+    var blackBoardTransparent = new THREE.Mesh(blackBoardGeometry,blackBoardMaterialTransparent);
+    blackBoardTransparent.position.set(x,y,-Constants.MAX_SIZE.z+Constants.BLACK_BOARD_THICKNESS);
+    blackBoardTransparent.castShadow = true;
+    field.addObject(blackBoardTransparent);
    
   };
   
