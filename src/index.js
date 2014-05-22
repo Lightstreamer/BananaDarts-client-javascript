@@ -137,8 +137,9 @@ require(["js/Constants","js/Field","js/Game",
     }
   });
   
-  
-  controls.disable("menu");
+  if (options.getInstructionsOpen()) {
+    controls.disable("menu");
+  }
   var menusListener = {
       onOpen: function() {
         grey.open();
