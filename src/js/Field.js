@@ -19,9 +19,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   var SEE_THROUGH_MATERIAL = new THREE.MeshBasicMaterial({color: "black",  blending: THREE.NoBlending, opacity:0});
   
   
-  var Field = function(htmlEl) {
+  var Field = function(htmlEl,toHideWhileFlying) {
      
     this.htmlEl = htmlEl;
+    this.toHideWhileFlying = toHideWhileFlying;
     
     this.scene = new THREE.Scene();
     this.cssScene = new THREE.Scene();
@@ -401,9 +402,9 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       
       hideMenu: function(hide) {
         if (hide) {
-          $(".hideWhileFlying").hide();
+          this.toHideWhileFlying.hide();
         } else {
-          $(".hideWhileFlying").show();
+          this.toHideWhileFlying.show();
         }
       }
   };
