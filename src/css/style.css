@@ -201,7 +201,7 @@ th {
   top: 174px; /* 116 + 48 + 10 */
 }
 #communicateMenu, #communicateButton {
-  bottom: 25px; 
+  bottom: 125px; 
 }
 
 #instructionsButton, #optionsButton, #communicateButton, #instructionsMenu, #optionsMenu,  #communicateMenu {
@@ -239,6 +239,8 @@ th {
   transition: all 1s ease;
   opacity: 0.8;
   border-radius: 8px;
+  height: 100px;
+  width: 300px;
 }
 
 #communicateMenu:hover {
@@ -248,15 +250,22 @@ th {
 .inputDiv {
   text-align: center;
 }
+.inputDiv div {
+  margin: 10px;
+}
+#nick {
+  width: 130px;
+}
+#chatMessage {
+  width: 150px;
+}
 .inputDiv input {
   background-color: #f6e994;
   color: #0083cb;
   border-radius: 5px;
   font-size: 12px;
-  width: 40%;
 }
 #sendChat {
-  position: absolute;
   width: 2em;
   height:2em;
   vertical-align: middle;
