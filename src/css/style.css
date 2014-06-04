@@ -208,6 +208,10 @@ th {
   display: none;
   border-radius: 8px;
 }
+ 
+#instructionsMenu .row, #optionsMenu .row {
+ margin: 3px 10px 10px 10px;
+}
 
 .floatingMenu {
   background-color: #0083cb;
@@ -270,25 +274,11 @@ th {
   padding:1px;
 }
 
-#instructionsMenu a:hover {
-  background-color: #f9dc0b;
-  color: #0083cb;
-  border-radius: 8px;
-}
-
 .leapInstructions  {
   display: none;
 }
 
-#linksRow {
-  font-size: 10px;
-  padding-top: 10px;
-}
-#linksRow div {
-  padding: 0 20px;
-  float: right;
-}
-#linksRow img {
+.linksRow img {
   height: 15px;
   vertical-align: middle;
   margin-top: -1px;
@@ -298,7 +288,7 @@ th {
 /* Options */
 
 #optionsMenu {
-
+  
 }
 
 .checked {
@@ -312,6 +302,7 @@ th {
 #options .button {
   margin-top: 2px;
   padding-top:2px;
+  padding-right: 30px;
 }
 #options .button:hover {
   background-color: #f9dc0b;
