@@ -34,6 +34,7 @@ define(["Inheritance","EventDispatcher","./Constants"],
     
     this.element = element;
     
+    conf = conf || {};
     this.currentlyOpen = conf.startOpen || false;
     this.effect = conf.effect || FloatingMenu.NO_EFFECT;
     this.closedPosition = conf.closedPosition || null;
