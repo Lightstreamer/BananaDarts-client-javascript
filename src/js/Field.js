@@ -19,9 +19,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   var SEE_THROUGH_MATERIAL = new THREE.MeshBasicMaterial({color: "black",  blending: THREE.NoBlending, opacity:0});
   
   
-  var Field = function(htmlEl) {
+  var Field = function(htmlEl,toHideWhileFlying) {
      
     this.htmlEl = htmlEl;
+    this.toHideWhileFlying = toHideWhileFlying;
     
     this.scene = new THREE.Scene();
     this.cssScene = new THREE.Scene();
@@ -32,6 +33,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
     this.cssRenderer = null;
     this.camera = null;
     this.controls = null;
+    this.orbitBlocked = true;
+    this.orbitEnabled = true;
     
     
     this.setupRenderers(); //may throw
@@ -128,6 +131,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         this.camera = new THREE.PerspectiveCamera( 45, window.innerWidth/window.innerHeight, 0.1, 10000);
         
         this.controls = new THREE.OrbitControls(this.camera, this.htmlEl);
+        this.applyOrbitSettings();
         
         var that = this;
         this.controls.addEventListener('change', function() {
@@ -354,7 +358,21 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       },
       
       enableOrbit: function(enabled) {
-        this.controls.enabled = enabled;
+        if (enabled != this.orbitEnabled) {
+          this.orbitEnabled = enabled;
+          this.applyOrbitSettings();
+        }
+      },
+      
+      blockOrbit: function(blocked) {
+        if (blocked != this.orbitBlocked) {
+          this.orbitBlocked = blocked;
+          this.applyOrbitSettings();
+        }
+      },
+      
+      applyOrbitSettings: function() {
+        this.controls.enabled = !this.orbitBlocked && this.orbitEnabled;
       },
       
       addObject: function(obj) {
@@ -384,6 +402,14 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       removeCSSObject: function(obj) {
         this.cssScene.remove(obj);
         this.cssRender();
+      },
+      
+      hideMenu: function(hide) {
+        if (hide) {
+          this.toHideWhileFlying.hide();
+        } else {
+          this.toHideWhileFlying.show();
+        }
       }
   };
   

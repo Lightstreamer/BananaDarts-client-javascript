@@ -94,14 +94,12 @@ define(["Inheritance","EventDispatcher","./Constants"],
         this.controller.on('frame', function(frame) { 
           that.onFrame(frame);
         });
-
-        this.controller.on('ready', function() { 
+        
+        this.controller.on('streamingStarted', function() { 
           that.setReady(true);
         });
-        this.controller.on('deviceConnected', function() { 
-          that.setReady(true);
-        });
-        this.controller.on('deviceDisconnected', function() { 
+       
+        this.controller.on('streamingStopped', function() { 
           that.setReady(false);
         });
       },

@@ -23,108 +23,82 @@
     
     <meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
   
+    <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:bold&v1' rel='stylesheet' type='text/css'>
     <link rel="stylesheet" type="text/css" href="css/style.css" />
-
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js"></script>
+    
     <script src="http://code.jquery.com/jquery-2.0.3.min.js"></script>
-    <script src="http://js.leapmotion.com/0.3.0-beta2/leap.js"></script>
     
-    <script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r61/three.min.js"></script> <!--  upgrading to 66 breaks the css panels -->
-    <script src="js/CSS3DRenderer.js"></script> <!--  https://github.com/mrdoob/three.js/blob/master/examples/js/renderers/CSS3DRenderer.js -->
-    <script src="js/droid_sans_bold.typeface.js"></script> <!--  https://github.com/mrdoob/three.js/blob/master/examples/fonts/droid/droid_sans_bold.typeface.js  -->
-    <script src="js/MTLLoader.js"></script> <!--  https://github.com/mrdoob/three.js/blob/master/examples/js/loaders/MTLLoader.js -->
-    <script src="js/OBJMTLLoader.js"></script> <!-- https://github.com/mrdoob/three.js/blob/master/examples/js/loaders/OBJMTLLoader.js -->
-    <script src="js/OrbitControls.js"></script> <!-- https://github.com/mrdoob/three.js/blob/master/examples/js/controls/OrbitControls.js -->
-    
-    <script src="http://demos.lightstreamer.com/commons/lightstreamer.js"></script>
-    
-    <!-- link rel="stylesheet" type="text/css" href="css/stats.css" /-->
-    <!-- script src="js/threex.rendererstats.js"></script -->
-    <!-- script src="js/stats.min.js"></script -->
-    
-    <script src="index.js"></script>
   </head>
   <body>
-    
   
-    <div class="whole">
-      <a href="https://github.com/Weswit/BananaDarts-client-javascript"><img class="github" src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png" alt="Fork me on GitHub"></a>
-     
-      <div id="tools">
-        <div id="tools_stuff">
-          <div class="row title">
-            <h1>Multiplayer Darts Game</h1>
-            <h2 id="waiting_leap" class="blink">&gt; Connect your <a href="https://www.leapmotion.com/" target="_blank">Leap Motion</a> device (or watch other players) &lt;</h2>
-            <h2 id="ready_leap">&gt; Leap Motion ready &lt;</h2>
-            <h2 id="not_compatible" class="blink">&gt; Your browser does not seem to support WebGL  &lt;</h2>
-            <h2 id="loading" class="blink">&gt; Loading &lt;</h2>
-          </div>
-          
-          <div class="row"> 
-            <div class="col options">
-              <div class="inputDiv">
-                <span class="label">Name:</span> <input id="nick" type="text" disabled />
-              </div>
-              <div class="inputDiv">
-                <span class="label">Shout:</span> <input id="chatMessage" type="text" disabled /><img id="sendChat" src="images/send.png" class="button"/>
-              </div>
-              
-              <div id="buttons">
-                <div id="autoCameraButton" class="button checked">
-                  Automatic camera handling
-                </div>
-                <div id="showNicksButton" class="button checked">
-                  Show names on darts
-                </div>
-                <div id="audioButton" class="button checked">
-                  Audio
-                </div>
-                
-                <div id="resetCamera" class="button">
-                  <span>Reset camera</span>
-                </div>
-                
-                <div id="resetScore" class="button">
-                  <span>Reset score</span>
-                </div>
-              </div>
-            </div>
-            
-            <div class="col gInstructions">
-              <h3>How to play</h3>
-              <p>Make a fist over the Leap Motion device, then move it forward to throw the dart (no need to open your hand).</p>
-              <p>Try to aim at the target. Move your hand faster to increase dart speed.</p>
-            </div>
-            
-            <div class="col cInstructions">
-              <h3>How to move camera</h3>
-              Using your mouse:<br/>
-              <ul>
-              <li>Left click and move to rotate</li>
-              <li>Right click and move to pan</li>
-              <li>Scroll wheel to zoom</li>
-              </ul>
-            </div>
-          </div>
-          
-          <div id="logoRow">
-            <img id="logo" src="images/logo.png" />
-          </div>
-          
-          <div class="row" id="linksRow">
-            <div class="col"><img src="images/github.png"> <a href="https://github.com/Weswit/BananaDarts-client-javascript" target="_blank">Source code on GitHub</a></div>
-            <div class="col right">Contact: <a href="mailto:support@lightstreamer.com" target="_blank">support@lightstreamer.com</a></div>          
-          </div>
-          
-        </div>  
-        <img class="button" src="images/up.png" id="tools_button">
-         
-         
+    <!-- LOADING -->
+    <style>
+      #loading {
+        position:absolute;
+        top:0;
+        left:0;
+        right:0;
+        bottom:0;
+        opacity: 0.9;
+        z-index: 11;
+        background-color: #0083cb;
+        color: #f9dc0b;
+      }
+      #loading div {
+        text-align: center;
+        margin-top: 10px;
+      }
+      #loaded {
+        width: 200px;
+        margin: auto;
+        border-radius: 8px;
+        background-image: linear-gradient(to left, #f9dc0b 100%, red 0);
+        color: #0083cb;
+      }
+    </style>
+    <script>
+      var mPerc = 0;
+      function addPerc(perc) {
+        mPerc+=perc;
+        showPerc(mPerc);
+      }
+      function showPerc(perc) {
+        perc = Math.floor(perc);
+        if (perc != 100) {
+          $("#loaded").css("background-image","linear-gradient(to left, #f9dc0b "+(100-perc)+"%, #0023cb "+(100-perc)+"%)");
+        } else {
+          $("#loaded").css("background-image","linear-gradient(to left, #f9dc0b 0, #0023cb 0)");
+        }
+        $("#loaded").text(perc+"%");
+      }
+      $(document).ready(function(){
+        addPerc(10);
+      });
+    </script>
+    <div id="loading" class="floatingMenu">
+      <div class="row">
+        <img src="images/logo.png">
       </div>
-      
+      <div id="loading_container" class="row">
+        Loading
+        <div id="loaded">0%</div>
+      </div>
+      <h2 id="not_compatible"> <a href="http://get.webgl.org/">Your browser does not seem to support WebGL</a> </h2>
+    </div>  
+    
+    <!-- STANDARD -->
+    
+    <div class="whole">
+      <a href="https://github.com/Weswit/BananaDarts-client-javascript" target="_blank"><img id="github" class="hideWhileFlying semitransparent" src="https://s3.amazonaws.com/github/ribbons/forkme_left_darkblue_121621.png" alt="Fork me on GitHub"></a>
+      <img id="logo" src="images/logo.png" class="hideWhileFlying semitransparent"/>
+      <img id="instructionsButton" class="hideWhileFlying button semitransparent" src="images/info.png"/>
+      <img id="optionsButton" class="hideWhileFlying button semitransparent" src="images/gear.png" />
+      <img id="communicateButton" class="hideWhileFlying button semitransparent" src="images/communicate.png"/>
       <div id="theWorld"></div>
     </div>
     
+    
+    <!-- SCOREBOARD -->
 
     <div id="scoreboard">
       <table>
@@ -165,14 +139,162 @@
       </table>
     </div>
     
+    <!-- STATUS -->
+    
+    <h2 id="waiting_leap" class="blink floatingMenu button"> Please connect your Leap Motion device or switch to mouse controls </h2>
+ 
+    
+    <!-- FORM -->
+    <div id="communicateMenu" class="floatingMenu hideWhileFlying">
+      <div class="row inputDiv">
+        <div>
+          <span class="label">Name:</span> <input id="nick" type="text" disabled />
+        </div>
+        <div>
+          <input id="chatMessage" type="text" placeholder="write a message" disabled /><img id="sendChat" src="images/send.png" class="button"/>
+        </div>
+      </div>
+    </div>
+    
+    <!-- CHAT -->
+    
     <div id="chat">
       <div id="chatHeader">Chat:</div>
       <div id="chatPlaceHolder">Your shouts will appear here!</div>
-      <div id="chatTemplate" data-source="lightstreamer">
+      <div id="chatTemplate" data-source="lightstreamer" class="chatTemplate">
         <span data-source="lightstreamer" data-field="nick">-</span> <span data-source="lightstreamer" data-field="message">-</span>
       </div>
     </div>
     
+    <!-- GREY -->
+    <div id="grey" class="floatingMenu"></div>
     
+    
+    <!-- INSTRUCTIONS -->
+    
+    
+    <div id="instructionsMenu" class="floatingMenu">
+      <div class="row"> 
+        <img id="instructionsClose" src="images/close.png" class="button close"/>
+      </div>
+      <div class="row centered">
+        <label class="switch row">
+          <input type="checkbox" class="switch-input" />
+          <span class="switch-label" data-on="Leap Motion" data-off="Mouse"></span>
+          <span class="switch-handle"></span>
+        </label>
+      </div>
+      
+      <div class="row">
+        <h3>How to play</h3>
+        <div class="leapInstruction">
+          <p>Make a fist over the Leap Motion device, then move it forward to throw the dart (no need to open your hand).</p>
+          <p>Try to aim at the target. Move your hand faster to increase dart speed.</p>
+        </div>
+        <div class="mouseInstruction">
+         <p>Click and hold your mouse button, then move it forward and release the button to throw the dart.</p>
+         <p>Try to aim at the target. Move the mouse  faster to increase dart speed.</p>
+        </div>
+      </div>
+        
+      <div class="row">
+        <h3>How to move camera</h3>
+        Press and hold the ctrl key on your keyboard, then using your mouse:<br/>
+        <ul>
+          <li>Left click and move to rotate</li>
+          <li>Right click and move to pan</li>
+          <li>Scroll wheel to zoom</li>
+        </ul>
+      </div>
+      
+      <div class="addthis row">
+        <h3>Sharing is caring</h3>
+        <!-- AddThis Button BEGIN -->
+        <div class="addthis_toolbox addthis_default_style addthis_32x32_style">
+        <a class="addthis_button_google_plusone_share"></a>
+        <a class="addthis_button_facebook"></a>
+        <a class="addthis_button_twitter"></a>
+        <a class="addthis_button_tumblr"></a>
+        <a class="addthis_button_pinterest_share"></a>
+        <a class="addthis_button_reddit"></a>
+        <a class="addthis_button_compact"></a>
+        </div>
+        <script type="text/javascript">var addthis_config = {"data_track_addressbar":true};</script>
+        <script type="text/javascript" src="//s7.addthis.com/js/300/addthis_widget.js#pubid=ra-538f214925c892d2"></script>
+        <!-- AddThis Button END -->
+      </div>
+      
+      <div class="row linksRow">
+        <h3>Source Code</h3>
+        <div class="row"><img src="images/github.png"> <a href="https://github.com/Weswit/BananaDarts-client-javascript" target="_blank">Client side</a></div>
+        <div class="row"><img src="images/github.png"> <a href="https://github.com/Weswit/BananaDarts-adapter-java" target="_blank">Server side</a></div>
+      </div>
+      
+      <div class="row">
+        <h3>Contact</h3>
+      
+        <div class="row"><a href="mailto:support@lightstreamer.com" target="_blank">support@lightstreamer.com</a></div>          
+      </div>
+    </div>
+    
+    
+    <!-- OPTIONS -->
+    
+    
+    <div id="optionsMenu" class="floatingMenu">
+      <div class="row">
+        <img id="optionsClose" src="images/close.png" class="button close" />
+      </div>
+      
+      <div class="row centered">
+        <label class="switch row">
+          <input type="checkbox" class="switch-input" />
+          <span class="switch-label" data-on="Leap Motion" data-off="Mouse"></span>
+          <span class="switch-handle"></span>
+        </label>
+      </div>
+    
+      <div class="row"><h3>Options</h3></div>            
+      <div id="options" class="row">
+        <div id="buttons">
+          <div id="autoCameraButton" class="button checked">
+            Automatic camera handling
+          </div>
+          <div id="showNicksButton" class="button checked">
+            Show names on darts
+          </div>
+          <div id="audioButton" class="button checked">
+            Audio
+          </div>
+          
+          <div id="resetCamera" class="button">
+            <span>Reset camera</span>
+          </div>
+          
+          <div id="resetScore" class="button">
+            <span>Reset score</span>
+          </div>
+          
+        </div>
+      </div>
+    </div>
+    
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js"></script>
+    <script src="http://js.leapmotion.com/leap-0.6.0.min.js"></script>
+    
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r61/three.min.js"></script> <!--  upgrading to 66 breaks the css panels -->
+    <script src="js/CSS3DRenderer.js"></script> <!--  https://github.com/mrdoob/three.js/blob/master/examples/js/renderers/CSS3DRenderer.js -->
+    <script src="js/droid_sans_bold.typeface.js"></script> <!--  https://github.com/mrdoob/three.js/blob/master/examples/fonts/droid/droid_sans_bold.typeface.js  -->
+    <script src="js/MTLLoader.js"></script> <!--  https://github.com/mrdoob/three.js/blob/master/examples/js/loaders/MTLLoader.js -->
+    <script src="js/OBJMTLLoader.js"></script> <!-- https://github.com/mrdoob/three.js/blob/master/examples/js/loaders/OBJMTLLoader.js -->
+    <script src="js/OrbitControls.js"></script> <!-- https://github.com/mrdoob/three.js/blob/master/examples/js/controls/OrbitControls.js -->
+    
+    <script src="http://demos.lightstreamer.com/commons/lightstreamer.js"></script>
+    
+    <!-- link rel="stylesheet" type="text/css" href="css/stats.css" /-->
+    <!-- script src="js/threex.rendererstats.js"></script -->
+    <!-- script src="js/stats.min.js"></script -->
+    
+    <script src="index.js"></script>
   </body>
 </html>

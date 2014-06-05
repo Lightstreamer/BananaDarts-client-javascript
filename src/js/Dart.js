@@ -20,7 +20,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
   
   var materials = {};
   materials[Constants.OWN] = new THREE.MeshBasicMaterial( { color: 0xff0000 } );
-  materials[Constants.OTHER] = new THREE.MeshBasicMaterial( { color: 0x00ff00 } );
+  materials[Constants.OTHER] = new THREE.MeshBasicMaterial( { color: 0x006b00 } );
   
   var mtls = {};
   mtls[Constants.OWN] = "obj/dart.obj.mtl";
@@ -59,6 +59,11 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       x: 0,
       y: 0,
       z: 250
+  };
+  
+  var MAX_CAMERA_POS = {
+      x: 10,
+      y: 10
   };
   
   var hitSound = Utils.loadSound("hit"); // https://www.youtube.com/watch?v=Zt_L-J6xcN0
@@ -109,9 +114,8 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           this.createDart();
         }
         
-        
         this.reset();
-        
+    
         this.field.addObject(this.dart);
       },
       
@@ -236,6 +240,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       attachCamera: function(attach) {
         this.camera = attach;
         this.field.enableOrbit(!attach);
+        this.field.hideMenu(attach);
       },
       
       //Rotation
@@ -310,6 +315,17 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
         var px = x+CAMERA_OFFSET.x;
         var py = y+CAMERA_OFFSET.y;
         var pz = z+CAMERA_OFFSET.z;
+        
+        if (px > MAX_CAMERA_POS["x"]) {
+          px = MAX_CAMERA_POS["x"];
+        } else if (px < -MAX_CAMERA_POS["x"]) {
+          px = -MAX_CAMERA_POS["x"];
+        }
+        if (py > MAX_CAMERA_POS["y"]) {
+          py = MAX_CAMERA_POS["y"];
+        } else if (py < -MAX_CAMERA_POS["y"]) {
+          py = -MAX_CAMERA_POS["y"];
+        }
         
         this.field.moveCameraToward(px,py,pz);
         this.field.pointCamera(x,y,z);
@@ -420,6 +436,7 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
           this.calculateRotation(x,y,z,tNow);
         } else if(this.camera) {
           this.field.enableOrbit(true);
+          this.field.hideMenu(false);
         }
         
       },
@@ -482,7 +499,10 @@ define(["./Constants","./Utils"],function(Constants,Utils) {
       },
       
       reset: function() {
-        this.setPosition(0,Constants.INITIAL_CAMERA_POS_Y,Constants.MAX_SIZE.z);
+        var randX = Math.round(Math.random()*Constants.ARM_LENGTH)-Constants.ARM_LENGTH/2;
+        var randY = Math.round(Math.random()*Constants.ARM_LENGTH)+Constants.TWENTY-Constants.ARM_LENGTH/2;
+        
+        this.setPosition(randX,randY,Constants.MAX_SIZE.z);
         this.setRotation(Math.PI/2,0,0);
         this.planted = false;
         this.plantedTime = null;

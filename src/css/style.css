@@ -20,57 +20,12 @@ body {
   font-family: 'helvetica neue', Helvetica, Arial;
   margin: 0;
   overflow: hidden;
-}
-.button {
-  cursor:pointer;
   -moz-user-select: -moz-none;
   -khtml-user-select: none;
   -webkit-user-select: none;
   -ms-user-select: none;
   user-select: none;
 }
-.whole {
-  border: 0;
-  position: absolute;
-  bottom:0;
-  top:0;
-  left: 0;
-  right: 0;
-  overflow: hidden;
-}
-.github {
-  position: absolute; 
-  top: 0; 
-  right: 0; 
-  border: 0; 
-  z-index: 4;
-}
-
-/* MENU */
-
-#tools {
-  position: fixed;
-  margin: auto;
-  width: 842px; /* 20 802 20 */
-  border: 0;
-  top: 0;
-  left: 0; 
-  right: 0; 
-  transition: top 1s ease;
-  z-index:3;
-  opacity: 0.9;
-}
-#logo {
-  transition: all 1s ease;
-}
-#tools_button {
-  position: relative;
-  top: -20px;
-  left: 410px; /* 852/2 - 32/2 */
-  height: 32px;
-  width:32px;
-}
-
 .row, .col { 
   overflow: hidden; 
   position: relative; 
@@ -84,125 +39,29 @@ body {
   bottom: 0; 
   float:left;
 }
-.right {
-  float: right;
-}
-
-/* MENU contents */
-
-#tools_stuff {
-  background-color: #0083cb;
-  color: #f9dc0b;
-  border-radius: 0 0 10px 10px;
-  padding: 10px 0 20px 0;
-}
-
-/* MENU contents - header */
-
-.title {
-  width: 100%;
-}
-#tools h1 {
-  font-size: 40px;
-  margin-top: 15px;
-}
-#tools h2 {
-  font-weight: normal;
-}
-#tools h1, #tools h2 {
+.centered {
   text-align: center;
 }
-#ready_leap, #waiting_leap, #not_compatible {
-  display: none;
+.button {
+  cursor:pointer;
 }
-.blink {
-  animation: blinker 0.8s cubic-bezier(.42, .01, 0, 1) infinite alternate;  
-  -webkit-animation: blinker 0.8s cubic-bezier(.3, 0, 1, 1) infinite alternate;  
-  transition-delay: 0.5s
+.whole {
+  border: 0;
+  position: absolute;
+  bottom:0;
+  top:0;
+  left: 0;
+  right: 0;
+  overflow: hidden;
 }
-@keyframes blinker {  
-  from { opacity: 1; }
-  to { opacity: 0; }
+.semitransparent {
+  transition: all 0.5s ease;
+  opacity: 0.5;
+  z-index: 9;
 }
-@-webkit-keyframes blinker {  
-  from { opacity: 1; }
-  to { opacity: 0; }
+.semitransparent:hover {
+  opacity: 1 !important;
 }
-
-/* MENU contents - columns */
-
-.options, .gInstructions, .cInstructions {
-  width: 28%;
-  height: 15em;
-  padding: 0 20px;
-}
-.gInstructions, .cInstructions {
-  border-left: 1px solid #f9dc0b;
-}
-
-/* MENU contents - clicks & forms */
-
-#tools_stuff a {
-  color: #f9dc0b;
-  padding:1px;
-}
-#buttons .button {
-  margin-top: 2px;
-  padding-top:2px;
-}
-#buttons .button:hover, #tools_stuff a:hover {
-  background-color: #f9dc0b;
-  color: #0083cb;
-  border-radius: 8px;
-}
-.inputDiv {
-  height: 32px;
-  margin: 1em 0;
-}
-.inputDiv input {
-  background-color: #f6e994;
-  color: #0083cb;
-  border-radius: 5px;
-}
-#sendChat {
-  width: 2em;
-  height:2em;
-  vertical-align: middle;
-  margin-left: -4px;
-}
-.checked {
-  background-image: url(../images/check.png);
-  background-position: center right;
-  background-repeat: no-repeat;
-}
-.checked:hover {
-  background-image: url(../images/checkhover.png);
-}
-
-/* MENU contents - writings */
-
-#tools ul {
-  padding-left: 20px;
-  margin-top: 7px;
-}
-#logoRow {
-  padding-top: 30px;
-  text-align: center;
-  margin: auto;
-}
-#logo {
-  margin: auto;
-}
-#linksRow div {
-  padding: 0 20px;
-  font-size: 15px;
-}
-#linksRow img {
-  height: 15px;
-  vertical-align: middle;
-  margin-top: -1px;
-}
-
 
 /* 3D */
 
@@ -227,17 +86,24 @@ body {
   z-index: 1;
 }
 
+/* Blackboards */
+
+#scoreboard, #chat {
+  display: none;
+  padding: 60px; 
+  border: 0;
+  width: 752px; 
+  height: 405px;
+  color:white;
+  background-size: contain;
+  font-family: 'Cabin Sketch';
+  font-size: 30px;
+}
+
 /* Scoreboard */
 
 #scoreboard {
-  display: none;
-  padding: 15px 10px 10px 60px; //5+5
-  border: 0;
-  width: 805px; 
-  height: 500px;
-  color:white;
   background-image:url(../images/score.jpg);
-  background-size: contain;
 }
 #scoreboard table {
   table-layout:fixed;
@@ -245,7 +111,7 @@ body {
   width: 855px;
 }
 #scoreboard tbody {
-  font-size: 25px;
+  font-size: 30px;
 }
 #scoreboard td {
   overflow: hidden;  
@@ -266,11 +132,11 @@ body {
   padding-right: 25px;
 }
 th {
-  font-size: 25px;
+  font-size: 30px;
   border-bottom: 1px solid white;
 }
 .scoreCol, .throwsCol, .totCol {
-  width: 100px;
+  width: 150px;
 }
 [data-field=lastScore], [data-field=numThrows], [data-field=totalScore] {
   text-align: center;
@@ -284,25 +150,21 @@ th {
 
 #chatHeader {
   font-weight: bold;
-  font-size:26px;
+  font-size:30px;
+  padding-bottom: 10px;
+  border-bottom: 2px solid white;
 }
 #chat {
-  display: none;
-  padding: 60px 10px 10px 45px; 
-  border: 0;
-  width: 815px; 
-  height: 304px;
-  color:white;
-  background-image:url(../images/chat.jpg);
-  background-size: contain;
-  font-size: 23px;
+ background-image:url(../images/chat.jpg);
 }
-#chatTemplate {
+.chatTemplate {
   overflow: hidden;
+  white-space: nowrap;
 }
 #chat [data-field=nick] {
-  font-size: 16px;
-  background-color: #222;
+  font-size: 23px;
+  background-color: yellow;
+  color: black;
   font-weight: bold;
   padding: 0 7px;
   border-radius: 8px;
@@ -311,3 +173,308 @@ th {
   color: #ccc;
 }
 
+/* FloatingMenu */
+
+#github {
+  position: absolute; 
+  top: 0; 
+  left: 0; 
+}
+#logo {
+  top: 0; 
+  right: 0; 
+  width: 250px;
+  height: 114px;
+  position: absolute; 
+}
+#instructionsMenu, #optionsMenu,  #communicateMenu {
+  cursor: default;
+}
+#instructionsButton, #instructionsMenu {
+  top: 116px; /* 114 + 2 */
+}
+#optionsButton, #optionsMenu {
+  top: 174px; /* 116 + 48 + 10 */
+}
+#communicateMenu, #communicateButton {
+  bottom: 125px; 
+}
+
+#instructionsButton, #optionsButton, #communicateButton, #instructionsMenu, #optionsMenu,  #communicateMenu {
+  right: 15px; 
+  position: absolute; 
+}
+
+#instructionsMenu, #optionsMenu {
+  transition: all 1s ease;
+  opacity: 0.8;
+  display: none;
+  border-radius: 8px;
+}
+ 
+#instructionsMenu .row, #optionsMenu .row {
+ margin: 3px 10px 10px 10px;
+}
+
+.floatingMenu {
+  background-color: #0083cb;
+  color: #f9dc0b;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.close {
+  float: right;
+}
+
+/* Communicate */
+
+#communicateMenu {
+  transition: all 1s ease;
+  opacity: 0.8;
+  border-radius: 8px;
+  height: 100px;
+  width: 300px;
+}
+
+#communicateMenu:hover {
+  opacity: 1;
+}
+
+.inputDiv {
+  text-align: center;
+}
+.inputDiv div {
+  margin: 10px;
+}
+#nick {
+  width: 130px;
+}
+#chatMessage {
+  width: 150px;
+}
+.inputDiv input {
+  background-color: #f6e994;
+  color: #0083cb;
+  border-radius: 5px;
+  font-size: 12px;
+}
+#sendChat {
+  width: 2em;
+  height:2em;
+  vertical-align: middle;
+  margin-left: -4px;
+}
+
+/* Instructions */
+
+#instructionsMenu {
+
+}
+
+#instructionsMenu a {
+  color: #f9dc0b;
+  padding:1px;
+}
+
+.leapInstructions  {
+  display: none;
+}
+
+.linksRow img {
+  height: 15px;
+  vertical-align: middle;
+  margin-top: -1px;
+}
+
+
+/* Options */
+
+#optionsMenu {
+  
+}
+
+.checked {
+  background-image: url(../images/check.png);
+  background-position: center right;
+  background-repeat: no-repeat;
+}
+.checked:hover {
+  background-image: url(../images/checkhover.png);
+}
+#options .button {
+  margin-top: 2px;
+  padding-top:2px;
+  padding-right: 30px;
+}
+#options .button:hover {
+  background-color: #f9dc0b;
+  color: #0083cb;
+  border-radius: 8px;
+}
+
+/* Status */
+
+#not_compatible {
+  display: none;
+  text-align: center;
+}
+#not_compatible a {
+  color: #f9dc0b;
+  padding:1px;
+}
+#waiting_leap {
+  display: none;
+  border-radius: 8px;
+  position: absolute;
+  padding: 15px;
+}
+.blink {
+  animation: blinker 0.8s cubic-bezier(.42, .01, 0, 1) infinite alternate;  
+  -webkit-animation: blinker 0.8s cubic-bezier(.3, 0, 1, 1) infinite alternate;  
+  transition-delay: 0.5s
+}
+@keyframes blinker {  
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+@-webkit-keyframes blinker {  
+  from { opacity: 1; }
+  to { opacity: 0; }
+}
+
+/* Grey */
+#grey {
+  position:absolute;
+  top:0;
+  left:0;
+  right:0;
+  bottom:0;
+  opacity: 0.9;
+  background-color: grey;
+  display: none;
+  transition: all 1s ease;
+}
+
+/* Switch - MIT License - http://www.cssflow.com/snippets/simple-toggle-switch/demo */
+
+.switch {
+  position: relative;
+  display: inline-block;
+  vertical-align: top;
+  width: 106px;
+  height: 20px;
+  padding: 3px;
+  background-color: white;
+  border-radius: 18px;
+  /*box-shadow: inset 0 -1px #f9dc0b, inset 0 1px 1px rgba(249, 220, 11, 0.05);*/
+  box-shadow: inset 0 -1px white, inset 0 1px 1px rgba(0, 0, 0, 0.05);
+  cursor: pointer;
+  background-image: -webkit-linear-gradient(top, #eeeeee, white 25px);
+  background-image: -moz-linear-gradient(top, #eeeeee, white 25px);
+  background-image: -o-linear-gradient(top, #eeeeee, white 25px);
+  background-image: linear-gradient(to bottom, #eeeeee, white 25px);
+  
+  /*background-image: -webkit-linear-gradient(top, #f9dca8, #f9dc0b 25px);
+  background-image: -moz-linear-gradient(top, #f9dca8, #f9dc0b 25px);
+  background-image: -o-linear-gradient(top, #f9dca8, #f9dc0b 25px);
+  background-image: linear-gradient(to bottom, #f9dca8, #f9dc0b 25px);*/
+}
+
+.switch-input {
+  position: absolute;
+  top: 0;
+  left: 0;
+  opacity: 0;
+}
+
+.switch-label {
+  position: relative;
+  display: block;
+  height: inherit;
+  font-size: 10px;
+  text-transform: uppercase;
+  background: #f9dc0b;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.12), inset 0 0 2px rgba(0, 0, 0, 0.15);
+  -webkit-transition: 0.15s ease-out;
+  -moz-transition: 0.15s ease-out;
+  -o-transition: 0.15s ease-out;
+  transition: 0.15s ease-out;
+  -webkit-transition-property: opacity background;
+  -moz-transition-property: opacity background;
+  -o-transition-property: opacity background;
+  transition-property: opacity background;
+}
+.switch-label:before, .switch-label:after {
+  position: absolute;
+  top: 50%;
+  margin-top: -.5em;
+  line-height: 1;
+  -webkit-transition: inherit;
+  -moz-transition: inherit;
+  -o-transition: inherit;
+  transition: inherit;
+}
+.switch-label:before {
+  content: attr(data-off);
+  right: 11px;
+  color: #0083cb;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+}
+.switch-label:after {
+  content: attr(data-on);
+  left: 11px;
+  color: #f9dc0b;
+  text-shadow: 0 1px rgba(0, 0, 0, 0.2);
+  opacity: 0;
+}
+.switch-input:checked ~ .switch-label {
+  background: #0083cb;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.15), inset 0 0 3px rgba(0, 0, 0, 0.2);
+}
+.switch-input:checked ~ .switch-label:before {
+  opacity: 0;
+}
+.switch-input:checked ~ .switch-label:after {
+  opacity: 1;
+}
+
+.switch-handle {
+  position: absolute;
+  top: 4px;
+  left: 4px;
+  width: 18px;
+  height: 18px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px rgba(0, 0, 0, 0.2);
+  background-image: -webkit-linear-gradient(top, white 40%, #f0f0f0);
+  background-image: -moz-linear-gradient(top, white 40%, #f0f0f0);
+  background-image: -o-linear-gradient(top, white 40%, #f0f0f0);
+  background-image: linear-gradient(to bottom, white 40%, #f0f0f0);
+  -webkit-transition: left 0.15s ease-out;
+  -moz-transition: left 0.15s ease-out;
+  -o-transition: left 0.15s ease-out;
+  transition: left 0.15s ease-out;
+}
+.switch-handle:before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -6px 0 0 -6px;
+  width: 12px;
+  height: 12px;
+  background: #f9f9f9;
+  border-radius: 6px;
+  box-shadow: inset 0 1px rgba(0, 0, 0, 0.02);
+  background-image: -webkit-linear-gradient(top, #eeeeee, white);
+  background-image: -moz-linear-gradient(top, #eeeeee, white);
+  background-image: -o-linear-gradient(top, #eeeeee, white);
+  background-image: linear-gradient(to bottom, #eeeeee, white);
+}
+.switch-input:checked ~ .switch-handle {
+  left: 90px;
+  box-shadow: -1px 1px 5px rgba(0, 0, 0, 0.2);
+}

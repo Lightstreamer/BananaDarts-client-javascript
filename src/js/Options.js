@@ -15,12 +15,22 @@ Copyright 2014 Weswit s.r.l.
 */
 define(["./Constants"],function(Constants) {
 
-  var CAN_SAVE = typeof localStorage != "undefined" && localStorage !== null && localStorage.getItem && localStorage.setItem;
+  var CAN_SAVE = false;
+  try {
+    if (typeof localStorage != "undefined" && localStorage !== null && localStorage.getItem && localStorage.setItem) {
+      CAN_SAVE = true;
+    }
+  } catch(e) {
+    //may end in exception if localStorage exists but was disabled through browser options
+  }
   
   var optionsList = [
                      "nick",
                      "autoCamera",
-                     "showNicks"
+                     "showNicks",
+                     "mouse",
+                     "leap",
+                     "instructionsOpen"
                      ];
   
   var Options = function() {
@@ -28,7 +38,10 @@ define(["./Constants"],function(Constants) {
     this.nick = "Player"+Math.round(Math.random()*10000);
     this.autoCamera = true;
     this.showNicks = true;
+    this.leap = false;
+    this.mouse = true;
     this.audio = typeof Audio != "undefined";
+    this.instructionsOpen = true;
     this.load();
     
   };
@@ -94,6 +107,37 @@ define(["./Constants"],function(Constants) {
       toggleAudio: function() {
         this.setAudio(!this.audio);
       },
+      
+      setLeap: function(enable) {
+        this.leap = enable;
+        this.save("leap");
+      },
+      getLeap: function() {
+        return this.leap;
+      },
+      toggleLeap: function() {
+        this.setLeap(!this.leap);
+      },
+      
+      setMouse: function(mouse) {
+        this.mouse = mouse;
+        this.save("mouse");
+      },
+      getMouse: function() {
+        return this.mouse;
+      },
+      toggleMouse: function() {
+        this.setMouse(!this.mouse);
+      },
+      
+      setInstructionsOpen: function(instructionsOpen) {
+        this.instructionsOpen = instructionsOpen;
+        this.save("instructionsOpen");
+      },
+      getInstructionsOpen: function() {
+        return this.instructionsOpen;
+      },
+      
       
       save: function(what) {
         if (CAN_SAVE) {

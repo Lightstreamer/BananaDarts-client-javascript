@@ -52,6 +52,8 @@ define(["./Utils"],function(Utils) {
     BOARD_DIAMETER: 200,
     BOARD_THICKNESS: 10,
     
+    BLACK_BOARD_THICKNESS: 15,
+    
     MAX_SIZE: {
      x:SIZE_X/2,
      y:SIZE_Y/2,
@@ -63,6 +65,7 @@ define(["./Utils"],function(Utils) {
     INITIAL_CAMERA_POS_Z: (Utils.cmToUnit(280)+SIZE_Z/2),
     INITIAL_CAMERA_POS_X: Utils.cmToUnit(40),
     MAX_MOVE_CAMERA_STEP: 60,
+    CAMERA_KEY: 17,
     
     LEAP_PADDING: {
       x: 10,
@@ -75,12 +78,30 @@ define(["./Utils"],function(Utils) {
     
     PLANTED_DELAY: 1000,
     
+    //LEAP FACTORS
     SPEED_FACTOR: 2,
     USE_PEAK_SPEED: false,
     USE_LAST_SPEED: true,
     HISTORY_WEIGHT: 0.5,
+    
+    //MOUSE FACTORS
+    SPEED_MULTIPLIERS: {
+      x: 10,
+      y: 5,
+      z: 10
+    },
+    
     MIN_SPEED: -200,
     
+    FLOATING_Z_INDEX: {
+      //renderer is 1
+      //world is 2
+      MIN: 8,
+      //icons are 9
+      STANDARD: 10,
+      MIDDLE: 11,
+      MAX: 12
+    },
     
     ROOM: "dart",
     
