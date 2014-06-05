@@ -25,6 +25,20 @@ define(["Inheritance","EventDispatcher","./Constants"],
       y: -Constants.ARM_LENGTH/2+Constants.TWENTY,
   };
   
+  var GAME_AREA_MAX = {};
+  var GAME_AREA_MIN = {};
+  function calcGameArea() {
+    GAME_AREA_MIN.x = window.innerWidth/6;
+    GAME_AREA_MIN.y = 0;
+    
+    GAME_AREA_MAX.x = window.innerWidth-GAME_AREA_MIN.x;
+    GAME_AREA_MAX.y = window.innerHeight;
+  }
+  $(window).resize(function() {
+    calcGameArea();
+  });
+  calcGameArea();
+  
   
   var Mouse = function() {
     this.initDispatcher();
@@ -63,16 +77,33 @@ define(["Inheritance","EventDispatcher","./Constants"],
     
     mouseClickChange: function(isDown) {
       this.isDown = isDown;
-      this.dispatchEvent("onMouseChange",[this.isDown,this.norm["x"],this.norm["y"]]);
+      if (this.isOn) {
+        this.dispatchEvent("onMouseChange",[this.isDown,this.norm["x"],this.norm["y"]]);
+      }
     },
     
     mousePosChange: function(newX,newY) {
-      this.calcNormalizedPos("x",-newX);
-      this.calcNormalizedPos("y",newY);
-      this.dispatchEvent("onMouseChange",[this.isDown,this.norm["x"],this.norm["y"]]);
+      this.isOn = this.calcNormalizedPos("x",-newX);
+      this.isOn &= this.calcNormalizedPos("y",newY);
+      
+      if (this.isOn) {
+        $("body").css("cursor","none");
+        this.dispatchEvent("onMouseChange",[this.isDown,this.norm["x"],this.norm["y"]]);
+      } else {
+        $("body").css("cursor","");
+      }
+      
+      
     },
     
     calcNormalizedPos: function(axis, val) {
+      
+      var abs = Math.abs(val);
+      if (abs < GAME_AREA_MIN[axis] || abs > GAME_AREA_MAX[axis]) {
+        return false;
+      } 
+      
+      
       var delta = this.prev[axis] - val;
       this.prev[axis] = val;
       this.norm[axis] += delta;
@@ -83,7 +114,7 @@ define(["Inheritance","EventDispatcher","./Constants"],
         this.norm[axis] = MIN[axis];
       }
       
-      
+      return true;
     }
    
   };
