@@ -13,8 +13,8 @@ Copyright 2014 Weswit s.r.l.
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-define(["./LeapMotion","./Mouse","./Constants","./Status"], 
-    function(LeapMotion,Mouse,Constants,Status) {
+define(["./LeapMotion","./Mouse","./Constants","./FloatingMenu"], 
+    function(LeapMotion,Mouse,Constants,FloatingMenu) {
 
   var fixedZ = Constants.MAX_SIZE.z-Constants.ARM_REACH/2+Constants.GO_LINE;
   
@@ -35,6 +35,8 @@ define(["./LeapMotion","./Mouse","./Constants","./Status"],
     this.mouseClickTime = null;
     this.mouseInArea = false;
     
+    this.leapMex = null;
+    
   };
   
   Controls.prototype = {
@@ -45,6 +47,7 @@ define(["./LeapMotion","./Mouse","./Constants","./Status"],
           this.allDisabled++;
         }
         this.cursorHandling();
+        this.leapMessageHandling();
       },
       
       enable: function(key) {
@@ -53,6 +56,7 @@ define(["./LeapMotion","./Mouse","./Constants","./Status"],
           this.allDisabled--;
         }
         this.cursorHandling();
+        this.leapMessageHandling();
       },
       
       //MOUSE
@@ -124,18 +128,32 @@ define(["./LeapMotion","./Mouse","./Constants","./Status"],
       
       //LEAP MOTION
       
+      setLeapMex: function(leapMex) {
+        this.leapMex = new FloatingMenu(leapMex);
+        this.leapMessageHandling();
+      },
+      
+      leapMessageHandling: function() {
+        if (!this.leapMex) {
+          return;
+        }
+        if (this.leapEnabled && this.allDisabled == 0 && !this.leapReady) {
+          this.leapMex.open();
+        } else  {
+          this.leapMex.close();
+        }
+      },
+      
       enableLeap: function(enable) {
         this.leapEnabled = enable;
-        Status.changeStatus(this.leapReady || !enable ? Status.OK : Status.WAIT_LEAP);
+        this.leapMessageHandling();
       },
       
       //LeapMotion listener
       
       onReady: function(ready) {
         this.leapReady = ready;
-        if (this.leapEnabled) {
-          Status.changeStatus(ready ? Status.OK : Status.WAIT_LEAP);
-        }
+        this.leapMessageHandling();
       },
       
       onFistMove: function(x,y,z,sx,sy,sz) {

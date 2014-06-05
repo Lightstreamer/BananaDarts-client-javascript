@@ -22,16 +22,29 @@ require(["js/Constants","js/Field","js/Game",
          "js/lsClient","js/Simulator","js/ConsoleSubscriptionListener",
          "js/Scoreboard","js/RoomSubscription",
          "js/ChatBoard","js/ChatSubscription",
-         "js/FloatingMenu","js/Status", "js/Utils"],
+         "js/FloatingMenu", "js/Utils"],
     function(Constants,Field,Game,
         Dart,Player,Options,Controls,
         lsClient,Simulator,ConsoleSubscriptionListener,
         Scoreboard,RoomSubscription,
         ChatBoard,ChatSubscription,
-        FloatingMenu,Status,Utils) {
+        FloatingMenu,Utils) {
   
   //all required js loaded
   addPerc(18);
+  
+  //setup game
+  var field = null;
+  try {
+    field = new Field($("#theWorld")[0],$(".hideWhileFlying"));
+    
+  } catch(e) {
+    $("#loading_container").hide();
+    $("#not_compatible").show();
+    
+    return;
+  }
+  
   var loading = new FloatingMenu($("#loading"),{
     startOpen: true,
     zIndex: Constants.FLOATING_Z_INDEX.MAX,
@@ -53,15 +66,6 @@ require(["js/Constants","js/Field","js/Game",
   
   var options = new Options();
   var userNick = options.getNick();
-  
-  //setup game
-  var field = null;
-  try {
-    field = new Field($("#theWorld")[0],$(".hideWhileFlying"));
-  } catch(e) {
-    Status.changeStatus(Status.NOT_COMPATIBLE);
-    return;
-  }
   
   var game = new Game(field);
   var scoreboard = new Scoreboard(field,"scoreboardTemplate",["td"],$("#scoreboard"));
@@ -120,6 +124,12 @@ require(["js/Constants","js/Field","js/Game",
     effect: FloatingMenu.OPACITY_EFFECT,
     openOpacity: 0.7
   });
+  
+  controls.setLeapMex($("#waiting_leap"));
+  $("#waiting_leap").click(function() {
+    optionsMenu.open();
+  });
+  
   
   instructionsMenu.addListener({
     onOpen: function() {

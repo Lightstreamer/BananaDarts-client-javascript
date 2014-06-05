@@ -315,9 +315,19 @@ th {
 
 /* Status */
 
-#statusMenu {
+#not_compatible {
+  display: none;
   text-align: center;
+}
+#not_compatible a {
+  color: #f9dc0b;
+  padding:1px;
+}
+#waiting_leap {
+  display: none;
   border-radius: 8px;
+  position: absolute;
+  padding: 15px;
 }
 .blink {
   animation: blinker 0.8s cubic-bezier(.42, .01, 0, 1) infinite alternate;  

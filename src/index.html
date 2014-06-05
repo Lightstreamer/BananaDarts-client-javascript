@@ -79,10 +79,11 @@
       <div class="row">
         <img src="images/logo.png">
       </div>
-      <div class="row">
+      <div id="loading_container" class="row">
         Loading
         <div id="loaded">0%</div>
       </div>
+      <h2 id="not_compatible"> <a href="http://get.webgl.org/">Your browser does not seem to support WebGL</a> </h2>
     </div>  
     
     <!-- STANDARD -->
@@ -139,13 +140,9 @@
     </div>
     
     <!-- STATUS -->
-    <div id="statusMenu" class="floatingMenu">
-      <div class="row">
-        <h2 id="not_compatible" class="status blink">&gt; Your browser does not seem to support WebGL  &lt;</h2>
-        <h2 id="no_leap" class="status blink">&gt; Please connect your Leap Motion device or switch to mouse controls  &lt;</h2>
-        <h2 id="ok" class="status">42</h2>
-      </div>
-    </div>
+    
+    <h2 id="waiting_leap" class="blink floatingMenu button"> Please connect your Leap Motion device or switch to mouse controls </h2>
+ 
     
     <!-- FORM -->
     <div id="communicateMenu" class="floatingMenu hideWhileFlying">
@@ -283,7 +280,7 @@
     </div>
     
     <script src="http://cdnjs.cloudflare.com/ajax/libs/require.js/2.1.9/require.min.js"></script>
-    <script src="http://js.leapmotion.com/0.3.0-beta2/leap.js"></script>
+    <script src="http://js.leapmotion.com/leap-0.6.0.min.js"></script>
     
     <script src="http://cdnjs.cloudflare.com/ajax/libs/three.js/r61/three.min.js"></script> <!--  upgrading to 66 breaks the css panels -->
     <script src="js/CSS3DRenderer.js"></script> <!--  https://github.com/mrdoob/three.js/blob/master/examples/js/renderers/CSS3DRenderer.js -->
