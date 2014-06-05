@@ -33,7 +33,7 @@ define(["./LeapMotion","./Mouse","./Constants","./Status"],
     this.allDisabled = 0;
     
     this.mouseClickTime = null;
-    
+    this.mouseInArea = false;
     
   };
   
@@ -44,6 +44,7 @@ define(["./LeapMotion","./Mouse","./Constants","./Status"],
           this.disableKeys[key] = true;
           this.allDisabled++;
         }
+        this.cursorHandling();
       },
       
       enable: function(key) {
@@ -51,6 +52,7 @@ define(["./LeapMotion","./Mouse","./Constants","./Status"],
           delete(this.disableKeys[key]);
           this.allDisabled--;
         }
+        this.cursorHandling();
       },
       
       //MOUSE
@@ -61,6 +63,7 @@ define(["./LeapMotion","./Mouse","./Constants","./Status"],
         }
         this.mouseEnabled = enable;
         this.resetMouse();
+        this.cursorHandling();
       },
       
       //Mouse listener
@@ -94,6 +97,20 @@ define(["./LeapMotion","./Mouse","./Constants","./Status"],
         }
         
         
+      },
+      
+      onMouseAreaEnter: function(enter) {
+        this.mouseInArea = enter;
+        this.cursorHandling();
+      },
+      
+     cursorHandling: function() {
+        if (this.mouseEnabled && this.allDisabled == 0 && this.mouseInArea) {
+          $("body").css("cursor","none");
+        } else  {
+          $("body").css("cursor","");
+          
+        }
       },
       
       resetMouse: function() {

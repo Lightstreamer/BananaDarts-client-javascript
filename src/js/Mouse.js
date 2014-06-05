@@ -83,18 +83,21 @@ define(["Inheritance","EventDispatcher","./Constants"],
     },
     
     mousePosChange: function(newX,newY) {
-      this.isOn = this.calcNormalizedPos("x",-newX);
-      this.isOn &= this.calcNormalizedPos("y",newY);
+      var on = this.calcNormalizedPos("x",-newX);
+      on &= this.calcNormalizedPos("y",newY);
       
-      if (this.isOn) {
-        $("body").css("cursor","none");
-        this.dispatchEvent("onMouseChange",[this.isDown,this.norm["x"],this.norm["y"]]);
-      } else {
-        $("body").css("cursor","");
+      if (this.isOn != on) {
+        this.isOn = on;
+        this.dispatchEvent("onMouseAreaEnter",[this.isOn]);
       }
       
+      if (this.isOn) {
+        this.dispatchEvent("onMouseChange",[this.isDown,this.norm["x"],this.norm["y"]]);
+      } 
       
     },
+    
+    
     
     calcNormalizedPos: function(axis, val) {
       
