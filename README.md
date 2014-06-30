@@ -20,7 +20,7 @@ Each user controls a dart (the red one) that can be thrown toward the dartboard 
 
 <!-- END DESCRIPTION bananadarts-client-javascript -->
 
-# Install #
+## Install
 
 Note that the [DART](https://github.com/Weswit/BananaDarts-adapter-java) adapters have to be deployed in your local Lightstreamer server instance.
 
@@ -33,15 +33,15 @@ Before you can run this demo some dependencies need to be solved:
 -  three.js is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
 
 You can deploy this demo inside Lightstreamer internal web server or in any other web server.
-If you choose the former please create a new folder under <LS_HOME>/pages/ and copy the contents of the src folder of this project there.
+If you choose the former please create a new folder under `<LS_HOME>/pages/` and copy the contents of the `src` folder of this project there.
 The client demo configuration assume that Lightstreamer Server, Lightstreamer Adapters and this client are launched on the same machine.
-If you need to targeting a different Lightstreamer server please search this line in js/Constants.js:
+If you need to targeting a different Lightstreamer server please search this line in `js/Constants.js`:
 ```js
-SERVER: protocolToUse+"//push.lightstreamer.com",
+SERVER: protocolToUse+"//localhost:8080",
 ```
 and change it accordingly.
 
-# Build #
+## Build
 
 The html application can be optionally built, to reduce the number and size of the files to be downloaded by the browser, using [r.js](http://requirejs.org/docs/optimization.html).
 A ready-made configuration file for the build process is available in the build_rjs folder of this project.
@@ -58,15 +58,15 @@ java -cp compiler.jar;js.jar org.mozilla.javascript.tools.shell.Main r.js -o app
 As an alternative it is possible to customize the build file to use [UglifyJS](https://github.com/mishoo/UglifyJS2); in this case it can be built using [node.js](http://nodejs.org/) instead of using the JVM.
 
 
-# See Also #
+## See Also
 
-## Lightstreamer Adapter Needed by This Demo Client ##
+### Lightstreamer Adapter Needed by This Demo Client
 <!-- START RELATED_ENTRIES -->
 
 * [Lightstreamer - Multiplayer Darts - Java Adapter](https://github.com/Weswit/BananaDarts-adapter-java)
 
 <!-- END RELATED_ENTRIES -->
 
-# Lightstreamer Compatibility Notes #
+## Lightstreamer Compatibility Notes
 
 * Compatible with Lightstreamer JavaScript Client library version 6.1 or newer.
