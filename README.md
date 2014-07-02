@@ -22,7 +22,7 @@ Each user controls a dart (the red one) that can be thrown toward the dartboard 
 
 ## Install
 
-Note that the [DART](https://github.com/Weswit/BananaDarts-adapter-java) adapters have to be deployed in your local Lightstreamer server instance.
+Note that the [Multiplayer Darts - Java Adapter](https://github.com/Weswit/BananaDarts-adapter-java) has to be deployed in your local Lightstreamer server instance.
 
 Before you can run this demo some dependencies need to be solved:
 
