@@ -30,7 +30,7 @@ Each user controls a dart (the red one) that can be thrown toward the dartboard 
 *  three.js is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
 * Deploy this demo on the Lightstreamer Server (used as Web server) or in any external Web Server. If you choose the former, please create the folder `<LS_HOME>/pages/demos/BananaDart` and copy here the contents of the `/src` folder of this project.
 The client demo configuration assumes that Lightstreamer Server, Lightstreamer Adapters and this client are launched on the same machine. If you need to targeting a different Lightstreamer server please search in `js/Constants.js` this line:<BR/> `SERVER: protocolToUse+"//localhost:8080"`<BR/> and change it accordingly.
-* Open your browser and point it to: [http://localhost:8080/demos/ChatDemo/](http://localhost:8080/demos/BananaDarts/)
+* Open your browser and point it to: [http://localhost:8080/demos/BananaDarts/](http://localhost:8080/demos/BananaDarts/)
 
 ## Build
 
