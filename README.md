@@ -22,24 +22,15 @@ Each user controls a dart (the red one) that can be thrown toward the dartboard 
 
 ## Install
 
-Note that, as prerequisite, the [Multiplayer Darts - Java Adapter](https://github.com/Weswit/BananaDarts-adapter-java) has to be deployed in your local Lightstreamer server instance. Please check out that project and follow the installation instructions provided with it.
-
-Before you can run this demo some dependencies need to be solved:
-
--  Lightstreamer JS client is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
--  RequireJS is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
--  jQuery is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
--  leapjs is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
--  three.js is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
-
-You can deploy this demo inside Lightstreamer internal web server or in any other web server.
-If you choose the former please create a new folder under `<LS_HOME>/pages/` and copy the contents of the `src` folder of this project there.
-The client demo configuration assume that Lightstreamer Server, Lightstreamer Adapters and this client are launched on the same machine.
-If you need to targeting a different Lightstreamer server please search this line in `js/Constants.js`:
-```js
-SERVER: protocolToUse+"//localhost:8080",
-```
-and change it accordingly.
+* As prerequisite, the [Multiplayer Darts - Java Adapter](https://github.com/Weswit/BananaDarts-adapter-java) has to be deployed in your local Lightstreamer server instance. Please check out that project and follow the installation instructions provided with it.
+*  Lightstreamer JS client is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
+*  RequireJS is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
+*  jQuery is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
+*  leapjs is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
+*  three.js is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
+* Deploy this demo on the Lightstreamer Server (used as Web server) or in any external Web Server. If you choose the former, please create the folder `<LS_HOME>/pages/demos/BananaDart` and copy here the contents of the `/src` folder of this project.
+The client demo configuration assumes that Lightstreamer Server, Lightstreamer Adapters and this client are launched on the same machine. If you need to targeting a different Lightstreamer server please search in `js/Constants.js` this line:<BR/> `SERVER: protocolToUse+"//localhost:8080"`<BR/> and change it accordingly.
+* Open your browser and point it to: [http://localhost:8080/demos/ChatDemo/](http://localhost:8080/demos/BananaDarts/)
 
 ## Build
 
