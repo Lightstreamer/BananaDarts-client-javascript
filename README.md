@@ -21,7 +21,7 @@ Each user controls a dart (the red one) that can be thrown toward the dartboard 
 <!-- END DESCRIPTION bananadarts-client-javascript -->
 
 ## Install
-
+If you want to install a version of this demo pointing to your local Lightstreamer server, follow these steps.
 * As prerequisite, the [Multiplayer Darts - Java Adapter](https://github.com/Weswit/BananaDarts-adapter-java) has to be deployed in your local Lightstreamer server instance. Please check out that project and follow the installation instructions provided with it.
 *  Lightstreamer JS client is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
 *  RequireJS is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
