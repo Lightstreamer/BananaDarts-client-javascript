@@ -9,7 +9,7 @@ Multiplayer, [Leap Motion](https://www.leapmotion.com/) controlled, dart game ru
 [![screenshot](screenshot1.png)](http://demos.lightstreamer.com/BananaDarts/)<br>
 [![screenshot](screenshot2.png)](http://demos.lightstreamer.com/BananaDarts/)<br>
 [![screenshot](screenshot3.png)](http://demos.lightstreamer.com/BananaDarts/)<br>
-###[![](http://demos.lightstreamer.com/site/img/play.png) View live demo](http://demos.lightstreamer.com/BananaDarts)
+### [![](http://demos.lightstreamer.com/site/img/play.png) View live demo](http://demos.lightstreamer.com/BananaDarts)
 
 ## Details
 
