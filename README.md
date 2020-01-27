@@ -25,9 +25,10 @@ If you want to install a version of this demo pointing to your local Lightstream
 * As prerequisite, the [Multiplayer Darts - Java Adapter](https://github.com/Lightstreamer/BananaDarts-adapter-java) has to be deployed in your local Lightstreamer server instance. Please check out that project and follow the installation instructions provided with it.
 * Lightstreamer JS client is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
 * RequireJS is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
-*  jQuery is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
-*  leapjs is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
-*  three.js is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
+* jQuery is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
+* leapjs is currently hot-linked in the html page (look for leap-0.6.0.min.js), but you may need to replace it with a local version.
+You can find the version currently used in the demo [on Github](https://github.com/leapmotion/leapjs/blob/v0.6.0/leap-0.6.0.min.js), where newer versions are also available.
+* three.js is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
 * Deploy this demo on the Lightstreamer Server (used as Web server) or in any external Web Server. If you choose the former, please create the folder `<LS_HOME>/pages/demos/BananaDart` and copy here the contents of the `/src` folder of this project.
 The client demo configuration assumes that Lightstreamer Server, Lightstreamer Adapters, and this client are launched on the same machine. If you need to target a different Lightstreamer server, please search in `js/Constants.js` this line:<BR/> `SERVER: protocolToUse+"//localhost:8080"`<BR/> and change it accordingly.
 * Open your browser and point it to: [http://localhost:8080/demos/BananaDarts/](http://localhost:8080/demos/BananaDarts/)
