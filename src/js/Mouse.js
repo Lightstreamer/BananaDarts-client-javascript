@@ -18,11 +18,11 @@ define(["Inheritance","EventDispatcher","./Constants"],
   
   var MAX = {
       x: Constants.ARM_LENGTH/2,
-      y: Constants.ARM_LENGTH/2+Constants.TWENTY,
+      y: Constants.ARM_LENGTH/2+Constants.TWENTY
   };
   var MIN = {
       x: -Constants.ARM_LENGTH/2,
-      y: -Constants.ARM_LENGTH/2+Constants.TWENTY,
+      y: -Constants.ARM_LENGTH/2+Constants.TWENTY
   };
   
   var GAME_AREA_MAX = {};

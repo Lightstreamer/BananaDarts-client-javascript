@@ -148,7 +148,7 @@ define(["LightstreamerClient","./Constants","Executor","./Player"],
       dispose: function() {
         this.client.disconnect();
         Executor.stopRepetitiveTask(this.eventObj);
-        this.client.connectionSharing.enableSharing("ABORT","ABORT","ABORT");
+        this.client.enableSharing(null);
       }
   };
   
