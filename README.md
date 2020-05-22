@@ -23,7 +23,7 @@ Each user controls a dart (the red one), which can be thrown toward the dartboar
 ## Install
 If you want to install a version of this demo pointing to your local Lightstreamer server, follow these steps.
 * As prerequisite, the [Multiplayer Darts - Java Adapter](https://github.com/Lightstreamer/BananaDarts-adapter-java) has to be deployed in your local Lightstreamer server instance. Please check out that project and follow the installation instructions provided with it.
-* Get the `lightstreamer.js` file from [Lightstreamer distribution](http://www.lightstreamer.com/download) (see compatibility notes below) and put it in the `src` folder of the demo.
+* Lightstreamer JS client is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
 * RequireJS is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
 * jQuery is currently hot-linked in the html page: you may want to replace it with a local version and/or to upgrade its version.
 * leapjs is currently hot-linked in the html page (look for leap-0.6.0.min.js), but you may need to replace it with a local version.
@@ -61,4 +61,4 @@ As an alternative, it is possible to customize the build file to use [UglifyJS](
 
 ## Lightstreamer Compatibility Notes
 
-* Compatible with Lightstreamer JavaScript Client library version 6.1 to 7.x.
+* Compatible with Lightstreamer JavaScript Client library version 8.0 or newer.
